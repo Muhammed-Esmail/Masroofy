@@ -1,8 +1,9 @@
 from django.db import models
 
-
-# Create your models here.
-class Cycle(models.Model):
-    start_date = models.DateField()
-    end_date = models.DateField()
+class CycleModel(models.Model):
+    startDate = models.DateField()
+    endDate = models.DateField()
     amount = models.FloatField()
+
+    class Meta:
+        db_table = 'Cycle'

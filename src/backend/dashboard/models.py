@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Settings(models.Model):
+class SettingsModel(models.Model):
     class languageChoices(models.TextChoices):
         ENGLISH = "EN"
         ARABIC = "AR"
@@ -22,3 +22,6 @@ class Settings(models.Model):
 
     cycle_duration = models.IntegerField(null=False)
     budget_threshold = models.FloatField(null=False)
+
+    class Meta:
+        db_table='Settings'

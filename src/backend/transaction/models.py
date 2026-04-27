@@ -1,24 +1,28 @@
 from django.db import models
 
-
-class Category(models.Model):
+class CategoryModel(models.Model):
     category_name = models.TextField()
     description = models.TextField()
 
-class Transaction(models.Model):
+    class Meta:
+        db_table = 'Category'
+
+class TransactionModel(models.Model):
     amount = models.FloatField()
     log_date = models.DateField()
-    description = models.TextField(1)
+    description = models.TextField()
     note = models.TextField(null=True)
     cycle = models.ForeignKey(
-        'cycle.Cycle',
+        'cycle.CycleModel',
         on_delete=models.PROTECT,
         null=False,
-    ),
-    category = models.ForeignKey(
-        Category,
+    )
+    category_id = models.ForeignKey(
+        CategoryModel,
         on_delete=models.SET_DEFAULT,
         null=False,
         default=1
     )
 
+    class Meta:
+        db_table = 'Transaction'
