@@ -1,9 +1,12 @@
+from typing import override
+
 from django.test import TestCase
 from history.services import *
 from backend.shared_classes import *
 from datetime import date
 
 class CategoryCRUDTest(TestCase):
+    @override
     def setUp(self):
         self.crud = CategoryCRUD()
         self.sample_category = Category(
@@ -36,6 +39,7 @@ class CategoryCRUDTest(TestCase):
             self.crud.fetchById(1)
 
 class CycleCRUDTest(TestCase):
+    @override
     def setUp(self):
         self.crud = CycleCRUD()
         self.sample_cycle = Cycle(
@@ -69,6 +73,7 @@ class CycleCRUDTest(TestCase):
             self.crud.fetchById(1)
 
 class TransactionCRUDTest(TestCase):
+    @override
     def setUp(self):
         self.trans_crud = TransactionCRUD()
         self.cycle_crud = CycleCRUD()
@@ -140,6 +145,7 @@ class TransactionCRUDTest(TestCase):
 
 
 class HistoryManagerTest(TestCase):
+    @override
     def setUp(self):
         self.hist = HistoryManager()
         self.cycle_crud = CycleCRUD()

@@ -3,7 +3,15 @@ from backend.shared_classes import Category
 from transaction.models import CategoryModel
 
 class CategoryCRUD(Fetchable[Category], CRUD[Category]):
-    def fetchById(self, id: int):
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+    
+    
+    def fetchById(self, id: int) -> Category:
         category = CategoryModel.objects.get(id=id)
         return self.createDataObject(category.id, category.category_name, category.description)
 

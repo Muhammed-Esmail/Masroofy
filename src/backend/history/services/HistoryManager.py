@@ -2,6 +2,14 @@ from history.services import TransactionCRUD, CycleCRUD
 from datetime import date
 
 class HistoryManager:
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+    
+
     transaction_queryable: TransactionCRUD
     cycle_readable: CycleCRUD
 

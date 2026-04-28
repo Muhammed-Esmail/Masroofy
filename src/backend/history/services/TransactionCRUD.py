@@ -1,10 +1,12 @@
+from typing import Optional
+
 from history.interfaces import Fetchable, Queryable, CRUD
 from backend.shared_classes import Transaction
 from transaction.models import TransactionModel
 from datetime import date
 
 class TransactionCRUD(Fetchable[Transaction], Queryable[Transaction], CRUD[Transaction]):
-    def fetchById(self, id: int):
+    def fetchById(self, id: int) -> Transaction:
         transaction = TransactionModel.objects.get(id=id)
         return self.createDataObject(transaction.id,
                                      transaction.amount,
@@ -14,7 +16,7 @@ class TransactionCRUD(Fetchable[Transaction], Queryable[Transaction], CRUD[Trans
                                      transaction.description,
                                      transaction.note)
 
-    def fetchByFilters(self, startDate=None, endDate=None, category_id=None):
+    def fetchByFilters(self, startDate: Optional[date] = None, endDate: Optional[date] = None, category_id: Optional[int] = None) -> list[Transaction]:
         transactions = TransactionModel.objects.all()
         if startDate:
             transactions = transactions.filter(log_date__gte=startDate)

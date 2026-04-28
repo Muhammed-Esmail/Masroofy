@@ -4,7 +4,7 @@ from cycle.models import CycleModel
 from datetime import date
 
 class CycleCRUD(Fetchable[Cycle], CRUD[Cycle]):
-    def fetchById(self, id):
+    def fetchById(self, id) -> Cycle:
         cycle = CycleModel.objects.get(id=id)
         return self.createDataObject(cycle.id, cycle.startDate, cycle.endDate, cycle.amount)
 
