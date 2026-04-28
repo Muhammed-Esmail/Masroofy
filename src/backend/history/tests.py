@@ -113,8 +113,8 @@ class TransactionCRUDTest(TestCase):
         self.trans_crud.create(self.sample_transaction)
         transaction_1 = self.trans_crud.fetchByFilters(category_id=1)
         transaction_2 = self.trans_crud.fetchByFilters(startDate=date(1999,7,7))
-        self.assertTrue(transaction_1[0].amount, 100)
-        self.assertTrue(transaction_2[0].amount, 100)
+        self.assertEqual(transaction_1[0].amount, 100)
+        self.assertEqual(transaction_2[0].amount, 100)
 
     def test_update(self):
         self.trans_crud.create(self.sample_transaction)

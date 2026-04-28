@@ -1,5 +1,4 @@
 from history.services import TransactionCRUD, CycleCRUD
-from backend.shared_classes import Category
 from datetime import date
 
 class HistoryManager:

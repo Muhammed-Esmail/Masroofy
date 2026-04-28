@@ -6,12 +6,7 @@ from datetime import date
 class CycleCRUD(Fetchable[Cycle], CRUD[Cycle]):
     def fetchById(self, id):
         cycle = CycleModel.objects.get(id=id)
-        return Cycle(
-            id=cycle.id,
-            startDate=cycle.startDate,
-            endDate=cycle.endDate,
-            amount=cycle.amount
-        )
+        return self.createDataObject(cycle.id, cycle.startDate, cycle.endDate, cycle.amount)
 
     def create(self, newCycle: Cycle):
         CycleModel.objects.create(
@@ -33,7 +28,7 @@ class CycleCRUD(Fetchable[Cycle], CRUD[Cycle]):
         CycleModel.objects.filter(id=id).delete()
         return True
 
-    def createDataObject(self, id: int, amount: int, startDate: date, endDate: date, description: str, note: str | None):
+    def createDataObject(self, id: int, startDate: date, endDate: date,  amount: int):
         return Cycle(
             id=id,
             startDate=startDate,
