@@ -5,6 +5,7 @@ from dataclasses import dataclass
 class Transaction:
     id: int | None
     amount: int
+    cycle_id: int
     category_id: int
     log_date: date
     description: str

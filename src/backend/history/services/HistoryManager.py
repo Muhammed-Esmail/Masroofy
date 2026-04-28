@@ -1,5 +1,5 @@
-from services import TransactionCRUD, CycleCRUD
-from shared_classes import Category
+from history.services import TransactionCRUD, CycleCRUD
+from backend.shared_classes import Category
 from datetime import date
 
 class HistoryManager:
@@ -13,8 +13,8 @@ class HistoryManager:
     def fetchCycleData(self, cycle_id: int):
         return self.cycle_readable.fetchById(cycle_id)
     
-    def fetchTransactionData(self, startDate: date, endDate: date, category: Category):
-        return self.transaction_queryable.fetchByFilters(startDate, endDate, category)
+    def fetchTransactionData(self, startDate: date, endDate: date, category_id: int):
+        return self.transaction_queryable.fetchByFilters(startDate, endDate, category_id)
     
     def fetchFullHistory(self):
         return self.transaction_queryable.fetchByFilters()

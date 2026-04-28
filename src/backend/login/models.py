@@ -5,7 +5,7 @@ class UserModel(models.Model):
     password = models.TextField(max_length=100)
     name = models.TextField(max_length=100)
     email = models.TextField(max_length=100)
-    current_cycle_id = models.ForeignKey(
+    current_cycle = models.ForeignKey(
         'cycle.CycleModel',
         on_delete=models.PROTECT,
         null=False

@@ -17,7 +17,7 @@ class TransactionModel(models.Model):
         on_delete=models.PROTECT,
         null=False,
     )
-    category_id = models.ForeignKey(
+    category = models.ForeignKey(
         CategoryModel,
         on_delete=models.SET_DEFAULT,
         null=False,

@@ -1,8 +1,8 @@
-from interfaces import Fetchable, CRUD
-from shared_classes import Category
+from history.interfaces import Fetchable, CRUD
+from backend.shared_classes import Category
 from transaction.models import CategoryModel
 
-class CategoryCRUD(Fetchable.Fetchable[Category], CRUD[Category]):
+class CategoryCRUD(Fetchable[Category], CRUD[Category]):
     def fetchById(self, id: int):
         category = CategoryModel.objects.get(id=id)
         return self.createDataObject(category.id, category.category_name, category.description)
@@ -12,12 +12,14 @@ class CategoryCRUD(Fetchable.Fetchable[Category], CRUD[Category]):
             category_name=newCategory.name,
             description=newCategory.description
         )
+        return True
 
     def update(self, id: int, newCategory: Category):
         CategoryModel.objects.filter(id=id).update(
             category_name=newCategory.name,
             description=newCategory.description
         )
+        return True
 
     def delete(self, id: int):
         CategoryModel.objects.filter(id=id).delete()
