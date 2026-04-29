@@ -7,3 +7,9 @@ class CycleModel(models.Model):
 
     class Meta:
         db_table = 'Cycle'
+
+class ActiveCycleModel(models.Model):
+    cycle = models.OneToOneField(CycleModel, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        db_table = 'active_cycle'
