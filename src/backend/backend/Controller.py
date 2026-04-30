@@ -1,6 +1,7 @@
 from __future__ import annotations 
 from typing import Any
 
+from transaction.services import CategoryManager
 from history.services.HistoryManager import HistoryManager as _HistoryManager
 from cycle.services.AllowanceManager import AllowanceManager as _AllowanceManager
 
@@ -12,7 +13,7 @@ class Controller:
     allowanceManager: _AllowanceManager
     dailyLimitCalculator: Any
     insightsEngine: Any
-    categoryManager: Any
+    categoryManager: CategoryManager
     securityManager: Any
 
     def __new__(cls):
@@ -26,7 +27,7 @@ class Controller:
         self.allowanceManager = _AllowanceManager()
         self.dailyLimitCalculator = None  # replace with actual class
         self.insightsEngine = None        # replace with actual class
-        self.categoryManager = None       # replace with actual class
+        self.categoryManager = CategoryManager()
         self.securityManager = None       # replace with actual class
 
         self.allowanceManager.setController(self)
@@ -36,3 +37,6 @@ class Controller:
     
     def getAllowanceManager(self):
         return self.allowanceManager
+    
+    def getCategoryManager(self):
+        return self.categoryManager
