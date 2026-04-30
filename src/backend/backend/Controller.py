@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import Any
 
 from transaction.services import CategoryManager
+from transaction.services import TransactionManager as _TransactionManager 
 from history.services.HistoryManager import HistoryManager as _HistoryManager
 from cycle.services.AllowanceManager import AllowanceManager as _AllowanceManager
 
@@ -15,6 +16,7 @@ class Controller:
     insightsEngine: Any
     categoryManager: CategoryManager
     securityManager: Any
+    transactionManager: _TransactionManager
 
     def __new__(cls):
         if cls._instance is None:
@@ -29,8 +31,10 @@ class Controller:
         self.insightsEngine = None        # replace with actual class
         self.categoryManager = CategoryManager()
         self.securityManager = None       # replace with actual class
+        self.transactionManager = _TransactionManager()
 
         self.allowanceManager.setController(self)
+        self.transactionManager.setController(self)
 
     def getHistoryManager(self):
         return self.historyManager
@@ -40,3 +44,6 @@ class Controller:
     
     def getCategoryManager(self):
         return self.categoryManager
+    
+    def getTransactionManager(self):
+        return self.transactionManager
