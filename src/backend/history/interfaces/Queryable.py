@@ -6,5 +6,5 @@ T = TypeVar('T')
 
 class Queryable(Generic[T], ABC):
     @abstractmethod
-    def fetchByFilters(self, startDate: date | None , endDate: date | None, category_id: int | None) -> list[T]:
+    def fetchByFilters(self, startDate: date | None, endDate: date | None, category_id: int | None, cycle_id: int | None) -> list[T]:
         pass

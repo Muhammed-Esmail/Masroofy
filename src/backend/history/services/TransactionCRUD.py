@@ -16,7 +16,7 @@ class TransactionCRUD(Fetchable[Transaction], Queryable[Transaction], CRUD[Trans
                                      transaction.description,
                                      transaction.note)
 
-    def fetchByFilters(self, startDate: Optional[date] = None, endDate: Optional[date] = None, category_id: Optional[int] = None) -> list[Transaction]:
+    def fetchByFilters(self, startDate: Optional[date] = None, endDate: Optional[date] = None, category_id: Optional[int] = None, cycle_id: Optional[int] = None) -> list[Transaction]:
         transactions = TransactionModel.objects.all()
         if startDate:
             transactions = transactions.filter(log_date__gte=startDate)
@@ -26,6 +26,9 @@ class TransactionCRUD(Fetchable[Transaction], Queryable[Transaction], CRUD[Trans
 
         if category_id:
             transactions = transactions.filter(category_id=category_id)
+            
+        if cycle_id:
+            transactions = transactions.filter(cycle_id=cycle_id)
 
         return [self.createDataObject(t.id,
                                      t.amount,
@@ -62,6 +65,11 @@ class TransactionCRUD(Fetchable[Transaction], Queryable[Transaction], CRUD[Trans
     def delete(self, id: int):
         TransactionModel.objects.filter(id=id).delete()
         return True
+    
+
+    def getTotalSpentInCycle(self, cycle_id):
+        transactions = self.fetchByFilters(cycle_id=cycle_id)
+        return sum(t.amount for t in transactions)
     
 
     def createDataObject(self, id: int, amount: int, cycle_id: int, category_id: int, log_date: date, description: str, note: str | None):
