@@ -5,7 +5,7 @@ from transaction.services import CategoryManager, NotificationManager
 from transaction.services import TransactionManager as _TransactionManager 
 from history.services import HistoryManager as _HistoryManager
 from cycle.services.AllowanceManager import AllowanceManager as _AllowanceManager
-
+from dashboard.services import SettingsManager
 
 class Controller:
     _instance = None
@@ -18,6 +18,7 @@ class Controller:
     securityManager: Any
     transactionManager: _TransactionManager
     notificationManager: NotificationManager
+    settingsManager: SettingsManager
 
     def __new__(cls):
         if cls._instance is None:
@@ -34,12 +35,12 @@ class Controller:
         self.securityManager = None       # replace with actual class
         self.transactionManager = _TransactionManager()
         self.notificationManager = NotificationManager()
+        self.settingsManager = SettingsManager()
         
 
         self.allowanceManager.setController(self)
         self.transactionManager.setController(self)
         self.notificationManager.setController(self)
-        
         self.transactionManager.subscribe(self.notificationManager)
 
     def getHistoryManager(self):
@@ -56,3 +57,6 @@ class Controller:
     
     def getNotificationManager(self):
         return self.notificationManager
+    
+    def getSettingsManager(self):
+        return self.settingsManager
