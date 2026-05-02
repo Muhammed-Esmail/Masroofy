@@ -8,7 +8,8 @@ class UserModel(models.Model):
     current_cycle = models.ForeignKey(
         'cycle.CycleModel',
         on_delete=models.PROTECT,
-        null=False
+        null=True,
+        blank=True
     )
 
     class Meta:
