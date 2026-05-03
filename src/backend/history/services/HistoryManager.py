@@ -5,6 +5,9 @@ from history.services import TransactionCRUD, CycleCRUD
 from cycle.models import CycleModel
 from datetime import date
 
+class NoActiveCycle(Exception):
+    pass
+
 class HistoryManager:
     _instance = None
 
@@ -27,8 +30,14 @@ class HistoryManager:
     def fetchTransactionData(self, startDate: date, endDate: date, category_id: int, cycle_id: int):
         return self.transaction_queryable.fetchByFilters(startDate, endDate, category_id, cycle_id)
     
-    def fetchFullHistory(self):
-        return self.transaction_queryable.fetchByFilters()
+    def fetchFullHistory(self, currentOnly=False):
+        activeCycleID = self.getActiveCycleID()
+        if activeCycleID is None:
+            raise NoActiveCycle("[History Manager] No Active Cycle!")
+        if currentOnly:
+            return self.transaction_queryable.fetchByFilters(cycle_id=activeCycleID)
+        else:
+            return self.transaction_queryable.fetchByFilters()
 
     def createNewCycle(self, newCycle: CycleModel) -> int:
         return self.cycle_readable.create(newCycle)

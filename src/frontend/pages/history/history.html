@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head><title>History</title></head>
+<body>
+  <h1>History</h1>
+  <a href={% url 'login' %}>← Back</a>
+
+  <hr>
+
+  <h2>Full History</h2>
+  <button onclick="fetchFullHistory()">Fetch All Transactions</button>
+  <pre id="fullHistoryResult"></pre>
+
+  <hr>
+
+  <h2>Filtered History</h2>
+  <form onsubmit="fetchFiltered(event)">
+    <label>Start Date (optional): <input type="date" id="startDate"></label><br><br>
+    <label>End Date (optional): <input type="date" id="endDate"></label><br><br>
+    <label>Category ID (optional): <input type="number" id="categoryId"></label><br><br>
+    <label>Cycle ID (optional): <input type="number" id="cycleId"></label><br><br>
+    <button type="submit">Fetch Filtered</button>
+  </form>
+  <pre id="filteredResult"></pre>
+
+  <hr>
+
+  <h2>Fetch Single Cycle</h2>
+  <form onsubmit="fetchCycle(event)">
+    <label>Cycle ID: <input type="number" id="cycleIdSingle" required></label><br><br>
+    <button type="submit">Fetch Cycle</button>
+  </form>
+  <pre id="cycleResult"></pre>
+
+  <h2>Get Active Cycle ID</h2>
+  <form onsubmit="getActiveCycleId(event)">
+    <button type="submit">Get ID</button>
+  </form>
+  <pre id="activeCycleId"></pre>
+
+  <hr>
+
+  <h2>Total Spent in Active Cycle</h2>
+    <form onsubmit="fetchTotalSpent(event)">
+    <button type="submit">Get ID</button>
+  </form>
+  <pre id="totalSpentResult"></pre>
+  <script src="{% static '/pages/history/js/history.js' %}"></script>
+</body>
+</html>
