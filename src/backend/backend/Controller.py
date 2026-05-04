@@ -1,12 +1,12 @@
 from __future__ import annotations 
 from typing import Any
 
-from transaction.services import CategoryManager
+from transaction.services import CategoryManager, NotificationManager
 from transaction.services import TransactionManager as _TransactionManager 
-from history.services.HistoryManager import HistoryManager as _HistoryManager
+from history.services import HistoryManager as _HistoryManager
 from cycle.services.AllowanceManager import AllowanceManager as _AllowanceManager
 from insights.services.InsightsEngine import InsightsEngine 
-
+from dashboard.services import SettingsManager
 
 class Controller:
     _instance = None
@@ -18,6 +18,8 @@ class Controller:
     categoryManager: CategoryManager
     securityManager: Any
     transactionManager: _TransactionManager
+    notificationManager: NotificationManager
+    settingsManager: SettingsManager
 
     def __new__(cls):
         if cls._instance is None:
@@ -33,9 +35,14 @@ class Controller:
         self.categoryManager = CategoryManager()
         self.securityManager = None       # replace with actual class
         self.transactionManager = _TransactionManager()
+        self.notificationManager = NotificationManager()
+        self.settingsManager = SettingsManager()
+        
 
         self.allowanceManager.setController(self)
         self.transactionManager.setController(self)
+        self.notificationManager.setController(self)
+        self.transactionManager.subscribe(self.notificationManager)
 
     def getHistoryManager(self):
         return self.historyManager
@@ -48,3 +55,9 @@ class Controller:
     
     def getTransactionManager(self):
         return self.transactionManager
+    
+    def getNotificationManager(self):
+        return self.notificationManager
+    
+    def getSettingsManager(self):
+        return self.settingsManager

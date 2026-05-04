@@ -24,8 +24,8 @@ class HistoryManager:
     def fetchCycleData(self, cycle_id: int):
         return self.cycle_readable.fetchById(cycle_id)
     
-    def fetchTransactionData(self, startDate: date, endDate: date, category_id: int):
-        return self.transaction_queryable.fetchByFilters(startDate, endDate, category_id)
+    def fetchTransactionData(self, startDate: date, endDate: date, category_id: int, cycle_id: int):
+        return self.transaction_queryable.fetchByFilters(startDate, endDate, category_id, cycle_id)
     
     def fetchFullHistory(self):
         return self.transaction_queryable.fetchByFilters()
@@ -41,6 +41,14 @@ class HistoryManager:
         
         if currentCycle:
             return currentCycle.id
+        
+        return None
+    
+    def getTotalSpentInActiveCycle(self) -> Optional[int]:
+        currentCycleId = self.getActiveCycleID()
+        
+        if currentCycleId:
+            return self.transaction_queryable.getTotalSpentInCycle(currentCycleId)
         
         return None
 
