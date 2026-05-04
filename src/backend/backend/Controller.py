@@ -5,6 +5,7 @@ from transaction.services import CategoryManager, NotificationManager
 from transaction.services import TransactionManager as _TransactionManager 
 from history.services import HistoryManager as _HistoryManager
 from cycle.services.AllowanceManager import AllowanceManager as _AllowanceManager
+from insights.services.InsightsEngine import InsightsEngine 
 from dashboard.services import SettingsManager
 
 class Controller:
@@ -30,7 +31,7 @@ class Controller:
         self.historyManager = _HistoryManager()
         self.allowanceManager = _AllowanceManager()
         self.dailyLimitCalculator = None  # replace with actual class
-        self.insightsEngine = None        # replace with actual class
+        self.insightsEngine = InsightsEngine()       
         self.categoryManager = CategoryManager()
         self.securityManager = None       # replace with actual class
         self.transactionManager = _TransactionManager()
