@@ -1,23 +1,16 @@
-const BASE = '/history';
+import '/static/api/API.js';
 
-function getCsrf() {
-    const cookie = document.cookie.split(';').find(c => c.trim().startsWith('csrftoken='));
-    return cookie ? cookie.split('=')[1] : '';
+class HistoryService extends API {
+    constructor(base) {
+        super()
+        this.setBase(base)
+    }
 }
 
-async function request(url, method = 'GET', body = null) {
-    const opts = {
-    method,
-    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrf() },
-    };
-    if (body) opts.body = JSON.stringify(body);
-    const res = await fetch(url, opts);
-    const text = await res.text();
-    try { return JSON.parse(text); } catch { return text; }
-}
+const historyService = new HistoryService('/history');
 
 async function fetchFullHistory() {
-    const data = await request(`${BASE}/full_history/`);
+    const data = await historyService.request(`/full_history/`);
     const better = JSON.stringify(data, null, 2);
     let s = better.split('Transaction')
 
@@ -35,7 +28,7 @@ async function fetchFiltered(e) {
     if (endDate) params.append('endDate', endDate);
     if (categoryId) params.append('category_id', categoryId);
     if (cycleId) params.append('cycle_id', cycleId);
-    let data = await request(`${BASE}/filtered_history/?${params.toString()}`);
+    let data = await historyService.request(`/filtered_history/?${params.toString()}`);
     if (!data) data = "Not Found";
     document.getElementById('filteredResult').textContent = JSON.stringify(data, null, 2);
 }
@@ -45,18 +38,18 @@ async function fetchCycle(e) {
     const id = document.getElementById('cycleIdSingle').value;
     const params = new URLSearchParams();
     if (id) params.append('id', id);
-    const data = await request(`${BASE}/fetch_cycle_data/?${params.toString()}`);
+    const data = await historyService.request(`/fetch_cycle_data/?${params.toString()}`);
     document.getElementById('cycleResult').textContent = JSON.stringify(data, null, 2);
 }
 
 async function getActiveCycleId(e) {
     e.preventDefault();
-    const data = await request(`${BASE}/get_active_cycle_id/`);
+    const data = await historyService.request(`/get_active_cycle_id/`);
     document.getElementById('activeCycleId').textContent = JSON.stringify(data, null, 2);  
 }
 
 async function fetchTotalSpent(e) {
     e.preventDefault();
-    const data = await request(`${BASE}/get_total_spent/`);
+    const data = await historyService.request(`${BASE}/get_total_spent/`);
     document.getElementById('totalSpentResult').textContent = JSON.stringify(data, null, 2);
 }
