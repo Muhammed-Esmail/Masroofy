@@ -1,5 +1,12 @@
+from typing import Optional
+
+from backend.shared_classes import Cycle
 from history.services import TransactionCRUD, CycleCRUD
+from cycle.models import CycleModel
 from datetime import date
+
+class NoActiveCycle(Exception):
+    pass
 
 class HistoryManager:
     _instance = None
@@ -20,8 +27,45 @@ class HistoryManager:
     def fetchCycleData(self, cycle_id: int):
         return self.cycle_readable.fetchById(cycle_id)
     
-    def fetchTransactionData(self, startDate: date, endDate: date, category_id: int):
-        return self.transaction_queryable.fetchByFilters(startDate, endDate, category_id)
+    def fetchTransactionData(self, startDate: date, endDate: date, category_id: int, cycle_id: int):
+        return self.transaction_queryable.fetchByFilters(startDate, endDate, category_id, cycle_id)
     
-    def fetchFullHistory(self):
-        return self.transaction_queryable.fetchByFilters()
+    def fetchFullHistory(self, currentOnly=False):
+        activeCycleID = self.getActiveCycleID()
+        if activeCycleID is None:
+            raise NoActiveCycle("[History Manager] No Active Cycle!")
+        if currentOnly:
+            return self.transaction_queryable.fetchByFilters(cycle_id=activeCycleID)
+        else:
+            return self.transaction_queryable.fetchByFilters()
+
+    def createNewCycle(self, newCycle: CycleModel) -> int:
+        return self.cycle_readable.create(newCycle)
+
+    def getActiveCycle(self) -> Optional[Cycle]:
+        return self.cycle_readable.fetchActive()
+
+    def getActiveCycleID(self) -> Optional[int]:
+        currentCycle = self.getActiveCycle()
+        
+        if currentCycle:
+            return currentCycle.id
+        
+        return None
+    
+    def getTotalSpentInActiveCycle(self) -> Optional[int]:
+        currentCycleId = self.getActiveCycleID()
+        
+        if currentCycleId:
+            return self.transaction_queryable.getTotalSpentInCycle(currentCycleId)
+        
+        return None
+
+    def setActive(self, id: int) -> None:
+        self.cycle_readable.setActive(id)
+
+    def clearActive(self) -> None:
+        self.cycle_readable.clearActive()
+
+    def updateCycleData(self, cycleID: int, newData: CycleModel) -> None:
+        self.cycle_readable.update(cycleID, newData)
