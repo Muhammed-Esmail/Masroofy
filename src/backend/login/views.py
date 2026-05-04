@@ -13,7 +13,15 @@ def home(request):
     }
     return render(request, 'pages/login/login.html', context)
 def Auth(request):
-    '''handel both login and signup'''
+    '''
+    handel both login and signup
+    
+    ### parameters
+    - request: The incoming HTTP POST request containing JSON with email, username, and password.
+ 
+    ### returns
+    - A JSON response indicating success or failure, or the rendered login page on GET.
+    '''
     userExists = UserModel.objects.exists()
     context = {
             'needSignUp': not userExists
@@ -49,7 +57,15 @@ def Auth(request):
     return render(request, 'pages/login/login.html',context)
 
 def verifySession(request):
-    '''check if the user has an active session'''
+    '''
+    check if the user has an active session
+    
+    ### parameters
+    - request: The incoming HTTP request.
+ 
+    ### returns
+    - A JSON response indicating whether the session is valid, including the username if so.
+    '''
     if 'userId' in request.session:
         return JsonResponse({"message": "session is vaild","userName":request.session.get('userName')},status=200)
     else:
