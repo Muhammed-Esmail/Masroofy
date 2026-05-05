@@ -1,7 +1,7 @@
 from __future__ import annotations 
 from typing import TYPE_CHECKING
 
-from history.services import TransactionCRUD
+from history.services import TransactionCRUD, HistoryManager
 from backend.shared_classes import Transaction
 from transaction.interfaces import Observer
 
@@ -13,6 +13,7 @@ class TransactionManager:
     _instance = None
     _controller: Controller = None
     _transCRUD: TransactionCRUD = None
+    _historyManager: HistoryManager = None
     
     def __init__(self):
         if not hasattr(self, 'observers'):
@@ -25,7 +26,8 @@ class TransactionManager:
 
     def setController(self, controller: Controller):
         self._controller = controller
-        self._transCRUD = self._controller.getHistoryManager().transaction_queryable
+        self._historyManager = self._controller.getHistoryManager()
+        self._transCRUD = self._historyManager.transaction_queryable
         
     def subscribe(self, observer: Observer):
         self.observers.append(observer)
@@ -44,6 +46,7 @@ class TransactionManager:
         ## Parameters:
         - transaction: Transaction
         '''
+        transaction.cycle_id = self._historyManager.getActiveCycleID()
         self._transCRUD.create(transaction)
         self.notify()
 
@@ -51,6 +54,7 @@ class TransactionManager:
         '''
         Updates the transaction associated with `newTransaction.id` to the rest of the data inside `newTransaction`
         '''
+        newTransaction.cycle_id = self._historyManager.getActiveCycleID()
         self._transCRUD.update(newTransaction.id, newTransaction)
         self.notify()
 

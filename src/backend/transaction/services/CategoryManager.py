@@ -39,6 +39,9 @@ class CategoryManager:
         newCat.id = newID
 
         return newCat
+    
+    def fetchAllCategories(self) -> list[str]:
+        return self._catagoryCRUD.fetchAllCategoriesNames()
 
     def deleteCategory(self, category: Category) -> None:
         '''

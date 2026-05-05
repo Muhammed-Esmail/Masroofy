@@ -27,8 +27,8 @@ class HistoryManager:
     def fetchCycleData(self, cycle_id: int):
         return self.cycle_readable.fetchById(cycle_id)
     
-    def fetchTransactionData(self, startDate: date, endDate: date, category_id: int, cycle_id: int):
-        return self.transaction_queryable.fetchByFilters(startDate, endDate, category_id, cycle_id)
+    def fetchTransactionData(self, startDate: date, endDate: date, category_name: str, cycle_id: int):
+        return self.transaction_queryable.fetchByFilters(startDate, endDate, category_name, cycle_id)
     
     def fetchFullHistory(self, currentOnly=False):
         activeCycleID = self.getActiveCycleID()

@@ -1,36 +1,70 @@
-import '/static/api/API.js';
+import { renderTransactions, renderCycle } from '/static/shared/js/render.js';
+import { getRequest, postRequest, deleteRequest } from '/static/shared/js/request.js';
 
-class HistoryService extends API {
-    constructor(base) {
-        super()
-        this.setBase(base)
+const BASE = '/history';
+
+function openUpdateDialog(t) {
+    document.getElementById('dialogTransactionId').textContent = t.id;
+    document.getElementById('updateId').value = t.id;
+    document.getElementById('updateAmount').value = t.amount;
+    document.getElementById('updatecategoryName').value = t.category_name;
+    document.getElementById('updateLogDate').value = t.log_date;
+    document.getElementById('updateDescription').value = t.description || '';
+    document.getElementById('updateNote').value = t.note || '';
+    document.getElementById('updateDialog').showModal();
+}
+
+async function updateTransaction(e) {
+    e.preventDefault();
+    const form = document.getElementById('update-form');
+    const data = Object.fromEntries(new FormData(form).entries());
+    const response = await postRequest(`/transaction/update_transaction/`, data);
+    if (response.success) {
+        alert('Transaction Updated');
+        document.getElementById('updateDialog').close();
+        fetchFullHistory();
+    } else {
+        alert('Update failed: ' + JSON.stringify(response));
     }
 }
 
-const historyService = new HistoryService('/history');
+async function deleteTransaction(id) {
+    const response = await deleteRequest(`/transaction/delete_transaction/`, id);
+    if (response.success) alert('Transaction Deleted');
+    fetchFullHistory();
+}
+
+let transactionCache = {};
+
+function onListClick(e) {
+    const id = Number(e.target.dataset.id);
+    if (!id) return;
+    if (e.target.classList.contains('btn-update')) openUpdateDialog(transactionCache[id]);
+    if (e.target.classList.contains('btn-delete')) deleteTransaction(id);
+}
 
 async function fetchFullHistory() {
-    const data = await historyService.request(`/full_history/`);
-    const better = JSON.stringify(data, null, 2);
-    let s = better.split('Transaction')
-
-    document.getElementById('fullHistoryResult').textContent = s.join('\nTransaction');
+    const data = await getRequest(`${BASE}/full_history/`);
+    data.forEach(t => transactionCache[t.id] = t);
+    renderTransactions(data, document.getElementById('fullHistoryResult'));
 }
 
 async function fetchFiltered(e) {
     e.preventDefault();
     const params = new URLSearchParams();
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value;
-    const categoryId = document.getElementById('categoryId').value;
-    const cycleId = document.getElementById('cycleId').value;
-    if (startDate) params.append('startDate', startDate);
-    if (endDate) params.append('endDate', endDate);
-    if (categoryId) params.append('category_id', categoryId);
-    if (cycleId) params.append('cycle_id', cycleId);
-    let data = await historyService.request(`/filtered_history/?${params.toString()}`);
-    if (!data) data = "Not Found";
-    document.getElementById('filteredResult').textContent = JSON.stringify(data, null, 2);
+    const startDate  = document.getElementById('startDate').value;
+    const endDate    = document.getElementById('endDate').value;
+    const categoryName = document.getElementById('categoryName').value;
+    const cycleId    = document.getElementById('cycleId').value;
+    if (startDate)  params.append('startDate', startDate);
+    if (endDate)    params.append('endDate', endDate);
+    if (categoryName) params.append('category_name', categoryName);
+    console.log(`[${categoryName}]`);
+    if (cycleId)    params.append('cycle_id', cycleId);
+    const data = await getRequest(`${BASE}/filtered_history/`, params);
+    const list = data || [];
+    list.forEach(t => transactionCache[t.id] = t);
+    renderTransactions(list, document.getElementById('filteredResult'));
 }
 
 async function fetchCycle(e) {
@@ -38,18 +72,28 @@ async function fetchCycle(e) {
     const id = document.getElementById('cycleIdSingle').value;
     const params = new URLSearchParams();
     if (id) params.append('id', id);
-    const data = await historyService.request(`/fetch_cycle_data/?${params.toString()}`);
-    document.getElementById('cycleResult').textContent = JSON.stringify(data, null, 2);
+    const data = await getRequest(`${BASE}/fetch_cycle_data/`, params);
+    renderCycle(data, document.getElementById('cycleResult'));
 }
 
-async function getActiveCycleId(e) {
-    e.preventDefault();
-    const data = await historyService.request(`/get_active_cycle_id/`);
-    document.getElementById('activeCycleId').textContent = JSON.stringify(data, null, 2);  
+async function getActiveCycleId() {
+    const data = await getRequest(`${BASE}/get_active_cycle_id/`);
+    document.getElementById('activeCycleId').textContent = JSON.stringify(data, null, 2);
 }
 
-async function fetchTotalSpent(e) {
-    e.preventDefault();
-    const data = await historyService.request(`${BASE}/get_total_spent/`);
+async function fetchTotalSpent() {
+    const data = await getRequest(`${BASE}/get_total_spent/`);
     document.getElementById('totalSpentResult').textContent = JSON.stringify(data, null, 2);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('btn-full-history').addEventListener('click', fetchFullHistory);
+    document.getElementById('form-filtered').addEventListener('submit', fetchFiltered);
+    document.getElementById('form-fetch-cycle').addEventListener('submit', fetchCycle);
+    document.getElementById('btn-active-cycle-id').addEventListener('click', getActiveCycleId);
+    document.getElementById('btn-total-spent').addEventListener('click', fetchTotalSpent);
+    document.getElementById('fullHistoryResult').addEventListener('click', onListClick);
+    document.getElementById('filteredResult').addEventListener('click', onListClick);
+    document.getElementById('update-form').addEventListener('submit', updateTransaction);
+    document.getElementById('btn-cancel-update').addEventListener('click', () => document.getElementById('updateDialog').close());
+});
