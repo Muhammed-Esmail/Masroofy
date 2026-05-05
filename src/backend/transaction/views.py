@@ -1,13 +1,16 @@
 from django.shortcuts import render
+from backend.Controller import Controller
 from transaction.services import TransactionManager, CategoryManager
 from history.services import TransactionCRUD
 from datetime import datetime
 from django.http import JsonResponse
 import json
 
+controller = Controller()
 transaction_crud = TransactionCRUD()
-transaction_manager = TransactionManager()
-category_manager = CategoryManager()
+transaction_manager = controller.getTransactionManager()
+category_manager = controller.getCategoryManager()
+notification_manager = controller.getNotificationManager()
 
 def index(request):
     categories = category_manager.fetchAllCategories()
@@ -35,7 +38,8 @@ def log_transaction(request):
     )
     
     transaction_manager.logTransaction(transaction_obj)
-    return JsonResponse({'success': True})
+    state = notification_manager.getCurrentState()
+    return JsonResponse({'success': True, 'state': state})
 
 def update_transaction(request):
     data = json.loads(request.body)
@@ -57,8 +61,10 @@ def update_transaction(request):
     )
     
     transaction_manager.updateTransaction(transaction_obj)
-    return JsonResponse({'success': True})
+    state = notification_manager.getCurrentState()
+    return JsonResponse({'success': True, 'state': state})
 
 def delete_transaction(request, id):
     transaction_manager.deleteTransaction(id)
-    return JsonResponse({'success': True})
+    state = notification_manager.getCurrentState()
+    return JsonResponse({'success': True, 'state': state})
