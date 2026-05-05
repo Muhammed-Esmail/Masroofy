@@ -14,17 +14,17 @@ class CategoryCRUD(Fetchable[Category], CRUD[Category]):
         return cls._instance
     
     
-    def fetchById(self, id: int) -> Category:
-        category = CategoryModel.objects.get(id=id)
-        return self.createDataObject(category.id, category.category_name, category.description)
-
-    def fetchByName(self, category_name: str) -> Optional[Category]:
+    def fetchById(self, name: str) -> Category:
+        category = CategoryModel.objects.get(name=name)
+        return self.createDataObject(category.category_name, category.description)
+        
+    def fetchAllCategoriesNames(self) -> list[str]:
         try:
-            category = CategoryModel.objects.get(category_name=category_name)
-            return self.createDataObject(category.id, category.category_name, category.description)
+            categories = CategoryModel.objects.all()
+            return [category.name for category in categories]
+        
         except CategoryModel.DoesNotExist:
             return None
-
     def create(self, newCategory: Category) -> Optional[int]:
         try:
             with transaction.atomic():
