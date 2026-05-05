@@ -16,7 +16,7 @@ class TransactionCRUD(Fetchable[Transaction], Queryable[Transaction], CRUD[Trans
                                      transaction.description,
                                      transaction.note)
 
-    def fetchByFilters(self, startDate: Optional[date] = None, endDate: Optional[date] = None, category_id: Optional[int] = None, cycle_id: Optional[int] = None) -> list[Transaction]:
+    def fetchByFilters(self, startDate: Optional[date] = None, endDate: Optional[date] = None, category_name: Optional[str] = None, cycle_id: Optional[int] = None) -> list[Transaction]:
         transactions = TransactionModel.objects.all()
         if startDate:
             transactions = transactions.filter(log_date__gte=startDate)
@@ -24,8 +24,8 @@ class TransactionCRUD(Fetchable[Transaction], Queryable[Transaction], CRUD[Trans
         if endDate:
             transactions = transactions.filter(log_date__lte=endDate)
 
-        if category_id:
-            transactions = transactions.filter(category_id=category_id)
+        if category_name:
+            transactions = transactions.filter(category_id=category_name)
             
         if cycle_id:
             transactions = transactions.filter(cycle_id=cycle_id)
@@ -44,7 +44,7 @@ class TransactionCRUD(Fetchable[Transaction], Queryable[Transaction], CRUD[Trans
         TransactionModel.objects.create(
             amount=newTransaction.amount,
             cycle_id=newTransaction.cycle_id,
-            category_id=newTransaction.category_id,
+            category_id=newTransaction.category_name,
             log_date=newTransaction.log_date,
             description=newTransaction.description,
             note=newTransaction.note
@@ -55,7 +55,7 @@ class TransactionCRUD(Fetchable[Transaction], Queryable[Transaction], CRUD[Trans
         TransactionModel.objects.filter(id=id).update(
             amount=newTransaction.amount,
             cycle_id=newTransaction.cycle_id,
-            category_id=newTransaction.category_id,
+            category_id=newTransaction.category_name,
             log_date=newTransaction.log_date,
             description=newTransaction.description,
             note=newTransaction.note
@@ -72,12 +72,12 @@ class TransactionCRUD(Fetchable[Transaction], Queryable[Transaction], CRUD[Trans
         return sum(t.amount for t in transactions)
     
 
-    def createDataObject(self, id: int, amount: int, cycle_id: int, category_id: int, log_date: date, description: str, note: str | None):
+    def createDataObject(self, id: int, amount: int, cycle_id: int, category_name: str, log_date: date, description: str, note: str | None):
         return Transaction(
             id=id,
             amount=amount,
             cycle_id=cycle_id,
-            category_id=category_id,
+            category_name=category_name,
             log_date=log_date,
             description=description,
             note=note

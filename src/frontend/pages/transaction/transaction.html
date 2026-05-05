@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transaction Manager</title>
+</head>
+<body>
+
+    <h1>Transaction Management</h1>
+
+    <section id="create-section">
+        <h2>Log New Transaction</h2>
+        <form id="create-form" method="POST" action="log_transaction/">
+            {% csrf_token %}
+            <label>Amount:<br>
+                <input type="number" name="amount" step="1" required>
+            </label><br><br>
+
+            <label>Category:<br>
+                <select name="category_name" required>
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </label><br><br>
+
+            <label>Log Date:<br>
+                <input type="date" name="log_date" required>
+            </label><br><br>
+
+            <label>Description:<br>
+                <input type="text" name="description" required>
+            </label><br><br>
+
+            <label>Note (Optional):<br>
+                <textarea name="note"></textarea>
+            </label><br><br>
+
+            <button type="submit">Log Transaction</button>
+        </form>
+    </section>
+
+</body>
+</html>

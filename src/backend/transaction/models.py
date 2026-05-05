@@ -1,7 +1,7 @@
 from django.db import models
 
 class CategoryModel(models.Model):
-    category_name = models.TextField(unique=True)
+    name = models.TextField(primary_key=True)
     description = models.TextField()
 
     class Meta:
@@ -21,7 +21,8 @@ class TransactionModel(models.Model):
         CategoryModel,
         on_delete=models.SET_DEFAULT,
         null=False,
-        default=1
+        default='General',
+        db_column='category_name',
     )
 
     class Meta:

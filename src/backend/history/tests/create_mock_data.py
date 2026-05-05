@@ -3,8 +3,8 @@ from transaction.models import CategoryModel, TransactionModel
 from datetime import date
 
 # Categories
-food = CategoryModel.objects.create(category_name="Food", description="Groceries")
-transport = CategoryModel.objects.create(category_name="Transport", description="Travel")
+food = CategoryModel.objects.create(name="Food", description="Groceries")
+transport = CategoryModel.objects.create(name="Transport", description="Travel")
 
 # Cycle
 cycle = CycleModel.objects.create(
