@@ -1,7 +1,11 @@
 import { renderTransactions, renderCycle } from '/static/shared/js/render.js';
-import { getRequest, postRequest, deleteRequest } from '/static/shared/js/request.js';
+import { API } from '/static/api/API.js';
 
-const BASE = '/history';
+const historyAPI = new API();
+historyAPI.setBase('/history');
+
+const transactionAPI = new API();
+transactionAPI.setBase('/transaction');
 
 function openUpdateDialog(t) {
     document.getElementById('dialogTransactionId').textContent = t.id;
@@ -18,7 +22,7 @@ async function updateTransaction(e) {
     e.preventDefault();
     const form = document.getElementById('update-form');
     const data = Object.fromEntries(new FormData(form).entries());
-    const response = await postRequest(`/transaction/update_transaction/`, data);
+    const response = await transactionAPI.request(`/update_transaction/`, 'POST', data);
     if (response.success) {
         alert('Transaction Updated');
         document.getElementById('updateDialog').close();
@@ -29,7 +33,7 @@ async function updateTransaction(e) {
 }
 
 async function deleteTransaction(id) {
-    const response = await deleteRequest(`/transaction/delete_transaction/`, id);
+    const response = await transactionAPI.request(`/delete_transaction/${id}/`, 'DELETE');
     if (response.success) alert('Transaction Deleted');
     fetchFullHistory();
 }
@@ -44,7 +48,7 @@ function onListClick(e) {
 }
 
 async function fetchFullHistory() {
-    const data = await getRequest(`${BASE}/full_history/`);
+    const data = await historyAPI.request(`/full_history/`, 'GET');
     data.forEach(t => transactionCache[t.id] = t);
     renderTransactions(data, document.getElementById('fullHistoryResult'));
 }
@@ -52,16 +56,16 @@ async function fetchFullHistory() {
 async function fetchFiltered(e) {
     e.preventDefault();
     const params = new URLSearchParams();
-    const startDate  = document.getElementById('startDate').value;
-    const endDate    = document.getElementById('endDate').value;
+    const startDate    = document.getElementById('startDate').value;
+    const endDate      = document.getElementById('endDate').value;
     const categoryName = document.getElementById('categoryName').value;
-    const cycleId    = document.getElementById('cycleId').value;
-    if (startDate)  params.append('startDate', startDate);
-    if (endDate)    params.append('endDate', endDate);
-    if (categoryName) params.append('category_name', categoryName);
+    const cycleId      = document.getElementById('cycleId').value;
+    if (startDate)     params.append('startDate', startDate);
+    if (endDate)       params.append('endDate', endDate);
+    if (categoryName)  params.append('category_name', categoryName);
     console.log(`[${categoryName}]`);
-    if (cycleId)    params.append('cycle_id', cycleId);
-    const data = await getRequest(`${BASE}/filtered_history/`, params);
+    if (cycleId)       params.append('cycle_id', cycleId);
+    const data = await historyAPI.request(`/filtered_history/?${params}`);
     const list = data || [];
     list.forEach(t => transactionCache[t.id] = t);
     renderTransactions(list, document.getElementById('filteredResult'));
@@ -72,17 +76,17 @@ async function fetchCycle(e) {
     const id = document.getElementById('cycleIdSingle').value;
     const params = new URLSearchParams();
     if (id) params.append('id', id);
-    const data = await getRequest(`${BASE}/fetch_cycle_data/`, params);
+    const data = await historyAPI.request(`/fetch_cycle_data/?${params}`);
     renderCycle(data, document.getElementById('cycleResult'));
 }
 
 async function getActiveCycleId() {
-    const data = await getRequest(`${BASE}/get_active_cycle_id/`);
+    const data = await historyAPI.request(`/get_active_cycle_id/`);
     document.getElementById('activeCycleId').textContent = JSON.stringify(data, null, 2);
 }
 
 async function fetchTotalSpent() {
-    const data = await getRequest(`${BASE}/get_total_spent/`);
+    const data = await historyAPI.request(`/get_total_spent/`);
     document.getElementById('totalSpentResult').textContent = JSON.stringify(data, null, 2);
 }
 
