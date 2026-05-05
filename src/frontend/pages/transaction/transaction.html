@@ -11,7 +11,7 @@
 
     <section id="create-section">
         <h2>Log New Transaction</h2>
-        <form id="create-form" method="POST" action="log_transaction/">
+        <form id="create-form">
             {% csrf_token %}
             <label>Amount:<br>
                 <input type="number" name="amount" step="1" required>
@@ -40,6 +40,6 @@
             <button type="submit">Log Transaction</button>
         </form>
     </section>
-
+    <script type="module" src="{% static '/pages/transaction/js/transaction.js' %}"></script>
 </body>
 </html>

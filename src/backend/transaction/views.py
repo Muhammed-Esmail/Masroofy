@@ -3,6 +3,7 @@ from transaction.services import TransactionManager, CategoryManager
 from history.services import TransactionCRUD
 from datetime import datetime
 from django.http import JsonResponse
+import json
 
 transaction_crud = TransactionCRUD()
 transaction_manager = TransactionManager()
@@ -16,11 +17,12 @@ def index(request):
     return render(request, 'pages/transaction/transaction.html', context)
 
 def log_transaction(request):
-    amount = int(request.POST.get('amount'))
-    category_name = request.POST.get('category_name')
-    log_date = datetime.strptime(request.POST.get('log_date'), '%Y-%m-%d').date()
-    description = request.POST.get('description')
-    note = request.POST.get('note')    
+    data = json.loads(request.body)
+    amount = int(data.get('amount'))
+    category_name = data.get('category_name')
+    log_date = datetime.strptime(data.get('log_date'), '%Y-%m-%d').date()
+    description = data.get('description')
+    note = data.get('note')  
 
     transaction_obj = transaction_crud.createDataObject(
         id=None,
@@ -36,12 +38,13 @@ def log_transaction(request):
     return JsonResponse({'success': True})
 
 def update_transaction(request):
-    id=int(request.POST.get('id', None))
-    amount = int(request.POST.get('amount'))
-    category_name = request.POST.get('category_name')
-    log_date = datetime.strptime(request.POST.get('log_date'), '%Y-%m-%d').date()
-    description = request.POST.get('description')
-    note = request.POST.get('note')    
+    data = json.loads(request.body)
+    id = int(data.get('id', None))
+    amount = int(data.get('amount'))
+    category_name = data.get('category_name')
+    log_date = datetime.strptime(data.get('log_date'), '%Y-%m-%d').date()
+    description = data.get('description')
+    note = data.get('note')  
 
     transaction_obj = transaction_crud.createDataObject(
         id=id,
