@@ -1,56 +1,29 @@
 from django.shortcuts import render
 from backend.Controller import Controller
 from transaction.services import TransactionManager, CategoryManager
-from history.services import TransactionCRUD
+from history.services import TransactionCRUD, CategoryCRUD
 from datetime import datetime
 from django.http import JsonResponse
 import json
 
 controller = Controller()
 transaction_crud = TransactionCRUD()
-transaction_manager = controller.getTransactionManager()
 category_manager = controller.getCategoryManager()
+transaction_manager = controller.getTransactionManager()
 notification_manager = controller.getNotificationManager()
+category_crud = CategoryCRUD()
 
-def index(request):
-    categories = category_manager.fetchAllCategories()
-    context = {
-        "categories": categories
-    }
-    return render(request, 'pages/transaction/transaction.html', context)
-
-def log_transaction(request):
+def fetchAndBuildTransactionObject(request):
     data = json.loads(request.body)
+    id = data.get('id')
+    if (id): id = int(id)
     amount = int(data.get('amount'))
     category_name = data.get('category_name')
     log_date = datetime.strptime(data.get('log_date'), '%Y-%m-%d').date()
     description = data.get('description')
     note = data.get('note')  
 
-    transaction_obj = transaction_crud.createDataObject(
-        id=None,
-        amount=amount,
-        cycle_id=None,
-        category_name=category_name,
-        log_date=log_date,
-        description=description,
-        note=note
-    )
-    
-    transaction_manager.logTransaction(transaction_obj)
-    state = notification_manager.getCurrentState()
-    return JsonResponse({'success': True, 'state': state})
-
-def update_transaction(request):
-    data = json.loads(request.body)
-    id = int(data.get('id', None))
-    amount = int(data.get('amount'))
-    category_name = data.get('category_name')
-    log_date = datetime.strptime(data.get('log_date'), '%Y-%m-%d').date()
-    description = data.get('description')
-    note = data.get('note')  
-
-    transaction_obj = transaction_crud.createDataObject(
+    return transaction_crud.createDataObject(
         id=id,
         amount=amount,
         cycle_id=None,
@@ -60,11 +33,63 @@ def update_transaction(request):
         note=note
     )
     
+def fetchAndBuildCategoryObject(request):
+    data = json.loads(request.body)
+    name = data.get('name')
+    description = data.get('description')
+    return category_crud.createDataObject(name, description)
+    
+
+def index(request):
+    categories = category_manager.fetchAllCategories()
+    context = {
+        "categories": categories
+    }
+    return render(request, 'pages/transaction/transaction.html', context)
+
+def log_transaction(request):
+    transaction_obj = fetchAndBuildTransactionObject(request)    
+    transaction_manager.logTransaction(transaction_obj)
+    state = notification_manager.getCurrentState()
+    return JsonResponse({'success': True, 'state': state})
+
+def update_transaction(request):
+    transaction_obj = fetchAndBuildTransactionObject(request)
     transaction_manager.updateTransaction(transaction_obj)
     state = notification_manager.getCurrentState()
     return JsonResponse({'success': True, 'state': state})
 
+
 def delete_transaction(request, id):
     transaction_manager.deleteTransaction(id)
+
     state = notification_manager.getCurrentState()
     return JsonResponse({'success': True, 'state': state})
+
+def category_index(request):
+    categories = category_manager.fetchAllCategories()
+    context = {
+        "categories": categories
+    }
+    return render(request, 'pages/transaction/category.html', context)
+
+def add_category(request):
+    category_obj = fetchAndBuildCategoryObject(request)
+    
+    res = category_manager.addCategory(category_obj)
+    
+    if res is None:
+        return JsonResponse({'success': False, 'description':'Category Name was Not Unique'})
+
+    return JsonResponse({'success': True})
+
+def update_category(request):
+    data = json.loads(request.body)
+    previous_category_name = data.get('previous_category_name')
+    category_obj = fetchAndBuildCategoryObject(request)
+    category_manager.updateCategory(previous_category_name, category_obj)
+    return JsonResponse({'success': True})
+    
+def delete_category(request, name):
+    category_manager.deleteCategory(name)
+    return JsonResponse({'success': True})

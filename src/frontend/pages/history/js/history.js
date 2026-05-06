@@ -42,6 +42,7 @@ async function deleteTransaction(id) {
         alert(response.state);
     }
     fetchFullHistory();
+    fetchFullHistory();
 }
 
 let transactionCache = {};

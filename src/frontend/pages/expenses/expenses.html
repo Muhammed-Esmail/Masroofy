@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Recurring Expenses</title>
+    <style>
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <h2>Your Recurring Expenses</h2>
+    <div>
+        {% for expense in expenses %}
+            <div style="margin-bottom: 20px;">
+                <strong>{{ expense.name }}</strong> - {{ expense.amount }}(L.E.) <br>
+                Frequency: {{ expense.get_frequency_display }} <br>
+                Schedule: 
+                {% if expense.frequency == 'MONTHLY' %}
+                    Days: {{ expense.days_of_month|join:", " }}
+                {% else %}
+                    Days: {{ expense.days_of_week|join:", " }}
+                {% endif %}
+                <br>
+                
+                <form action="{% url 'expense-update' expense.pk %}" method="GET" style="display:inline;">
+                    <button type="submit">Edit</button>
+                </form>
+                
+                <form action="{% url 'expense-delete' expense.pk %}" method="POST" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete this expense?')">Delete</button>
+                </form>
+            </div>
+            <hr>
+        {% empty %}
+            <p>No expenses created yet.</p>
+        {% endfor %}
+    </div>
+
+    <h2>Add New Expense</h2>
+    <form method="POST" action="{% url 'expense-create' %}">
+        {% csrf_token %}
+        
+        <p>
+            <label>Expense Name:</label><br>
+            <input type="text" name="name" required>
+        </p>
+
+        <p>
+            <label>Amount ($):</label><br>
+            <input type="number" name="amount" step="0.01" required>
+        </p>
+
+        <p>
+            <label>Frequency:</label><br>
+            <select name="frequency" id="id_frequency">
+                <option value="MONTHLY" selected>Specific Dates of the Month</option>
+                <option value="WEEKLY">Specific Days of the Week</option>
+            </select>
+        </p>
+
+        <p id="monthly_fields">
+            <label>Select Days of the Month:</label><br>
+            <span id="month_days_container"></span>
+        </p>
+
+        <p class="hidden" id="weekly_fields">
+            <label>Select Days of the Week:</label><br>
+            <label><input type="checkbox" name="weekly_days_input" value="SUN"> SUN</label>
+            <label><input type="checkbox" name="weekly_days_input" value="MON"> MON</label>
+            <label><input type="checkbox" name="weekly_days_input" value="TUE"> TUE</label>
+            <label><input type="checkbox" name="weekly_days_input" value="WED"> WED</label>
+            <label><input type="checkbox" name="weekly_days_input" value="THU"> THU</label>
+            <label><input type="checkbox" name="weekly_days_input" value="FRI"> FRI</label>
+            <label><input type="checkbox" name="weekly_days_input" value="SAT"> SAT</label>
+        </p>
+
+        <button type="submit">Save Expense</button>
+    </form>
+
+    <script>
+        const monthContainer = document.getElementById('month_days_container');
+        for (let i = 1; i <= 31; i++) {
+            const label = document.createElement('label');
+            label.innerHTML = `<input type="checkbox" name="monthly_days_input" value="${i}"> ${i} `;
+            monthContainer.appendChild(label);
+            if (i % 7 === 0) {
+                monthContainer.appendChild(document.createElement('br'));
+            }
+        }
+
+        const frequencySelect = document.getElementById('id_frequency');
+        const monthlyFields = document.getElementById('monthly_fields');
+        const weeklyFields = document.getElementById('weekly_fields');
+
+        function toggleFields() {
+            if (frequencySelect.value === 'MONTHLY') {
+                monthlyFields.classList.remove('hidden');
+                weeklyFields.classList.add('hidden');
+            } else {
+                monthlyFields.classList.add('hidden');
+                weeklyFields.classList.remove('hidden');
+            }
+        }
+
+        frequencySelect.addEventListener('change', toggleFields);
+        toggleFields();
+    </script>
+</body>
+</html>
