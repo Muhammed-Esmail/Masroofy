@@ -12,37 +12,33 @@ class CategoryManager:
             cls._instance._catagoryCRUD = CategoryCRUD()
         return cls._instance
     
-    def addCategory(self, cat_name: str, cat_description: str) -> Optional[Category]:
+    def addCategory(self, category: Category) -> Optional[Category]:
         '''
         ## Adds a new category to the DB.
         
         ### Parameters
-        - cat_name: str
-        - cat_description: str
+        - category: Category
 
         ### Returns
         - [Category]: If the new category ID if inserted successfully
 
         - [None]: If the name was associated with another existing category
         '''
-        newCat = self._catagoryCRUD.createDataObject(
-            id=-1, # Unknown yet
-            category_name=cat_name,
-            description=cat_description
-        )
 
-        newID = self._catagoryCRUD.create(newCat)
+        newCat = self._catagoryCRUD.create(category)
 
-        if newID is None: # Name was not unique / DB failed
+        if newCat is None: # Name was not unique / DB failed
             return None
-        
-        newCat.id = newID
 
         return newCat
     
     def fetchAllCategories(self) -> list[str]:
         return self._catagoryCRUD.fetchAllCategoriesNames()
-
+    
+    def updateCategory(self, name: str, newCategory: Category) -> bool:
+        self._catagoryCRUD.update(name, newCategory)
+        return True
+        
     def deleteCategory(self, category: Category) -> None:
         '''
         ## Deletes an existing category given a category object.
@@ -65,10 +61,4 @@ class CategoryManager:
         ### Returns
         - [None]: if the category did not exist it will ignore, otherwise delete normally
         '''
-
-        catObj = self._catagoryCRUD.fetchByName(category_name)
-
-        if catObj is None:
-            return
-        
-        self._catagoryCRUD.delete(catObj.id)
+        self._catagoryCRUD.delete(category_name)

@@ -19,7 +19,7 @@ class TransactionModel(models.Model):
     )
     category = models.ForeignKey(
         CategoryModel,
-        on_delete=models.SET_DEFAULT,
+        on_delete=models.CASCADE,
         null=False,
         default='General',
         db_column='category_name',

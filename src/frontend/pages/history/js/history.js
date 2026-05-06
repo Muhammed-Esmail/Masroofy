@@ -36,6 +36,7 @@ async function deleteTransaction(id) {
     const response = await transactionAPI.request(`/delete_transaction/${id}/`, 'DELETE');
     if (response.success) alert('Transaction Deleted');
     fetchFullHistory();
+    fetchFullHistory();
 }
 
 let transactionCache = {};
