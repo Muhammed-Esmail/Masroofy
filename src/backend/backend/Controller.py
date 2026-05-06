@@ -6,7 +6,7 @@ from transaction.services import TransactionManager as _TransactionManager
 from history.services import HistoryManager as _HistoryManager
 from cycle.services.AllowanceManager import AllowanceManager as _AllowanceManager
 from insights.services.InsightsEngine import InsightsEngine 
-from dashboard.services import SettingsManager
+from userSettings.services import SettingsManager
 
 class Controller:
     _instance = None

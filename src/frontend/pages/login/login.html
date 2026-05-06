@@ -5,7 +5,7 @@
     {% load static %}
   </head>
   <body>
-    <form method="post" id="auth">
+    <form method="POST" id="auth">
       {% csrf_token %}
       <label for="Email">Email</label>
       <input type="text" name="Email" placeholder="Enter your Email" />
@@ -17,8 +17,7 @@
       <input type="password" name="password" placeholder="Enter your password" />
       <button type="submit">{% if needSignUp %}Create Account{% else %}Login{% endif %}</button>
     </form>
+    <script src="{% static 'js/auth.js' %}"></script>
+    <script src="{% static 'js/login.js' %}"></script>
   </body>
-
-  <script src="{% static 'js/auth.js' %}"></script>
-  <script src="{% static 'js/login.js' %}"></script>
 </html>
