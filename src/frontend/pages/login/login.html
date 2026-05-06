@@ -1,10 +1,9 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <title>{% if needSignUp %}SignUp page{% else %}Login page{% endif %}</title>
-    {% load static %}
-  </head>
-  <body>
+{% extends "pages/base/base.html" %}
+{% load static %}
+
+{% block title %}{% if needSignUp %}SignUp page{% else %}Login page{% endif %}{% endblock %}
+
+{% block content %}
     <form method="post" id="auth">
       {% csrf_token %}
       <label for="Email">Email</label>
@@ -17,8 +16,6 @@
       <input type="password" name="password" placeholder="Enter your password" />
       <button type="submit">{% if needSignUp %}Create Account{% else %}Login{% endif %}</button>
     </form>
-  </body>
-
-  <script src="{% static 'js/auth.js' %}"></script>
-  <script src="{% static 'js/login.js' %}"></script>
-</html>
+    <script src="{% static 'js/auth.js' %}"></script>
+    <script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

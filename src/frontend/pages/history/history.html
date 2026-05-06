@@ -1,8 +1,9 @@
+{% extends "pages/base/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head><title>History</title></head>
-<body>
+
+{% block title %}History{% endblock %}
+
+{% block content %}
   <h1>History</h1>
 
   <hr>
@@ -34,8 +35,8 @@
 
   <h2>Fetch Single Cycle</h2>
   <form id="form-fetch-cycle">
-      <label>Cycle ID: <input type="number" id="cycleIdSingle" required></label><br><br>
-      <button type="submit">Fetch Cycle</button>
+    <label>Cycle ID: <input type="number" id="cycleIdSingle" required></label><br><br>
+    <button type="submit">Fetch Cycle</button>
   </form>
   <div id="cycleResult"></div>
 
@@ -55,7 +56,6 @@
     <h3>Update Transaction #<span id="dialogTransactionId"></span></h3>
     <form id="update-form">
       <input type="hidden" id="updateId" name="id">
-
       <label>Amount:<br><input type="number" id="updateAmount" name="amount" step="1"></label><br><br>
       <label>Category:<br>
         <select id="updatecategoryName" name="category_name">
@@ -67,12 +67,10 @@
       <label>Log Date:<br><input type="date" id="updateLogDate" name="log_date"></label><br><br>
       <label>Description:<br><input type="text" id="updateDescription" name="description"></label><br><br>
       <label>Note:<br><textarea id="updateNote" name="note"></textarea></label><br><br>
-
       <button type="submit">Save Changes</button>
       <button type="button" id="btn-cancel-update">Cancel</button>
     </form>
   </dialog>
 
   <script type="module" src="{% static '/pages/history/js/history.js' %}"></script>
-</body>
-</html>
+{% endblock %}

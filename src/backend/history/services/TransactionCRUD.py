@@ -69,7 +69,10 @@ class TransactionCRUD(Fetchable[Transaction], Queryable[Transaction], CRUD[Trans
 
     def getTotalSpentInCycle(self, cycle_id):
         transactions = self.fetchByFilters(cycle_id=cycle_id)
-        return sum(t.amount for t in transactions)
+        if transactions:
+            return sum(t.amount for t in transactions)
+        else:
+            return 0
     
 
     def createDataObject(self, id: int, amount: int, cycle_id: int, category_name: str, log_date: date, description: str, note: str | None):
