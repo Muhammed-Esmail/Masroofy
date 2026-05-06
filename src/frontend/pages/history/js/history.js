@@ -30,11 +30,17 @@ async function updateTransaction(e) {
     } else {
         alert('Update failed: ' + JSON.stringify(response));
     }
+    if (response.state) {
+        alert(response.state);
+    }
 }
 
 async function deleteTransaction(id) {
     const response = await transactionAPI.request(`/delete_transaction/${id}/`, 'DELETE');
     if (response.success) alert('Transaction Deleted');
+    if (response.state) {
+        alert(response.state);
+    }
     fetchFullHistory();
     fetchFullHistory();
 }

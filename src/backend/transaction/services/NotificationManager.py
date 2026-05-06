@@ -5,6 +5,7 @@ from transaction.constants import BUDGET_THRESHOLD_ALERT, BUDGET_EXHAUSTED_ALERT
 
 class NotificationManager(Observer):
     _instance = None
+    _state = None
     
     def __new__(cls):
         if cls._instance is None:
@@ -18,9 +19,12 @@ class NotificationManager(Observer):
     def setController(self, controller):
         self.controller = controller
         self.historyManager = self.controller.getHistoryManager()
+        
+    def getCurrentState(self):
+        return self._state
     
     def triggerBudgetAlert(self, message: str):
-        print(message)
+        self._state = message
         
     @override
     def update(self):
@@ -32,3 +36,5 @@ class NotificationManager(Observer):
                 self.triggerBudgetAlert(BUDGET_EXHAUSTED_ALERT)
             elif (total_spent/total >= 0.8):
                 self.triggerBudgetAlert(BUDGET_THRESHOLD_ALERT)
+            else:
+                self.triggerBudgetAlert(None)
