@@ -1,5 +1,5 @@
-from dashboard.models import SettingsModel
-from dashboard.classes import Settings
+from userSettings.models import SettingsModel
+from userSettings.classes import Settings
 
 class SettingsManager():
     def addSettings(self, newSettings: Settings) -> bool:

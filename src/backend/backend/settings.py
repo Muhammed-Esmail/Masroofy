@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'history.apps.HistoryConfig',
     'dashboard.apps.DashboardConfig',
     'transaction.apps.TransactionConfig',
+    'userSettings.apps.UserSettingsConfig',
 ]
 
 MIDDLEWARE = [

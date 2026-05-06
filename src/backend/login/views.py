@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from .services.securityManager import securityManager 
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login 
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 import json
 
 User = get_user_model()
@@ -39,10 +41,15 @@ def Auth(request):
             return JsonResponse({"message": "Invalid JSON"}, status=400)
         securityM = securityManager()
         if not userExists:
-            newUser=securityM.createUser(username,email,password)
-            login(request, newUser)
-            request.session['username'] = newUser.username
-            return JsonResponse({"message": "Account created and logged in"}, status=200)
+            try:
+                validate_password(password)
+                newUser=securityM.createUser(username,email,password)
+                login(request, newUser)
+                request.session['username'] = newUser.username
+                return JsonResponse({"message": "Account created and logged in"}, status=200)
+            except ValidationError as error:
+                return JsonResponse({"message":"password is not valid", "errors":error.messages},status =400)
+            
         else: 
                 try:
                     user = User.objects.get(email=email.lower().strip())
