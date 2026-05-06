@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category Manager</title>
+</head>
+<body>
+
+    <section id="category-section">
+        <h2>Category Management</h2>
+
+        <h3>Add Category</h3>
+        <form id="add-category-form">
+            {% csrf_token %}
+            <label>Name:<br>
+                <input type="text" name="name" required>
+            </label><br><br>
+            <label>Description:<br>
+                <textarea name="description"></textarea>
+            </label><br><br>
+            <button type="submit">Add Category</button>
+        </form>
+
+        <hr>
+
+        <h3>Update Category</h3>
+        <form id="update-category-form">
+            {% csrf_token %}
+            <label>Category to Update:<br>
+                <select name="previous_category_name" required>
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </label><br><br>
+            <label>New Name:<br>
+                <input type="text" name="name" required>
+            </label><br><br>
+            <label>New Description:<br>
+                <textarea name="description"></textarea>
+            </label><br><br>
+            <button type="submit">Update Category</button>
+        </form>
+
+        <hr>
+
+        <h3>Delete Category</h3>
+        <form id="delete-category-form">
+            {% csrf_token %}
+            <label>Category to Delete:<br>
+                <select name="name" required>
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </label><br><br>
+            <button type="submit">Delete Category</button>
+        </form>
+
+    </section>
+
+    <script type="module" src="{% static '/pages/transaction/js/category.js' %}"></script>
+</body>
+</html>

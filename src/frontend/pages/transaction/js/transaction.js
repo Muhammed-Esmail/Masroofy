@@ -12,6 +12,10 @@ async function logTransaction(e) {
     } else {
         alert('Failed: ' + JSON.stringify(response));
     }
+
+    if (response.state) {
+        alert(response.state);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
