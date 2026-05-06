@@ -16,7 +16,7 @@ class CategoryCRUD(Fetchable[Category], CRUD[Category]):
     
     def fetchById(self, name: str) -> Category:
         category = CategoryModel.objects.get(name=name)
-        return self.createDataObject(category.category_name, category.description)
+        return self.createDataObject(category.name, category.description)
         
     def fetchAllCategoriesNames(self) -> list[str]:
         try:
@@ -25,32 +25,32 @@ class CategoryCRUD(Fetchable[Category], CRUD[Category]):
         
         except CategoryModel.DoesNotExist:
             return None
-    def create(self, newCategory: Category) -> Optional[int]:
+        
+    def create(self, newCategory: Category) -> Optional[str]:
         try:
             with transaction.atomic():
                 obj = CategoryModel.objects.create(
-                    category_name=newCategory.name,
+                    name=newCategory.name,
                     description=newCategory.description
                 )
-            return obj.id
+            return obj.name
         except IntegrityError:
             return None
 
-    def update(self, id: int, newCategory: Category):
-        CategoryModel.objects.filter(id=id).update(
-            category_name=newCategory.name,
+    def update(self, name: str, newCategory: Category) -> bool:
+        CategoryModel.objects.filter(name=name).update(
+            name=newCategory.name,
             description=newCategory.description
         )
         return True
 
-    def delete(self, id: int):
-        CategoryModel.objects.filter(id=id).delete()
+    def delete(self, name: str) -> bool:
+        CategoryModel.objects.filter(name=name).delete()
         return True
 
 
-    def createDataObject(self, id: int, category_name: str, description: str):
+    def createDataObject(self, category_name: str, description: str) -> Category:
         return Category(
-            id=id,
             name=category_name,
             description=description
         )
