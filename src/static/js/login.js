@@ -1,29 +1,29 @@
 (function () {
+  console.log("LOGIN JS LOADED");
   const form = document.getElementById("auth");
+  console.log("form element:", form);
   const auth = new AuthService();
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
+
     const Email = form.querySelector('input[name="Email"]');
     const Password = form.querySelector('input[name="password"]');
     const UserName = form.querySelector('input[name="userName"]');
-    if (!Email || !Password) {
-      console.error("Email or password input not found.");
-      return;
-    }
     const email = Email.value.trim();
     const password = Password.value;
     const userName = UserName ? UserName.value.trim() : null;
-    const submitBtn = form.querySelector('[type="submit"]');
-    try {
-      const result = await auth.authUser(email, userName, password);
-      if (result.status === "success") {
-        window.location.href = "/dashboard/";
+
+    const result = await auth.authUser(email, userName, password);
+
+    if (result.status === "success") {
+      window.location.href = "dashboard/";
+    } else {
+      if (result.errors && result.errors.length > 0) {
+        alert(result.errors.join("\n"));
       } else {
-        alert(result.message || "Please try again.");
+        alert(result.message || "Something went wrong.");
       }
-    } catch (err) {
-      console.error("unexpected error –", err);
-      alert("Please try again later.");
     }
   });
 })();
