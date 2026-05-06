@@ -7,19 +7,22 @@ from history.services import HistoryManager as _HistoryManager
 from cycle.services.AllowanceManager import AllowanceManager as _AllowanceManager
 from insights.services.InsightsEngine import InsightsEngine 
 from dashboard.services import SettingsManager
+from dashboard.services.DailyLimitCalculator import DailyLimitCalculator
+from expenses.services.expenseManager import ExpenseManager
 
 class Controller:
     _instance = None
 
     historyManager : _HistoryManager
     allowanceManager: _AllowanceManager
-    dailyLimitCalculator: Any
+    dailyLimitCalculator: DailyLimitCalculator
     insightsEngine: Any
     categoryManager: CategoryManager
     securityManager: Any
     transactionManager: _TransactionManager
     notificationManager: NotificationManager
     settingsManager: SettingsManager
+    expenseManager : ExpenseManager
 
     def __new__(cls):
         if cls._instance is None:
@@ -30,13 +33,14 @@ class Controller:
     def _initialize(self):
         self.historyManager = _HistoryManager()
         self.allowanceManager = _AllowanceManager()
-        self.dailyLimitCalculator = None  # replace with actual class
+        self.dailyLimitCalculator = DailyLimitCalculator()
         self.insightsEngine = InsightsEngine()       
         self.categoryManager = CategoryManager()
         self.securityManager = None       # replace with actual class
         self.transactionManager = _TransactionManager()
         self.notificationManager = NotificationManager()
         self.settingsManager = SettingsManager()
+        self.expenseManager = ExpenseManager()
         
 
         self.allowanceManager.setController(self)
@@ -61,3 +65,6 @@ class Controller:
     
     def getSettingsManager(self):
         return self.settingsManager
+    
+    def getExpenseManager(self):
+        return self.expenseManager
