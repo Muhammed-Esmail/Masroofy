@@ -1,13 +1,16 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .services.securityManager import securityManager 
-from .models import UserModel
+from django.contrib.auth import get_user_model
+from django.contrib.auth import login 
 import json
+
+User = get_user_model()
 
 
 # Create your views here
 def home(request):
-    userExists = UserModel.objects.exists()
+    userExists = User.objects.exists()
     context = {
         'needSignUp': not userExists
     }
@@ -22,7 +25,7 @@ def Auth(request):
     ### returns
     - A JSON response indicating success or failure, or the rendered login page on GET.
     '''
-    userExists = UserModel.objects.exists()
+    userExists = User.objects.exists()
     context = {
             'needSignUp': not userExists
         }
@@ -30,27 +33,27 @@ def Auth(request):
         try:
             data = json.loads(request.body)
             email = data.get('email')
-            name = data.get('username', 'user')
+            username = data.get('username', 'user')
             password = data.get('password')
         except json.JSONDecodeError:
             return JsonResponse({"message": "Invalid JSON"}, status=400)
         securityM = securityManager()
         if not userExists:
-            newUser=securityM.createUser(name,email,password)
-            request.session['userId'] = newUser.id
-            request.session['userName'] = newUser.name
+            newUser=securityM.createUser(username,email,password)
+            login(request, newUser)
+            request.session['username'] = newUser.username
             return JsonResponse({"message": "Account created and logged in"}, status=200)
         else: 
                 try:
-                    user = UserModel.objects.get(email=email.lower().strip())
+                    user = User.objects.get(email=email.lower().strip())
                     isValid = securityM.checkPassword(user, password)
                     if isValid:
-                        request.session['userId'] = user.id
-                        request.session['userName'] = user.name 
+                        login(request, user)
+                        request.session['username'] = user.username 
                         return JsonResponse({"message": "Logged in successfully"}, status=200)
                     else:
-                        return JsonResponse({"message": "Invalid email or password"}, status=400)
-                except UserModel.DoesNotExist:
+                        return JsonResponse({"message": "Invalid email or password55"}, status=400)
+                except User.DoesNotExist:
                     return JsonResponse({"message": "Invalid email or password"}, status=400)
         
                 
@@ -66,7 +69,4 @@ def verifySession(request):
     ### returns
     - A JSON response indicating whether the session is valid, including the username if so.
     '''
-    if 'userId' in request.session:
-        return JsonResponse({"message": "session is vaild","userName":request.session.get('userName')},status=200)
-    else:
-        return JsonResponse({"message": "no valid session"},status=400)
+    request.user.is_authenticated

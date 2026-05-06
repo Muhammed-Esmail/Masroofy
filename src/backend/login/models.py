@@ -1,10 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-class UserModel(models.Model):
-    password = models.TextField(max_length=100)
-    name = models.TextField(max_length=100)
-    email = models.TextField(max_length=100)
+class UserModel(AbstractUser):
+    username = models.CharField(
+        max_length=150, 
+        unique=True, 
+        default="user"
+        )
     current_cycle = models.ForeignKey(
         'cycle.CycleModel',
         on_delete=models.PROTECT,
@@ -14,3 +17,5 @@ class UserModel(models.Model):
 
     class Meta:
         db_table='User'
+    def __str__(self):
+        return self.name or self.username
