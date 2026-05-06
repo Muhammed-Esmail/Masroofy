@@ -68,7 +68,12 @@ def category_index(request):
 
 def add_category(request):
     category_obj = fetchAndBuildCategoryObject(request)
-    category_manager.addCategory(category_obj)
+    
+    res = category_manager.addCategory(category_obj)
+    
+    if res is None:
+        return JsonResponse({'success': False, 'description':'Category Name was Not Unique'})
+
     return JsonResponse({'success': True})
 
 def update_category(request):

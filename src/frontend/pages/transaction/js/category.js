@@ -4,32 +4,42 @@ const api = new API();
 api.setBase('/transaction');
 
 async function addCategory(e) {
+    e.preventDefault();
+
     const data = Object.fromEntries(new FormData(e.target).entries());
     const response = await api.request('/add_category/', 'POST', data);
     if (response.success) {
         alert('Category created!');
+                window.location.reload();
+
     } else {
-        alert('Failed: ' + JSON.stringify(response));
+        alert('Failed: ' + response.description);
     }
 }
 
 async function updateCategory(e) {
+    e.preventDefault();
+
     const data = Object.fromEntries(new FormData(e.target).entries());
     const response = await api.request('/update_category/', 'POST', data);
     if (response.success) {
         alert('Category updated!');
+        window.location.reload();
     } else {
-        alert('Failed: ' + JSON.stringify(response));
+        alert('Failed: ' + response.description);
     }
 }
 
-async function deleteCategory() {
+async function deleteCategory(e) {
+    e.preventDefault();
+
     const name = document.querySelector('#delete-category-form select[name="name"]').value;
     const response = await api.request(`/delete_category/${name}/`, 'DELETE');
     if (response.success) {
         alert('Category deleted!');
+        window.location.reload();
     } else {
-        alert('Failed: ' + JSON.stringify(response));
+        alert('Failed: ' + response.description);
     }
 }
 
