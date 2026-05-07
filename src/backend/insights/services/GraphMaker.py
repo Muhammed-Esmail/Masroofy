@@ -8,7 +8,7 @@ class GraphMaker(Insights):
     formatting the results into a structure easily consumable by charting components.
     """
 
-    def generate(self, transactions) -> list[dict[str, any]]:
+    def generate(self, transactions, amount) -> list[dict[str, any]]:
         """
         Transforms a list of transactions into an aggregated daily spending report.
 
@@ -29,7 +29,7 @@ class GraphMaker(Insights):
         daily_totals = {}
         for t in transactions:
             # Aggregate totals by date string key
-            date_str = str(t.date)
+            date_str = str(t.log_date)
             daily_totals[date_str] = daily_totals.get(date_str, 0.0) + float(t.amount)
             
         return [

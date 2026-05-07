@@ -103,3 +103,7 @@ class Controller:
     def getExpenseManager(self) -> ExpenseManager:
         """Returns the instance of the ExpenseManager."""
         return self.expenseManager
+    
+    def getDailyLimitCalculator(self) -> DailyLimitCalculator:
+        """Returns the instance of the DailyLimitCalculator"""
+        return self.dailyLimitCalculator

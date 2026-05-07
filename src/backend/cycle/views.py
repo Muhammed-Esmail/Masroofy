@@ -24,3 +24,10 @@ def startCycle(request):
         return redirect('/dashboard/')
     
     return HttpResponse('Invalid Method', status=405)
+
+def resetCycle(request):
+    if request.method == 'POST': 
+        allowanceManager = AllowanceManager()
+        allowanceManager.resetCycle()
+        return redirect('/dashboard/')
+    return HttpResponse('Invalid Method', status=405)

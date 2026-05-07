@@ -43,6 +43,11 @@
         </button>
     </form>
 
+    <form method="POST" action="reset_cycle/">
+        {% csrf_token %}
+        <button type="submit">Reset Cycle</button>
+    </form>
+
     <p align="center">
         <small>By starting, you agree to our <a href="#">Terms of usage</a>.</small>
     </p>

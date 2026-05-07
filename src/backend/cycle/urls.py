@@ -5,4 +5,5 @@ app_name='cycle'
 urlpatterns = [
     path('', views.index, name='welcome'),
     path('start_cycle/', views.startCycle, name='start_cycle'),
+    path('reset_cycle/', views.resetCycle, name = 'resetCycle'),
 ]
