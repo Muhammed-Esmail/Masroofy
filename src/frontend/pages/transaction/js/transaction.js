@@ -7,7 +7,7 @@ async function logTransaction(e) {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.target).entries());
     const response = await api.request('/log_transaction/', 'POST', data);
-    if (response.success) {
+    if (response.ok) {
         alert('Transaction logged!');
     } else {
         alert('Failed: ' + JSON.stringify(response));
