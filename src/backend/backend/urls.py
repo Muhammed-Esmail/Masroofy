@@ -23,5 +23,6 @@ urlpatterns = [
     path('history/', include('history.urls')),
     path('cycle/', include('cycle.urls')),
     path('transaction/', include('transaction.urls')),
-    path('expenses/', include('expenses.urls')),
+    path('dashboard/', include('dashboard.urls')),
+    path('userSettings/', include('userSettings.urls'))
 ]

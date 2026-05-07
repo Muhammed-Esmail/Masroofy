@@ -1,8 +1,11 @@
 from django.contrib.auth.hashers import make_password, check_password
-from ..models import UserModel
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 
 class securityManager():
-    def hashPaaword(self,password):
+    
+    def hashPassword(self,password):
         '''
         Hashes a plain-text password using Django's make_password utility.
  
@@ -14,47 +17,47 @@ class securityManager():
         '''
         hased = make_password(password)
         return hased
-    def SetPassowrd(self,user,password):
+    def SetPassword(self,user,password):
         '''
-        Hashes and sets the password on a user object, then saves it to the database.
+        Hashes and sets the password on a User object, then saves it to the database.
  
         ### parameters
-        - user: The user instance to update.
+        - User: The User instance to update.
         - password: The password
  
         ### returns
-        - The updated user instance.
+        - The updated User instance.
         '''
-        hashed = self.hashPaaword(password)
+        hashed = self.hashPassword(password)
         user.password = hashed
         user.save()
         return user
-    def createUser(self,name,email,password):
+    def createUser(self,username,email,password):
         '''
-        Creates and persists a new user with a hashed password.
+        Creates and persists a new User with a hashed password.
  
         ### parameters
-        - name: The display name of the new user.
-        - email: The email address of the new user.
+        - username: The display username of the new User.
+        - email: The email address of the new User.
         - password: the password.
  
         ### returns
-        - The newly created user instance.
+        - The newly created User instance.
         '''
         userEamil = email.lower().strip()
-        userName = name.strip()
-        newUser =UserModel(
-            name = userName,
+        userName = username.strip()
+        newUser =User(
+            username = userName,
             email= userEamil
         )
-        self.SetPassowrd(newUser,password)
+        self.SetPassword(newUser,password)
         return newUser
     def checkPassword(self,user,Password):
         '''
-        Checks whether a given plain-text password matches the user's stored hashed password.
+        Checks whether a given plain-text password matches the User's stored hashed password.
  
         ### parameters
-        - user: The user instance to check against.
+        - User: The User instance to check against.
         - Password: the password
  
         ### returns
@@ -67,21 +70,21 @@ class securityManager():
         else:
             return False
         
-    def upadtePassword(self,User,oldPassword,newPassword):
+    def updatePassword(self,user,oldPassword,newPassword):
         '''
         Check if the old password is true and then updates it
 
         ### parameters
-        - User: The user instance whose password is being updated.
+        - User: The User instance whose password is being updated.
         - oldPassword: The current password to verify.
         - newPassword: The new password to set.
  
         ### returns
         - None on success, False if the old password is incorrect.
         '''
-        isSame = self.checkPassword(User,oldPassword)
+        isSame = self.checkPassword(user,oldPassword)
         if isSame:
-            self.SetPassowrd(User, newPassword)
+            self.SetPassword(user, newPassword)
         else:
             return False
 
