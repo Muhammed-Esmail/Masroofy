@@ -7,7 +7,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 import json
 from django.views.decorators.cache import never_cache
-
+from userSettings.services.SettingsManager import SettingsManager
 User = get_user_model()
 
 
@@ -16,7 +16,8 @@ User = get_user_model()
 def home(request):
     userExists = User.objects.exists()
     context = {
-        'needSignUp': not userExists
+        'needSignUp': not userExists,
+        'settings': SettingsManager().fetchSettings(),
     }
     return render(request, 'pages/login/login.html', context)
 def Auth(request):
@@ -31,8 +32,9 @@ def Auth(request):
     '''
     userExists = User.objects.exists()
     context = {
-            'needSignUp': not userExists
-        }
+        'needSignUp': not userExists,
+        'settings': SettingsManager().fetchSettings(),
+    }
     if request.method == 'POST':
         try:
             data = json.loads(request.body)

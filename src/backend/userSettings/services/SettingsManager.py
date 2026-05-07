@@ -23,8 +23,6 @@ class SettingsManager():
         """
         SettingsModel.objects.create(
             currency=newSettings.currency,
-            cycle_duration=newSettings.cycle_duration,
-            budget_threshold=newSettings.budget_threshold,
             language=newSettings.language,
             theme=newSettings.theme
         )
@@ -47,8 +45,6 @@ class SettingsManager():
         settings = SettingsModel.objects.get(id=1)
         return self.createDataObject(
             settings.currency, 
-            settings.cycle_duration, 
-            settings.budget_threshold, 
             settings.language, 
             settings.theme
         )
@@ -65,8 +61,6 @@ class SettingsManager():
         """
         SettingsModel.objects.filter(id=1).update(
             currency=newSettings.currency,
-            cycle_duration=newSettings.cycle_duration,
-            budget_threshold=newSettings.budget_threshold,
             language=newSettings.language,
             theme=newSettings.theme
         )
@@ -75,8 +69,6 @@ class SettingsManager():
     def createDataObject(
         self, 
         currency: str, 
-        cycle_duration: int, 
-        budget_threshold: int, 
         language: str, 
         theme: str
     ) -> Settings: 
@@ -85,8 +77,6 @@ class SettingsManager():
 
         Args:
             currency (str): The chosen currency symbol or code.
-            cycle_duration (int): Length of the budget cycle in days.
-            budget_threshold (int): Percentage at which to trigger alerts.
             language (str): User's preferred UI language.
             theme (str): UI theme identifier (e.g., 'Dark', 'Light').
 
@@ -95,8 +85,6 @@ class SettingsManager():
         """
         return Settings(
             currency=currency,
-            cycle_duration=cycle_duration,
-            budget_threshold=budget_threshold,
             language=language,
             theme=theme
         )

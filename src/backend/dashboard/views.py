@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from backend.Controller import Controller
 from datetime import date
 from cycle.services.AllowanceManager import NoCycleException
+from userSettings.services.SettingsManager import SettingsManager
 import json
 # Create your views here.
 def home(request):
@@ -50,6 +51,7 @@ def home(request):
         'pieData': pieData,
         'donutData': donutData,
         'graphData': graphData,
+        'settings':SettingsManager().fetchSettings(),
     }
     context['title'] = 'Dashboard'
     return render(request, 'pages/dashboard/dashboard.html',context)

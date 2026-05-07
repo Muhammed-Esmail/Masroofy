@@ -3,6 +3,7 @@ from backend.Controller import Controller
 from history.services import HistoryManager
 from django.http import HttpResponse, JsonResponse
 from transaction.services import CategoryManager
+from userSettings.services.SettingsManager import SettingsManager
 
 controller: Controller = Controller()
 historyManager: HistoryManager = controller.getHistoryManager()
@@ -11,7 +12,8 @@ categoryManager: CategoryManager = controller.getCategoryManager()
 def index(request):
     categories = categoryManager.fetchAllCategories()
     context = {
-        "categories": categories
+        "categories": categories,
+        'settings': SettingsManager().fetchSettings(),
     }
     return render(request, 'pages/history/history.html', context)
 
