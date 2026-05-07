@@ -29,7 +29,7 @@ class GraphMaker(Insights):
         daily_totals = {}
         for t in transactions:
             # Aggregate totals by date string key
-            date_str = str(t.date)
+            date_str = str(t.log_date)
             daily_totals[date_str] = daily_totals.get(date_str, 0.0) + float(t.amount)
             
         return [

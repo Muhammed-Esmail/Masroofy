@@ -21,7 +21,7 @@ class PieMaker(Insights):
 
         totals = {}
         for t in transactions:
-            cat_name = t.category.name if t.category else "Other"
+            cat_name = t.category_name if t.category_name else "Other"
             totals[cat_name] = totals.get(cat_name, 0.0) + float(t.amount)
             
         categories_list = []

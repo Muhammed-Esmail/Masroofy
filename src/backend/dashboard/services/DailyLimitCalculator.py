@@ -2,7 +2,7 @@ from datetime import timedelta
 
 class DailyLimitCalculator:
 
-    def getMoneySpent(transactions, cycle):
+    def getMoneySpent(self, transactions, cycle):
         '''
         ##Calculates total spent DURING this current cycle
 
@@ -19,7 +19,7 @@ class DailyLimitCalculator:
         ]
         return sum(t.amount for t in valid_transactions)
 
-    def getDaysLeft(currentDate, cycle):
+    def getDaysLeft(self, currentDate, cycle):
         '''
         ## counts number of days left in current cycle (Including today)
 
@@ -34,7 +34,7 @@ class DailyLimitCalculator:
         days = delta.days + 1
         return max(1, days)
 
-    def getProjectedSpending(expenses, currentDate, cycle):
+    def getProjectedSpending(self, expenses, currentDate, cycle):
         '''
         ## calculates how much the user has to spend to cover his expenses in this current cycle
 
@@ -64,11 +64,11 @@ class DailyLimitCalculator:
                     occurrences += 1
                 elif expense.frequency == 'WEEKLY' and weekdayMap[checkDate.weekday()] in expense.days_of_week:
                     occurrences += 1
-            total += (expense.amount * occurrences)
+            total += (float(expense.amount) * occurrences)
 
         return total
 
-    def calculate_daily_limit(currentDate, transactions, cycle, expenses):
+    def calculateDailyLimit(self, currentDate, transactions, cycle, expenses):
         '''
         ## main daily limit calculate function. calls other class functions and calculates the limit.
 
@@ -82,13 +82,14 @@ class DailyLimitCalculator:
         - float
         '''
         money_in_cycle = cycle.amount 
-        
         # Pass the cycle into our helper methods so they can do the filtering
-        money_spent = DailyLimitCalculator.get_money_spent(transactions, cycle)
-        days_left = DailyLimitCalculator.get_days_left(currentDate, cycle)
-        projected_spending = DailyLimitCalculator.get_projected_spending(expenses, currentDate, cycle)
+        money_spent = self.getMoneySpent(transactions, cycle)
+        days_left = self.getDaysLeft(currentDate, cycle)
+        projected_spending = self.getProjectedSpending(expenses, currentDate, cycle)
+        print("money", projected_spending)
 
-        remaining_money = money_in_cycle - money_spent - projected_spending
+        remaining_money = money_in_cycle - money_spent 
+        remaining_money -= projected_spending
         
         daily_limit = remaining_money / days_left
 
