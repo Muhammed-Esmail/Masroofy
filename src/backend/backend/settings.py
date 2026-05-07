@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'transaction.apps.TransactionConfig',
     'userSettings.apps.UserSettingsConfig',
+    'expenses.apps.ExpensesConfig',
+    'insights.apps.InsightsConfig',
 ]
 
 MIDDLEWARE = [

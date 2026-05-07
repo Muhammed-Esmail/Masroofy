@@ -1,1 +1,1 @@
-from .SettingsManager import SettingsManager
+from .DailyLimitCalculator import DailyLimitCalculator
