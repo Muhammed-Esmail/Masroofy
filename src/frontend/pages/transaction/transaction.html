@@ -1,11 +1,9 @@
+{% extends "pages/base/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Transaction Manager</title>
-</head>
-<body>
+
+{% block title %}Transaction Manager{% endblock %}
+
+{% block content %}
 
     <h1>Transaction Management</h1>
 
@@ -41,5 +39,4 @@
         </form>
     </section>
     <script type="module" src="{% static '/pages/transaction/js/transaction.js' %}"></script>
-</body>
-</html>
+{% endblock %}

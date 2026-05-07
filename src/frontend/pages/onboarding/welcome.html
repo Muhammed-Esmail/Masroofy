@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome to Masroofy</title>
-</head>
-<body>
+{% extends "pages/base/base.html" %}
+{% load static %}
+
+{% block title %}Welcome to Masroofy{% endblock %}
+
+{% block content %}
 
     <h1>Welcome to Masroofy</h1>
     <p>Let’s set up your financial oasis for this cycle. High-end budgeting, made for students.</p>
@@ -48,5 +48,4 @@
     </p>
 
     <script src="/static/pages/onboarding/js/onboarding.js"></script>
-</body>
-</html>
+{% endblock %}

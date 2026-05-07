@@ -9,6 +9,7 @@ from insights.services.InsightsEngine import InsightsEngine
 from dashboard.services import SettingsManager
 from dashboard.services.DailyLimitCalculator import DailyLimitCalculator
 from expenses.services.expenseManager import ExpenseManager
+from userSettings.services import SettingsManager
 
 class Controller:
     _instance = None

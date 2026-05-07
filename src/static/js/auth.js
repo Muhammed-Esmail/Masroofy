@@ -13,14 +13,16 @@ class AuthService {
         body: JSON.stringify({ email: Email, username: userName, password: password }),
       });
       const data = await response.json();
+      console.log("data:", data);
+
       if (response.ok) {
         return { status: "success", data: data };
       } else {
-        return { status: "error", message: "Failed to auth the user" };
+        return { status: "error", message: data.message, errors: data.errors || [] };
       }
     } catch (error) {
-      console.error("error", error);
-      return { status: "error", message: "unkown error" };
+      console.error("CATCH ERROR:", error);
+      return { status: "error", message: "unknown error", errors: [] };
     }
   }
   async verifySession() {

@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'history.apps.HistoryConfig',
     'dashboard.apps.DashboardConfig',
     'transaction.apps.TransactionConfig',
-    'expenses',
+    'userSettings.apps.UserSettingsConfig',
 ]
 
 MIDDLEWARE = [
@@ -105,6 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'login.UserModel'
 
 
 # Internationalization
