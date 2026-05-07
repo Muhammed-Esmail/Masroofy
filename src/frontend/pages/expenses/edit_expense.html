@@ -1,0 +1,85 @@
+{% extends "pages/base/base.html" %}
+{% load static %}
+
+{% block title %}Edit Expense{% endblock %}
+
+{% block content %}
+
+    <h2>Edit Expense: {{ expense.name }}</h2>
+    
+    <form method="POST" action="{% url 'expense-update' expense.id %}">
+        {% csrf_token %}
+        
+        <p>
+            <label>Expense Name:</label><br>
+            <input type="text" name="name" value="{{ expense.name }}" required>
+        </p>
+
+        <p>
+            <label>Amount ($):</label><br>
+            <input type="number" name="amount" value="{{ expense.amount }}" step="0.01" required>
+        </p>
+
+        <p>
+            <label>Frequency:</label><br>
+            <select name="frequency" id="id_frequency">
+                <option value="MONTHLY" {% if expense.frequency == 'MONTHLY' %}selected{% endif %}>Specific Dates of the Month</option>
+                <option value="WEEKLY" {% if expense.frequency == 'WEEKLY' %}selected{% endif %}>Specific Days of the Week</option>
+            </select>
+        </p>
+
+        <p id="monthly_fields" class="{% if expense.frequency == 'WEEKLY' %}hidden{% endif %}">
+            <label>Select Days of the Month:</label><br>
+            <span id="month_days_container"></span>
+        </p>
+
+        <p id="weekly_fields" class="{% if expense.frequency == 'MONTHLY' %}hidden{% endif %}">
+            <label>Select Days of the Week:</label><br>
+            <label><input type="checkbox" name="weekly_days_input" value="SUN" {% if 'SUN' in expense.days_of_week %}checked{% endif %}> SUN</label>
+            <label><input type="checkbox" name="weekly_days_input" value="MON" {% if 'MON' in expense.days_of_week %}checked{% endif %}> MON</label>
+            <label><input type="checkbox" name="weekly_days_input" value="TUE" {% if 'TUE' in expense.days_of_week %}checked{% endif %}> TUE</label>
+            <label><input type="checkbox" name="weekly_days_input" value="WED" {% if 'WED' in expense.days_of_week %}checked{% endif %}> WED</label>
+            <label><input type="checkbox" name="weekly_days_input" value="THU" {% if 'THU' in expense.days_of_week %}checked{% endif %}> THU</label>
+            <label><input type="checkbox" name="weekly_days_input" value="FRI" {% if 'FRI' in expense.days_of_week %}checked{% endif %}> FRI</label>
+            <label><input type="checkbox" name="weekly_days_input" value="SAT" {% if 'SAT' in expense.days_of_week %}checked{% endif %}> SAT</label>
+        </p>
+
+        <button type="submit">Update Expense</button>
+        <a href="{% url 'expense-list' %}">Cancel</a>
+    </form>
+
+    {{ expense.days_of_month|default:"[]"|json_script:"saved-days" }}
+
+    <script>
+        const monthContainer = document.getElementById('month_days_container');
+        const savedMonthlyDays = JSON.parse(document.getElementById('saved-days').textContent);
+
+        for (let i = 1; i <= 31; i++) {
+            const label = document.createElement('label');
+            const isChecked = savedMonthlyDays.includes(i) ? 'checked' : '';
+            
+            label.innerHTML = `<input type="checkbox" name="monthly_days_input" value="${i}" ${isChecked}> ${i} `;
+            monthContainer.appendChild(label);
+            
+            if (i % 7 === 0) {
+                monthContainer.appendChild(document.createElement('br'));
+            }
+        }
+
+        const frequencySelect = document.getElementById('id_frequency');
+        const monthlyFields = document.getElementById('monthly_fields');
+        const weeklyFields = document.getElementById('weekly_fields');
+
+        function toggleFields() {
+            if (frequencySelect.value === 'MONTHLY') {
+                monthlyFields.classList.remove('hidden');
+                weeklyFields.classList.add('hidden');
+            } else {
+                monthlyFields.classList.add('hidden');
+                weeklyFields.classList.remove('hidden');
+            }
+        }
+
+        frequencySelect.addEventListener('change', toggleFields);
+    </script>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "pages/base/base.html" %}
+{% load static %}
+
+{% block title %}History{% endblock %}
+
+{% block content %}
+  <h1>History</h1>
+
+  <hr>
+
+  <h2>Full History</h2>
+  <button id="btn-full-history">Fetch All Transactions</button>
+  <ul id="fullHistoryResult"></ul>
+
+  <hr>
+
+  <h2>Filtered History</h2>
+  <form id="form-filtered">
+    <label>Start Date (optional): <input type="date" id="startDate"></label><br><br>
+    <label>End Date (optional): <input type="date" id="endDate"></label><br><br>
+    <label>Category (optional):
+      <select id="categoryName">
+        <option value=""></option>
+        {% for category in categories %}
+          <option value="{{ category }}">{{ category }}</option>
+        {% endfor %}
+      </select>
+    </label><br><br>
+    <label>Cycle ID (optional): <input type="number" id="cycleId"></label><br><br>
+    <button type="submit">Fetch Filtered</button>
+  </form>
+  <ul id="filteredResult"></ul>
+
+  <hr>
+
+  <h2>Fetch Single Cycle</h2>
+  <form id="form-fetch-cycle">
+    <label>Cycle ID: <input type="number" id="cycleIdSingle" required></label><br><br>
+    <button type="submit">Fetch Cycle</button>
+  </form>
+  <div id="cycleResult"></div>
+
+  <hr>
+
+  <h2>Get Active Cycle ID</h2>
+  <button id="btn-active-cycle-id">Get ID</button>
+  <pre id="activeCycleId"></pre>
+
+  <hr>
+
+  <h2>Total Spent in Active Cycle</h2>
+  <button id="btn-total-spent">Get Total</button>
+  <pre id="totalSpentResult"></pre>
+
+  <dialog id="updateDialog">
+    <h3>Update Transaction #<span id="dialogTransactionId"></span></h3>
+    <form id="update-form">
+      <input type="hidden" id="updateId" name="id">
+      <label>Amount:<br><input type="number" id="updateAmount" name="amount" step="1"></label><br><br>
+      <label>Category:<br>
+        <select id="updatecategoryName" name="category_name">
+          {% for category in categories %}
+            <option value="{{ category }}">{{ category }}</option>
+          {% endfor %}
+        </select>
+      </label><br><br>
+      <label>Log Date:<br><input type="date" id="updateLogDate" name="log_date"></label><br><br>
+      <label>Description:<br><input type="text" id="updateDescription" name="description"></label><br><br>
+      <label>Note:<br><textarea id="updateNote" name="note"></textarea></label><br><br>
+      <button type="submit">Save Changes</button>
+      <button type="button" id="btn-cancel-update">Cancel</button>
+    </form>
+  </dialog>
+
+  <script type="module" src="{% static '/pages/history/js/history.js' %}"></script>
+{% endblock %}

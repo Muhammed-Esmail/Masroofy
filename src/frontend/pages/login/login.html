@@ -1,0 +1,17 @@
+{% extends "pages/base/base.html" %} {% load static %} {% block title %}{% if needSignUp %}SignUp page{% else %}Login
+page{% endif %}{% endblock %} {% block content %}
+<form method="post" id="auth">
+  {% csrf_token %}
+  <label for="Email">Email</label>
+  <input type="text" name="Email" placeholder="Enter your Email" />
+  {% if needSignUp %}
+  <label for="userName">userName</label>
+  <input type="text" name="userName" placeholder="Enter your userName" />
+  {% endif %}
+  <label for="password">Password</label>
+  <input type="password" name="password" placeholder="Enter your password" />
+  <button type="submit">{% if needSignUp %}Create Account{% else %}Login{% endif %}</button>
+</form>
+<script type="module" src="{% static 'js/auth.js' %}"></script>
+<script type="module" src="{% static 'js/login.js' %}"></script>
+{% endblock %}
