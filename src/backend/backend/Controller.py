@@ -22,7 +22,6 @@ class Controller:
         historyManager (_HistoryManager): Handles record-keeping of past actions.
         allowanceManager (_AllowanceManager): Manages budget cycles and limits.
         dailyLimitCalculator (DailyLimitCalculator): Logic for calculating spending caps.
-        insightsEngine (InsightsEngine): Processes data to generate financial trends.
         categoryManager (CategoryManager): Manages transaction classification.
         securityManager (Any): Placeholder for authentication/authorization logic.
         transactionManager (_TransactionManager): Core logic for processing transactions.
@@ -35,9 +34,7 @@ class Controller:
     historyManager : _HistoryManager
     allowanceManager: _AllowanceManager
     dailyLimitCalculator: DailyLimitCalculator
-    insightsEngine: Any
     categoryManager: CategoryManager
-    securityManager: Any
     transactionManager: _TransactionManager
     notificationManager: NotificationManager
     settingsManager: SettingsManager
@@ -60,9 +57,7 @@ class Controller:
         self.historyManager = _HistoryManager()
         self.allowanceManager = _AllowanceManager()
         self.dailyLimitCalculator = DailyLimitCalculator()
-        self.insightsEngine = InsightsEngine()       
         self.categoryManager = CategoryManager()
-        self.securityManager = None       # replace with actual class
         self.transactionManager = _TransactionManager()
         self.notificationManager = NotificationManager()
         self.settingsManager = SettingsManager()
