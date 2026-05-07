@@ -8,7 +8,7 @@ class GraphMaker(Insights):
     formatting the results into a structure easily consumable by charting components.
     """
 
-    def generate(self, transactions) -> list[dict[str, any]]:
+    def generate(self, transactions, amount) -> list[dict[str, any]]:
         """
         Transforms a list of transactions into an aggregated daily spending report.
 

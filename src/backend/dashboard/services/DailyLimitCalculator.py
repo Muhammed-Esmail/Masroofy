@@ -86,7 +86,7 @@ class DailyLimitCalculator:
         money_spent = self.getMoneySpent(transactions, cycle)
         days_left = self.getDaysLeft(currentDate, cycle)
         projected_spending = self.getProjectedSpending(expenses, currentDate, cycle)
-        print("money", projected_spending)
+
 
         remaining_money = money_in_cycle - money_spent 
         remaining_money -= projected_spending

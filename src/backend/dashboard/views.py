@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from backend.Controller import Controller
 from datetime import date
-from cycle.services.AllowanceManager import AllowanceManager, NoCycleException
-
+from cycle.services.AllowanceManager import NoCycleException
+import json
 # Create your views here.
 def home(request):
     controller = Controller()
@@ -12,13 +12,13 @@ def home(request):
     except NoCycleException:
         return redirect('/cycle/')
 
-    historyManager = controller.getHistoryManager();
+    historyManager = controller.getHistoryManager()
 
     transactions = historyManager.fetchFullHistory(currentOnly=True)
     expenses = controller.getExpenseManager().getAllExpenses()
     categoryNames = controller.getCategoryManager().fetchAllCategories()
     totalSpent = historyManager.getTotalSpentInActiveCycle()
-    cycleRemaining = cycle.amount - totalSpent 
+    cycleRemaining = max(0, cycle.amount - totalSpent)
     recentTransactions = sorted(transactions, key=lambda t : t.log_date, reverse = True)[:5]
     today = date.today()
 
@@ -33,6 +33,11 @@ def home(request):
         for name in categoryNames
     ]
 
+    insightsEngine = controller.insightsEngine
+    pieData = json.dumps(insightsEngine.generate_chart('pie', transactions, cycle.amount))
+    donutData = json.dumps(insightsEngine.generate_chart('donut', transactions, cycle.amount))
+    graphData = json.dumps(insightsEngine.generate_chart('graph', transactions, cycle.amount))
+
     context={
         'cycle': cycle,
         'dailyLimit': dailyLimit,
@@ -41,6 +46,10 @@ def home(request):
         'cycleRemaining': cycleRemaining,
         'recentTransactions': recentTransactions,
         'categoryBreakdown': categoryBreakdown,
+
+        'pieData': pieData,
+        'donutData': donutData,
+        'graphData': graphData,
     }
     context['title'] = 'Dashboard'
     return render(request, 'pages/dashboard/dashboard.html',context)

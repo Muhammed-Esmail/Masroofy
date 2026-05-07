@@ -1,7 +1,7 @@
 from .Insights import Insights
 
 class PieMaker(Insights):
-    def generate(self, transactions):
+    def generate(self, transactions, amount):
         '''
         ## Processes transactions to calculate spending percentages per category for a pie chart.
         

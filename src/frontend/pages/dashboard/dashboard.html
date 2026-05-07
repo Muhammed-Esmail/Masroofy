@@ -3,6 +3,8 @@
 {% block title %}Dashboard{% endblock %}
 {% block content %}
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <h1>Dashboard</h1>
 
 <div>
@@ -11,7 +13,6 @@
   <p>End: {{ cycle.endDate }}</p>
   <p>Allowance: {{ cycle.amount }}</p>
 </div>
-
 
 <div>
   <h2>Daily Limit</h2>
@@ -76,5 +77,65 @@
     </tbody>
   </table>
 </div>
+
+<!-- I'm using chart.js to handle this -->
+
+  <div style="display: flex; gap: 20px; align-items: flex-start;">
+  <div>
+    <h2>Spending by Category</h2>
+    <canvas id="pieChart" width="300" height="300"></canvas>
+  </div>
+
+  <div>
+    <h2>Spent vs Unspent</h2>
+   <canvas id="donutChart" width="300" height="300"></canvas>
+  </div>
+
+  <div>
+    <h2>Daily Spending</h2>
+   <canvas id="graphChart" width="300" height="300"></canvas>
+  </div>
+
+  </div>
+
+  <script type="application/json" id="pie-data" >{{ pieData|safe }}</script>
+  <script type="application/json" id="donut-data">{{ donutData|safe }}</script>
+  <script type="application/json" id="graph-data">{{ graphData|safe }}</script>
+
+<script>
+  const pieData = JSON.parse(document.getElementById('pie-data').textContent);
+  const donutData = JSON.parse(document.getElementById('donut-data').textContent);
+  const graphData = JSON.parse(document.getElementById('graph-data').textContent);
+
+  new Chart(document.getElementById('pieChart'), {
+    type: 'pie',
+    data: {
+      labels: pieData.categories,
+      datasets: [{ data: pieData.percentages }]
+    },
+    options: { responsive: false, maintainAspectRatio: false }
+  });
+
+  new Chart(document.getElementById('donutChart'), {
+    type: 'doughnut',
+    data: {
+      labels: donutData.categories,
+      datasets: [{ data: donutData.values }]
+    },
+    options: { responsive: false, maintainAspectRatio: false }
+  });
+
+  new Chart(document.getElementById('graphChart'), {
+    type: 'line',
+    data: {
+      labels: graphData.map(p => p.date),
+      datasets: [{
+        label: 'Daily Spending',
+        data: graphData.map(p => p.amount)
+      }]
+    },
+    options: { responsive: false, maintainAspectRatio: false }
+  });
+</script>
 
 {% endblock %}
