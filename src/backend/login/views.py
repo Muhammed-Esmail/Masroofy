@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import JsonResponse
 from .services.securityManager import securityManager 
 from django.contrib.auth import get_user_model
@@ -6,11 +6,13 @@ from django.contrib.auth import login
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 import json
+from django.views.decorators.cache import never_cache
 
 User = get_user_model()
 
 
 # Create your views here
+@never_cache
 def home(request):
     userExists = User.objects.exists()
     context = {
@@ -51,29 +53,17 @@ def Auth(request):
                 return JsonResponse({"message":"password is not valid", "errors":error.messages},status =400)
             
         else: 
-                try:
-                    user = User.objects.get(email=email.lower().strip())
-                    isValid = securityM.checkPassword(user, password)
-                    if isValid:
-                        login(request, user)
-                        request.session['username'] = user.username 
-                        return JsonResponse({"message": "Logged in successfully"}, status=200)
-                    else:
-                        return JsonResponse({"message": "Invalid email or password55"}, status=400)
-                except User.DoesNotExist:
-                    return JsonResponse({"message": "Invalid email or password"}, status=400)
-        
+            try:
+                user = User.objects.get(email=email.lower().strip())
+                isValid = securityM.checkPassword(user, password)
+                if isValid:
+                    login(request, user)
+                    request.session['username'] = user.username 
+                    return JsonResponse({"message": "Logged in successfully"}, status=200)
+                else:
+                    return JsonResponse({"message": "Invalid email or password55"}, status=400)
+            except User.DoesNotExist:
+                return JsonResponse({"message": "Invalid email or password"}, status=400)
+    
                 
     return render(request, 'pages/login/login.html',context)
-
-def verifySession(request):
-    '''
-    check if the user has an active session
-    
-    ### parameters
-    - request: The incoming HTTP request.
- 
-    ### returns
-    - A JSON response indicating whether the session is valid, including the username if so.
-    '''
-    request.user.is_authenticated
