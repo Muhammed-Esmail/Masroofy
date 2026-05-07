@@ -15,54 +15,56 @@ export class API {
   }
 
   setToken(token) {
-    localStorage.setItem("authToken", token);
+    const expires = new Date();
+    expires.setDate(expires.getDate() + 7); // last for 7 days
+    document.cookie = `authToken=${token}; expires=${expires.toUTCString()}; path=/; SameSite=Strict`;
   }
 
   getToken() {
-    return localStorage.getItem("authToken");
+    const cookie = document.cookie.split(";").find((c) => c.trim().startsWith("authToken="));
+    return cookie ? cookie.split("=")[1] : null;
   }
 
   clearToken() {
-    localStorage.removeItem("authToken");
+    document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
 
   async request(url, method = "GET", body = null) {
     const fullUrl = `${this.getBase()}${url}`;
+    const token = this.getToken();
 
-    async request(url, method = 'GET', body = null) {
-        const fullUrl = `${this.BASE}${url}`;
+    const opts = {
+      method,
+      credentials: "include", // Enable sending/receiving cookies
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": this.getCsrf(),
+        ...(token && { Authorization: `Token ${token}` }),
+      },
+    };
 
-        const opts = {
-            method,
-            credentials: 'include', // Enable sending/receiving cookies
-            headers: { 
-                'Content-Type': 'application/json', 
-                'X-CSRFToken': this.getCsrf() 
-            },
-        };
+    if (body) opts.body = JSON.stringify(body);
 
-        if (body) opts.body = JSON.stringify(body);
+    try {
+      const res = await fetch(fullUrl, opts);
+      const text = await res.text();
 
-        try {
-            const res = await fetch(fullUrl, opts);
-            const text = await res.text();
-            
-            // Handle empty responses or non-JSON gracefully
-            let data;
-            try { 
-                data = text ? JSON.parse(text) : {}; 
-            } catch { 
-                data = text; 
-            }
+      // Handle empty responses or non-JSON gracefully
+      let data;
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch {
+        data = text;
+      }
 
-            return { 
-                ok: res.ok, 
-                status: res.status, 
-                data: data 
-            };
-        } catch (error) {
-            console.error("Network/Fetch Error:", error);
-            throw error;
-        }
-    }   
+      return {
+        ok: res.ok,
+        status: res.status,
+        data: data,
+      };
+    } catch (error) {
+      console.error("Network/Fetch Error:", error);
+      throw error;
+    }
+  }
 }

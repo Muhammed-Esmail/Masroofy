@@ -50,7 +50,7 @@ def Auth(request):
                 token, _ = Token.objects.get_or_create(user=newUser)
                 login(request, newUser)
                 request.session['username'] = newUser.username
-                return JsonResponse({"message": "Account created and logged in", "token":token}, status=200)
+                return JsonResponse({"message": "Account created and logged in", "token":token.key}, status=200)
             except ValidationError as error:
                 return JsonResponse({"message":"password is not valid", "errors":error.messages},status =400)
             
@@ -60,9 +60,9 @@ def Auth(request):
                     isValid = securityM.checkPassword(user, password)
                     if isValid:
                         login(request, user)
-                        token, _ = Token.objects.get_or_create(user=newUser)
+                        token, _ = Token.objects.get_or_create(user=User)
                         request.session['username'] = user.username 
-                        return JsonResponse({"message": "Logged in successfully", "token":token}, status=200)
+                        return JsonResponse({"message": "Logged in successfully", "token":token.key}, status=200)
                     else:
                         return JsonResponse({"message": "Invalid email or password55"}, status=400)
                 except User.DoesNotExist:

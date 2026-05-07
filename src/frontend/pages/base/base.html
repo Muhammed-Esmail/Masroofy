@@ -1,29 +1,28 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{% block title %}Masroofy{% endblock %}</title>
-  <link rel="shortcut icon" href="/static/assets/favicon.png" type="image/x-icon">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Masroofy{% endblock %}</title>
+    <link rel="shortcut icon" href="/static/assets/favicon.png" type="image/x-icon" />
+  </head>
+  <body>
+    <nav>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/history">History</a>
+      <a href="/cycle">Cycles</a>
+      <a href="/transaction">Transactions</a>
+      <a href="/expenses">Expenses</a>
+      <a href="/transaction/category">Categories</a>
+      <a href="/userSettings">Settings</a>
+    </nav>
 
-  <nav>
-    <a href="/dashboard">Dashboard</a>
-    <a href="/history">History</a>
-    <a href="/cycle">Cycles</a>
-    <a href="/transaction">Transactions</a>
-    <a href="/expenses">Expenses</a>
-    <a href="/transaction/category">Categories</a>
-    <a href="/userSettings">Settings</a>
-  </nav>
+    {% block content %}{% endblock %}
 
-  {% block content %}{% endblock %}
-
-  <footer>
-    <p>&copy; 2026 Masroofy. All rights reserved.</p>
-  </footer>
-
-</body>
+    <footer>
+      <p>&copy; 2026 Masroofy. All rights reserved.</p>
+    </footer>
+    <script type="module" src="{% static 'js/session.js' %}"></script>
+  </body>
 </html>
