@@ -42,6 +42,9 @@ class AllowanceManager:
     
 
     def getCurrentCycle(self) -> Cycle:
+        '''
+        Returns a Cycle object of the current active cycle.
+        '''
         historyManager = self._controller.getHistoryManager()
 
         currentCycle  = historyManager.getActiveCycle()
@@ -52,6 +55,11 @@ class AllowanceManager:
         return currentCycle
         
     def checkActivityStatus(self) -> bool:
+        '''
+        Checks if there's a current active cycle set.
+        
+        Returns: boolean
+        ''' 
         try: 
             self.getCurrentCycle()
             return True
