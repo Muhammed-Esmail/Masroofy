@@ -40,12 +40,6 @@
                                 <a class="variable" href="#Settings.currency">currency</a>
                         </li>
                         <li>
-                                <a class="variable" href="#Settings.cycle_duration">cycle_duration</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#Settings.budget_threshold">budget_threshold</a>
-                        </li>
-                        <li>
                                 <a class="variable" href="#Settings.language">language</a>
                         </li>
                         <li>
@@ -80,10 +74,8 @@
 </span><span id="L-3"><a href="#L-3"><span class="linenos">3</span></a><span class="nd">@dataclass</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos">4</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Settings</span><span class="p">:</span>
 </span><span id="L-5"><a href="#L-5"><span class="linenos">5</span></a>    <span class="n">currency</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos">6</span></a>    <span class="n">cycle_duration</span><span class="p">:</span> <span class="nb">int</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos">7</span></a>    <span class="n">budget_threshold</span><span class="p">:</span> <span class="nb">int</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos">8</span></a>    <span class="n">language</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos">9</span></a>    <span class="n">theme</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos">6</span></a>    <span class="n">language</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos">7</span></a>    <span class="n">theme</span><span class="p">:</span> <span class="nb">str</span>
 </span></pre></div>
 
 
@@ -100,13 +92,11 @@
 
     </div>
     <a class="headerlink" href="#Settings"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Settings-4"><a href="#Settings-4"><span class="linenos"> 4</span></a><span class="nd">@dataclass</span>
-</span><span id="Settings-5"><a href="#Settings-5"><span class="linenos"> 5</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Settings</span><span class="p">:</span>
-</span><span id="Settings-6"><a href="#Settings-6"><span class="linenos"> 6</span></a>    <span class="n">currency</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="Settings-7"><a href="#Settings-7"><span class="linenos"> 7</span></a>    <span class="n">cycle_duration</span><span class="p">:</span> <span class="nb">int</span>
-</span><span id="Settings-8"><a href="#Settings-8"><span class="linenos"> 8</span></a>    <span class="n">budget_threshold</span><span class="p">:</span> <span class="nb">int</span>
-</span><span id="Settings-9"><a href="#Settings-9"><span class="linenos"> 9</span></a>    <span class="n">language</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="Settings-10"><a href="#Settings-10"><span class="linenos">10</span></a>    <span class="n">theme</span><span class="p">:</span> <span class="nb">str</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Settings-4"><a href="#Settings-4"><span class="linenos">4</span></a><span class="nd">@dataclass</span>
+</span><span id="Settings-5"><a href="#Settings-5"><span class="linenos">5</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Settings</span><span class="p">:</span>
+</span><span id="Settings-6"><a href="#Settings-6"><span class="linenos">6</span></a>    <span class="n">currency</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="Settings-7"><a href="#Settings-7"><span class="linenos">7</span></a>    <span class="n">language</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="Settings-8"><a href="#Settings-8"><span class="linenos">8</span></a>    <span class="n">theme</span><span class="p">:</span> <span class="nb">str</span>
 </span></pre></div>
 
 
@@ -115,7 +105,7 @@
                             <div id="Settings.__init__" class="classattr">
                                 <div class="attr function">
             
-        <span class="name">Settings</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">currency</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">cycle_duration</span><span class="p">:</span> <span class="nb">int</span>,</span><span class="param">	<span class="n">budget_threshold</span><span class="p">:</span> <span class="nb">int</span>,</span><span class="param">	<span class="n">language</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">theme</span><span class="p">:</span> <span class="nb">str</span></span>)</span>
+        <span class="name">Settings</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">currency</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">language</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">theme</span><span class="p">:</span> <span class="nb">str</span></span>)</span>
 
         
     </div>
@@ -131,28 +121,6 @@
         
     </div>
     <a class="headerlink" href="#Settings.currency"></a>
-    
-    
-
-                            </div>
-                            <div id="Settings.cycle_duration" class="classattr">
-                                <div class="attr variable">
-            <span class="name">cycle_duration</span><span class="annotation">: int</span>
-
-        
-    </div>
-    <a class="headerlink" href="#Settings.cycle_duration"></a>
-    
-    
-
-                            </div>
-                            <div id="Settings.budget_threshold" class="classattr">
-                                <div class="attr variable">
-            <span class="name">budget_threshold</span><span class="annotation">: int</span>
-
-        
-    </div>
-    <a class="headerlink" href="#Settings.budget_threshold"></a>
     
     
 

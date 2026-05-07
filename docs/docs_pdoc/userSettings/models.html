@@ -79,12 +79,6 @@
                                 <a class="function" href="#SettingsModel.theme">theme</a>
                         </li>
                         <li>
-                                <a class="function" href="#SettingsModel.cycle_duration">cycle_duration</a>
-                        </li>
-                        <li>
-                                <a class="function" href="#SettingsModel.budget_threshold">budget_threshold</a>
-                        </li>
-                        <li>
                                 <a class="class" href="#SettingsModel.DoesNotExist">SettingsModel.DoesNotExist</a>
                                         <ul class="memberlist">
                             </ul>
@@ -159,15 +153,12 @@
 </span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>        <span class="n">LIGHT</span> <span class="o">=</span> <span class="s2">&quot;Light Mode&quot;</span>
 </span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>        <span class="n">DARK</span> <span class="o">=</span> <span class="s2">&quot;Dark Mode&quot;</span>
 </span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="n">language</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">languageChoices</span><span class="p">)</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="n">currency</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">currencyChoices</span><span class="p">)</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">theme</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">themeChoices</span><span class="p">)</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="n">language</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">languageChoices</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">languageChoices</span><span class="o">.</span><span class="n">ENGLISH</span><span class="p">)</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="n">currency</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">currencyChoices</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">currencyChoices</span><span class="o">.</span><span class="n">US_DOLLAR</span><span class="p">)</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">theme</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">themeChoices</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">themeChoices</span><span class="o">.</span><span class="n">LIGHT</span><span class="p">)</span>
 </span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="n">cycle_duration</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>    <span class="n">budget_threshold</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>        <span class="n">db_table</span><span class="o">=</span><span class="s1">&#39;Settings&#39;</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>        <span class="n">db_table</span><span class="o">=</span><span class="s1">&#39;Settings&#39;</span>
 </span></pre></div>
 
 
@@ -198,19 +189,16 @@
 </span><span id="SettingsModel-17"><a href="#SettingsModel-17"><span class="linenos">17</span></a>        <span class="n">LIGHT</span> <span class="o">=</span> <span class="s2">&quot;Light Mode&quot;</span>
 </span><span id="SettingsModel-18"><a href="#SettingsModel-18"><span class="linenos">18</span></a>        <span class="n">DARK</span> <span class="o">=</span> <span class="s2">&quot;Dark Mode&quot;</span>
 </span><span id="SettingsModel-19"><a href="#SettingsModel-19"><span class="linenos">19</span></a>
-</span><span id="SettingsModel-20"><a href="#SettingsModel-20"><span class="linenos">20</span></a>    <span class="n">language</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">languageChoices</span><span class="p">)</span>
-</span><span id="SettingsModel-21"><a href="#SettingsModel-21"><span class="linenos">21</span></a>    <span class="n">currency</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">currencyChoices</span><span class="p">)</span>
-</span><span id="SettingsModel-22"><a href="#SettingsModel-22"><span class="linenos">22</span></a>    <span class="n">theme</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">themeChoices</span><span class="p">)</span>
+</span><span id="SettingsModel-20"><a href="#SettingsModel-20"><span class="linenos">20</span></a>    <span class="n">language</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">languageChoices</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">languageChoices</span><span class="o">.</span><span class="n">ENGLISH</span><span class="p">)</span>
+</span><span id="SettingsModel-21"><a href="#SettingsModel-21"><span class="linenos">21</span></a>    <span class="n">currency</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">currencyChoices</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">currencyChoices</span><span class="o">.</span><span class="n">US_DOLLAR</span><span class="p">)</span>
+</span><span id="SettingsModel-22"><a href="#SettingsModel-22"><span class="linenos">22</span></a>    <span class="n">theme</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">themeChoices</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">themeChoices</span><span class="o">.</span><span class="n">LIGHT</span><span class="p">)</span>
 </span><span id="SettingsModel-23"><a href="#SettingsModel-23"><span class="linenos">23</span></a>
-</span><span id="SettingsModel-24"><a href="#SettingsModel-24"><span class="linenos">24</span></a>    <span class="n">cycle_duration</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</span><span id="SettingsModel-25"><a href="#SettingsModel-25"><span class="linenos">25</span></a>    <span class="n">budget_threshold</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</span><span id="SettingsModel-26"><a href="#SettingsModel-26"><span class="linenos">26</span></a>
-</span><span id="SettingsModel-27"><a href="#SettingsModel-27"><span class="linenos">27</span></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
-</span><span id="SettingsModel-28"><a href="#SettingsModel-28"><span class="linenos">28</span></a>        <span class="n">db_table</span><span class="o">=</span><span class="s1">&#39;Settings&#39;</span>
+</span><span id="SettingsModel-24"><a href="#SettingsModel-24"><span class="linenos">24</span></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
+</span><span id="SettingsModel-25"><a href="#SettingsModel-25"><span class="linenos">25</span></a>        <span class="n">db_table</span><span class="o">=</span><span class="s1">&#39;Settings&#39;</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>SettingsModel(id, language, currency, theme, cycle_duration, budget_threshold)</p>
+            <div class="docstring"><p>SettingsModel(id, language, currency, theme)</p>
 </div>
 
 
@@ -255,38 +243,6 @@ object the first time, the query is executed.</p>
         
     </div>
     <a class="headerlink" href="#SettingsModel.theme"></a>
-    
-            <div class="docstring"><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</div>
-
-
-                            </div>
-                            <div id="SettingsModel.cycle_duration" class="classattr">
-                                <div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">cycle_duration</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">unknown</span></span><span class="return-annotation">):</span></span>
-
-        
-    </div>
-    <a class="headerlink" href="#SettingsModel.cycle_duration"></a>
-    
-            <div class="docstring"><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</div>
-
-
-                            </div>
-                            <div id="SettingsModel.budget_threshold" class="classattr">
-                                <div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">budget_threshold</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">unknown</span></span><span class="return-annotation">):</span></span>
-
-        
-    </div>
-    <a class="headerlink" href="#SettingsModel.budget_threshold"></a>
     
             <div class="docstring"><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>

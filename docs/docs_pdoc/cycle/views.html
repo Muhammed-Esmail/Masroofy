@@ -61,38 +61,42 @@
                         <label class="view-source-button" for="mod-views-view-source"><span>View Source</span></label>
 
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">render</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
-</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">cycle.services.AllowanceManager</span><span class="w"> </span><span class="kn">import</span> <span class="n">AllowanceManager</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">backend.shared_classes.Cycle</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cycle</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="c1"># Create your views here.</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;pages/onboarding/welcome.html&#39;</span><span class="p">)</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="k">def</span><span class="w"> </span><span class="nf">startCycle</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>        
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>        <span class="n">amount</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;amount&#39;</span><span class="p">)</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>        <span class="n">start_date</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;start_date&#39;</span><span class="p">)</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>        <span class="n">end_date</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;end_date&#39;</span><span class="p">)</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>        <span class="n">newCycle</span> <span class="o">=</span> <span class="n">Cycle</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>        <span class="n">allowance_manager</span> <span class="o">=</span> <span class="n">AllowanceManager</span><span class="p">()</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>        <span class="n">allowance_manager</span><span class="o">.</span><span class="n">initializeCycle</span><span class="p">(</span><span class="n">newCycle</span><span class="p">)</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">userSettings.services.SettingsManager</span><span class="w"> </span><span class="kn">import</span> <span class="n">SettingsManager</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">cycle.services.AllowanceManager</span><span class="w"> </span><span class="kn">import</span> <span class="n">AllowanceManager</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">backend.shared_classes.Cycle</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cycle</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="c1"># Create your views here.</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>    <span class="n">context</span><span class="o">=</span><span class="p">{</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>        <span class="s1">&#39;settings&#39;</span><span class="p">:</span><span class="n">SettingsManager</span><span class="p">()</span><span class="o">.</span><span class="n">fetchSettings</span><span class="p">()</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="p">}</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;pages/onboarding/welcome.html&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="k">def</span><span class="w"> </span><span class="nf">startCycle</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>        
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>        <span class="n">amount</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;amount&#39;</span><span class="p">)</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>        <span class="n">start_date</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;start_date&#39;</span><span class="p">)</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>        <span class="n">end_date</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;end_date&#39;</span><span class="p">)</span>
 </span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>        
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/dashboard/&#39;</span><span class="p">)</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>    
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s1">&#39;Invalid Method&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">405</span><span class="p">)</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a><span class="k">def</span><span class="w"> </span><span class="nf">resetCycle</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span> 
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>        <span class="n">allowanceManager</span> <span class="o">=</span> <span class="n">AllowanceManager</span><span class="p">()</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>        <span class="n">allowanceManager</span><span class="o">.</span><span class="n">resetCycle</span><span class="p">()</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/dashboard/&#39;</span><span class="p">)</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s1">&#39;Invalid Method&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">405</span><span class="p">)</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>        <span class="n">newCycle</span> <span class="o">=</span> <span class="n">Cycle</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>        <span class="n">allowance_manager</span> <span class="o">=</span> <span class="n">AllowanceManager</span><span class="p">()</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>        <span class="n">allowance_manager</span><span class="o">.</span><span class="n">initializeCycle</span><span class="p">(</span><span class="n">newCycle</span><span class="p">)</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>        
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/dashboard/&#39;</span><span class="p">)</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s1">&#39;Invalid Method&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">405</span><span class="p">)</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a><span class="k">def</span><span class="w"> </span><span class="nf">resetCycle</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span> 
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>        <span class="n">allowanceManager</span> <span class="o">=</span> <span class="n">AllowanceManager</span><span class="p">()</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>        <span class="n">allowanceManager</span><span class="o">.</span><span class="n">resetCycle</span><span class="p">()</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/dashboard/&#39;</span><span class="p">)</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s1">&#39;Invalid Method&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">405</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -108,8 +112,11 @@
 
     </div>
     <a class="headerlink" href="#index"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="index-10"><a href="#index-10"><span class="linenos">10</span></a><span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-</span><span id="index-11"><a href="#index-11"><span class="linenos">11</span></a>    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;pages/onboarding/welcome.html&#39;</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="index-11"><a href="#index-11"><span class="linenos">11</span></a><span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+</span><span id="index-12"><a href="#index-12"><span class="linenos">12</span></a>    <span class="n">context</span><span class="o">=</span><span class="p">{</span>
+</span><span id="index-13"><a href="#index-13"><span class="linenos">13</span></a>        <span class="s1">&#39;settings&#39;</span><span class="p">:</span><span class="n">SettingsManager</span><span class="p">()</span><span class="o">.</span><span class="n">fetchSettings</span><span class="p">()</span>
+</span><span id="index-14"><a href="#index-14"><span class="linenos">14</span></a>    <span class="p">}</span>
+</span><span id="index-15"><a href="#index-15"><span class="linenos">15</span></a>    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;pages/onboarding/welcome.html&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -127,21 +134,21 @@
 
     </div>
     <a class="headerlink" href="#startCycle"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="startCycle-13"><a href="#startCycle-13"><span class="linenos">13</span></a><span class="k">def</span><span class="w"> </span><span class="nf">startCycle</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-</span><span id="startCycle-14"><a href="#startCycle-14"><span class="linenos">14</span></a>    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-</span><span id="startCycle-15"><a href="#startCycle-15"><span class="linenos">15</span></a>        
-</span><span id="startCycle-16"><a href="#startCycle-16"><span class="linenos">16</span></a>        <span class="n">amount</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;amount&#39;</span><span class="p">)</span>
-</span><span id="startCycle-17"><a href="#startCycle-17"><span class="linenos">17</span></a>        <span class="n">start_date</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;start_date&#39;</span><span class="p">)</span>
-</span><span id="startCycle-18"><a href="#startCycle-18"><span class="linenos">18</span></a>        <span class="n">end_date</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;end_date&#39;</span><span class="p">)</span>
-</span><span id="startCycle-19"><a href="#startCycle-19"><span class="linenos">19</span></a>
-</span><span id="startCycle-20"><a href="#startCycle-20"><span class="linenos">20</span></a>        <span class="n">newCycle</span> <span class="o">=</span> <span class="n">Cycle</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
-</span><span id="startCycle-21"><a href="#startCycle-21"><span class="linenos">21</span></a>        <span class="n">allowance_manager</span> <span class="o">=</span> <span class="n">AllowanceManager</span><span class="p">()</span>
-</span><span id="startCycle-22"><a href="#startCycle-22"><span class="linenos">22</span></a>        <span class="n">allowance_manager</span><span class="o">.</span><span class="n">initializeCycle</span><span class="p">(</span><span class="n">newCycle</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="startCycle-17"><a href="#startCycle-17"><span class="linenos">17</span></a><span class="k">def</span><span class="w"> </span><span class="nf">startCycle</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+</span><span id="startCycle-18"><a href="#startCycle-18"><span class="linenos">18</span></a>    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+</span><span id="startCycle-19"><a href="#startCycle-19"><span class="linenos">19</span></a>        
+</span><span id="startCycle-20"><a href="#startCycle-20"><span class="linenos">20</span></a>        <span class="n">amount</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;amount&#39;</span><span class="p">)</span>
+</span><span id="startCycle-21"><a href="#startCycle-21"><span class="linenos">21</span></a>        <span class="n">start_date</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;start_date&#39;</span><span class="p">)</span>
+</span><span id="startCycle-22"><a href="#startCycle-22"><span class="linenos">22</span></a>        <span class="n">end_date</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;end_date&#39;</span><span class="p">)</span>
 </span><span id="startCycle-23"><a href="#startCycle-23"><span class="linenos">23</span></a>
-</span><span id="startCycle-24"><a href="#startCycle-24"><span class="linenos">24</span></a>        
-</span><span id="startCycle-25"><a href="#startCycle-25"><span class="linenos">25</span></a>        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/dashboard/&#39;</span><span class="p">)</span>
-</span><span id="startCycle-26"><a href="#startCycle-26"><span class="linenos">26</span></a>    
-</span><span id="startCycle-27"><a href="#startCycle-27"><span class="linenos">27</span></a>    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s1">&#39;Invalid Method&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">405</span><span class="p">)</span>
+</span><span id="startCycle-24"><a href="#startCycle-24"><span class="linenos">24</span></a>        <span class="n">newCycle</span> <span class="o">=</span> <span class="n">Cycle</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+</span><span id="startCycle-25"><a href="#startCycle-25"><span class="linenos">25</span></a>        <span class="n">allowance_manager</span> <span class="o">=</span> <span class="n">AllowanceManager</span><span class="p">()</span>
+</span><span id="startCycle-26"><a href="#startCycle-26"><span class="linenos">26</span></a>        <span class="n">allowance_manager</span><span class="o">.</span><span class="n">initializeCycle</span><span class="p">(</span><span class="n">newCycle</span><span class="p">)</span>
+</span><span id="startCycle-27"><a href="#startCycle-27"><span class="linenos">27</span></a>
+</span><span id="startCycle-28"><a href="#startCycle-28"><span class="linenos">28</span></a>        
+</span><span id="startCycle-29"><a href="#startCycle-29"><span class="linenos">29</span></a>        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/dashboard/&#39;</span><span class="p">)</span>
+</span><span id="startCycle-30"><a href="#startCycle-30"><span class="linenos">30</span></a>    
+</span><span id="startCycle-31"><a href="#startCycle-31"><span class="linenos">31</span></a>    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s1">&#39;Invalid Method&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">405</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -159,12 +166,12 @@
 
     </div>
     <a class="headerlink" href="#resetCycle"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="resetCycle-29"><a href="#resetCycle-29"><span class="linenos">29</span></a><span class="k">def</span><span class="w"> </span><span class="nf">resetCycle</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-</span><span id="resetCycle-30"><a href="#resetCycle-30"><span class="linenos">30</span></a>    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span> 
-</span><span id="resetCycle-31"><a href="#resetCycle-31"><span class="linenos">31</span></a>        <span class="n">allowanceManager</span> <span class="o">=</span> <span class="n">AllowanceManager</span><span class="p">()</span>
-</span><span id="resetCycle-32"><a href="#resetCycle-32"><span class="linenos">32</span></a>        <span class="n">allowanceManager</span><span class="o">.</span><span class="n">resetCycle</span><span class="p">()</span>
-</span><span id="resetCycle-33"><a href="#resetCycle-33"><span class="linenos">33</span></a>        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/dashboard/&#39;</span><span class="p">)</span>
-</span><span id="resetCycle-34"><a href="#resetCycle-34"><span class="linenos">34</span></a>    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s1">&#39;Invalid Method&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">405</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="resetCycle-33"><a href="#resetCycle-33"><span class="linenos">33</span></a><span class="k">def</span><span class="w"> </span><span class="nf">resetCycle</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+</span><span id="resetCycle-34"><a href="#resetCycle-34"><span class="linenos">34</span></a>    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span> 
+</span><span id="resetCycle-35"><a href="#resetCycle-35"><span class="linenos">35</span></a>        <span class="n">allowanceManager</span> <span class="o">=</span> <span class="n">AllowanceManager</span><span class="p">()</span>
+</span><span id="resetCycle-36"><a href="#resetCycle-36"><span class="linenos">36</span></a>        <span class="n">allowanceManager</span><span class="o">.</span><span class="n">resetCycle</span><span class="p">()</span>
+</span><span id="resetCycle-37"><a href="#resetCycle-37"><span class="linenos">37</span></a>        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/dashboard/&#39;</span><span class="p">)</span>
+</span><span id="resetCycle-38"><a href="#resetCycle-38"><span class="linenos">38</span></a>    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s1">&#39;Invalid Method&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">405</span><span class="p">)</span>
 </span></pre></div>
 
 

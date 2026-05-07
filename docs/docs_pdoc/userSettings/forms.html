@@ -84,7 +84,7 @@
 </span><span id="L-4"><a href="#L-4"><span class="linenos">4</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SettingsForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
 </span><span id="L-5"><a href="#L-5"><span class="linenos">5</span></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span> 
 </span><span id="L-6"><a href="#L-6"><span class="linenos">6</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">SettingsModel</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos">7</span></a>        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;currency&#39;</span><span class="p">,</span> <span class="s1">&#39;cycle_duration&#39;</span><span class="p">,</span> <span class="s1">&#39;budget_threshold&#39;</span><span class="p">,</span> <span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="s1">&#39;theme&#39;</span><span class="p">]</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos">7</span></a>        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;currency&#39;</span><span class="p">,</span><span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="s1">&#39;theme&#39;</span><span class="p">]</span>
 </span></pre></div>
 
 
@@ -103,7 +103,7 @@
             <div class="pdoc-code codehilite"><pre><span></span><span id="SettingsForm-5"><a href="#SettingsForm-5"><span class="linenos">5</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SettingsForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
 </span><span id="SettingsForm-6"><a href="#SettingsForm-6"><span class="linenos">6</span></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span> 
 </span><span id="SettingsForm-7"><a href="#SettingsForm-7"><span class="linenos">7</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">SettingsModel</span>
-</span><span id="SettingsForm-8"><a href="#SettingsForm-8"><span class="linenos">8</span></a>        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;currency&#39;</span><span class="p">,</span> <span class="s1">&#39;cycle_duration&#39;</span><span class="p">,</span> <span class="s1">&#39;budget_threshold&#39;</span><span class="p">,</span> <span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="s1">&#39;theme&#39;</span><span class="p">]</span>
+</span><span id="SettingsForm-8"><a href="#SettingsForm-8"><span class="linenos">8</span></a>        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;currency&#39;</span><span class="p">,</span><span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="s1">&#39;theme&#39;</span><span class="p">]</span>
 </span></pre></div>
 
 
@@ -169,7 +169,7 @@ class.</p>
                                 <div class="attr variable">
             <span class="name">base_fields</span>        =
 <input id="SettingsForm.base_fields-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="SettingsForm.base_fields-view-value"></label><span class="default_value">{&#39;currency&#39;: &lt;django.forms.fields.TypedChoiceField object&gt;, &#39;cycle_duration&#39;: &lt;django.forms.fields.IntegerField object&gt;, &#39;budget_threshold&#39;: &lt;django.forms.fields.FloatField object&gt;, &#39;language&#39;: &lt;django.forms.fields.TypedChoiceField object&gt;, &#39;theme&#39;: &lt;django.forms.fields.TypedChoiceField object&gt;}</span>
+            <label class="view-value-button pdoc-button" for="SettingsForm.base_fields-view-value"></label><span class="default_value">{&#39;currency&#39;: &lt;django.forms.fields.TypedChoiceField object&gt;, &#39;language&#39;: &lt;django.forms.fields.TypedChoiceField object&gt;, &#39;theme&#39;: &lt;django.forms.fields.TypedChoiceField object&gt;}</span>
 
         
     </div>
@@ -192,7 +192,7 @@ class.</p>
     <a class="headerlink" href="#SettingsForm.Meta"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="SettingsForm.Meta-6"><a href="#SettingsForm.Meta-6"><span class="linenos">6</span></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span> 
 </span><span id="SettingsForm.Meta-7"><a href="#SettingsForm.Meta-7"><span class="linenos">7</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">SettingsModel</span>
-</span><span id="SettingsForm.Meta-8"><a href="#SettingsForm.Meta-8"><span class="linenos">8</span></a>        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;currency&#39;</span><span class="p">,</span> <span class="s1">&#39;cycle_duration&#39;</span><span class="p">,</span> <span class="s1">&#39;budget_threshold&#39;</span><span class="p">,</span> <span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="s1">&#39;theme&#39;</span><span class="p">]</span>
+</span><span id="SettingsForm.Meta-8"><a href="#SettingsForm.Meta-8"><span class="linenos">8</span></a>        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;currency&#39;</span><span class="p">,</span><span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="s1">&#39;theme&#39;</span><span class="p">]</span>
 </span></pre></div>
 
 
@@ -213,7 +213,7 @@ class.</p>
                             <div id="SettingsForm.Meta.fields" class="classattr">
                                 <div class="attr variable">
             <span class="name">fields</span>        =
-<span class="default_value">[&#39;currency&#39;, &#39;cycle_duration&#39;, &#39;budget_threshold&#39;, &#39;language&#39;, &#39;theme&#39;]</span>
+<span class="default_value">[&#39;currency&#39;, &#39;language&#39;, &#39;theme&#39;]</span>
 
         
     </div>

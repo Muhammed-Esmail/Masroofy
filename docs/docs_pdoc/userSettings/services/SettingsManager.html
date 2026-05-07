@@ -69,108 +69,101 @@
 
                         <label class="view-source-button" for="mod-SettingsManager-view-source"><span>View Source</span></label>
 
-                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos">  1</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">userSettings.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">SettingsModel</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">userSettings.classes</span><span class="w"> </span><span class="kn">import</span> <span class="n">Settings</span>
-</span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a>
-</span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SettingsManager</span><span class="p">():</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="sd">    A service class for managing global application settings and user preferences.</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a>
-</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="sd">    This manager handles the persistence and retrieval of configuration data such </span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="sd">    as currency, theme, and budget thresholds. It assumes a single-user </span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="sd">    configuration model where settings are stored in a primary record.</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a>
-</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">addSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newSettings</span><span class="p">:</span> <span class="n">Settings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a><span class="sd">        Creates a new settings record in the database.</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a>
-</span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a><span class="sd">        Args:</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="sd">            newSettings (Settings): The settings data object containing </span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a><span class="sd">                preferences to be saved.</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a>
-</span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="sd">        Returns:</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a><span class="sd">            bool: True if the record was successfully created.</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a>        <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a>            <span class="n">cycle_duration</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">cycle_duration</span><span class="p">,</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a>            <span class="n">budget_threshold</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">budget_threshold</span><span class="p">,</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos"> 29</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">theme</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos"> 30</span></a>        <span class="p">)</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos"> 31</span></a>        <span class="k">return</span> <span class="kc">True</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos"> 32</span></a>
-</span><span id="L-33"><a href="#L-33"><span class="linenos"> 33</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">fetchSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Settings</span><span class="p">:</span>
-</span><span id="L-34"><a href="#L-34"><span class="linenos"> 34</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a><span class="sd">        Retrieves the primary application settings record.</span>
-</span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a>
-</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="sd">        Note:</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="sd">            This method specifically looks for the record with ID 1.</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>
-</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a><span class="sd">        Returns:</span>
-</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a><span class="sd">            Settings: A business object populated with the user preferences.</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a>
-</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="sd">        Raises:</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a><span class="sd">            SettingsModel.DoesNotExist: If the settings record has not been </span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a><span class="sd">                initialized in the database.</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a>        <span class="n">settings</span> <span class="o">=</span> <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">createDataObject</span><span class="p">(</span>
-</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span> 
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">cycle_duration</span><span class="p">,</span> 
-</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">budget_threshold</span><span class="p">,</span> 
-</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span> 
-</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">theme</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>        <span class="p">)</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>    
-</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">updateSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newSettings</span><span class="p">:</span> <span class="n">Settings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="sd">        Updates the primary settings record with new values.</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a>
-</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a><span class="sd">        Args:</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="sd">            newSettings (Settings): The updated data object to apply.</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a>
-</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a><span class="sd">        Returns:</span>
-</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a><span class="sd">            bool: True if the update operation was executed.</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>        <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span>
-</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>            <span class="n">cycle_duration</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">cycle_duration</span><span class="p">,</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>            <span class="n">budget_threshold</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">budget_threshold</span><span class="p">,</span>
-</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span>
-</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">theme</span>
-</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>        <span class="p">)</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>        <span class="k">return</span> <span class="kc">True</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>        
-</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">createDataObject</span><span class="p">(</span>
-</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>        <span class="bp">self</span><span class="p">,</span> 
-</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>        <span class="n">currency</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
-</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>        <span class="n">cycle_duration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> 
-</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>        <span class="n">budget_threshold</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> 
-</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>        <span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
-</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>        <span class="n">theme</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Settings</span><span class="p">:</span> 
-</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="sd">        Factory method to convert database fields into a Settings business object.</span>
-</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>
-</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a><span class="sd">        Args:</span>
-</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a><span class="sd">            currency (str): The chosen currency symbol or code.</span>
-</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a><span class="sd">            cycle_duration (int): Length of the budget cycle in days.</span>
-</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a><span class="sd">            budget_threshold (int): Percentage at which to trigger alerts.</span>
-</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a><span class="sd">            language (str): User&#39;s preferred UI language.</span>
-</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a><span class="sd">            theme (str): UI theme identifier (e.g., &#39;Dark&#39;, &#39;Light&#39;).</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>
-</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a><span class="sd">        Returns:</span>
-</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a><span class="sd">            Settings: A populated Settings object.</span>
-</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>        <span class="k">return</span> <span class="n">Settings</span><span class="p">(</span>
-</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">currency</span><span class="p">,</span>
-</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a>            <span class="n">cycle_duration</span><span class="o">=</span><span class="n">cycle_duration</span><span class="p">,</span>
-</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a>            <span class="n">budget_threshold</span><span class="o">=</span><span class="n">budget_threshold</span><span class="p">,</span>
-</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span>
-</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">theme</span>
-</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>        <span class="p">)</span>
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">userSettings.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">SettingsModel</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">userSettings.classes</span><span class="w"> </span><span class="kn">import</span> <span class="n">Settings</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SettingsManager</span><span class="p">():</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="sd">    A service class for managing global application settings and user preferences.</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="sd">    This manager handles the persistence and retrieval of configuration data such </span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="sd">    as currency, theme, and budget thresholds. It assumes a single-user </span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="sd">    configuration model where settings are stored in a primary record.</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">addSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newSettings</span><span class="p">:</span> <span class="n">Settings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="sd">        Creates a new settings record in the database.</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="sd">        Args:</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="sd">            newSettings (Settings): The settings data object containing </span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="sd">                preferences to be saved.</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="sd">        Returns:</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a><span class="sd">            bool: True if the record was successfully created.</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>        <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">theme</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>        <span class="p">)</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>        <span class="k">return</span> <span class="kc">True</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">fetchSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Settings</span><span class="p">]:</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a><span class="sd">        Retrieves the primary application settings record.</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a><span class="sd">        Note:</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a><span class="sd">            This method specifically looks for the record with ID 1.</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a><span class="sd">        Returns:</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a><span class="sd">            Settings: A business object populated with the user preferences.</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a><span class="sd">        Raises:</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a><span class="sd">            SettingsModel.DoesNotExist: If the settings record has not been </span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a><span class="sd">                initialized in the database.</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>            <span class="n">settings</span> <span class="o">=</span> <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">createDataObject</span><span class="p">(</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>                <span class="n">settings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span> 
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>                <span class="n">settings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span> 
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>                <span class="n">settings</span><span class="o">.</span><span class="n">theme</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>            <span class="p">)</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>        <span class="k">except</span><span class="p">:</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>            <span class="k">return</span> <span class="kc">None</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>    
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">updateSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newSettings</span><span class="p">:</span> <span class="n">Settings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a><span class="sd">        Updates the primary settings record with new values.</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a><span class="sd">        Args:</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a><span class="sd">            newSettings (Settings): The updated data object to apply.</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a><span class="sd">        Returns:</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a><span class="sd">            bool: True if the update operation was executed.</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>        <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">theme</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a>        <span class="p">)</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a>        <span class="k">return</span> <span class="kc">True</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a>        
+</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">createDataObject</span><span class="p">(</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a>        <span class="bp">self</span><span class="p">,</span> 
+</span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a>        <span class="n">currency</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a>        <span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+</span><span id="L-78"><a href="#L-78"><span class="linenos">78</span></a>        <span class="n">theme</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Settings</span><span class="p">:</span> 
+</span><span id="L-80"><a href="#L-80"><span class="linenos">80</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a><span class="sd">        Factory method to convert database fields into a Settings business object.</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos">82</span></a>
+</span><span id="L-83"><a href="#L-83"><span class="linenos">83</span></a><span class="sd">        Args:</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos">84</span></a><span class="sd">            currency (str): The chosen currency symbol or code.</span>
+</span><span id="L-85"><a href="#L-85"><span class="linenos">85</span></a><span class="sd">            language (str): User&#39;s preferred UI language.</span>
+</span><span id="L-86"><a href="#L-86"><span class="linenos">86</span></a><span class="sd">            theme (str): UI theme identifier (e.g., &#39;Dark&#39;, &#39;Light&#39;).</span>
+</span><span id="L-87"><a href="#L-87"><span class="linenos">87</span></a>
+</span><span id="L-88"><a href="#L-88"><span class="linenos">88</span></a><span class="sd">        Returns:</span>
+</span><span id="L-89"><a href="#L-89"><span class="linenos">89</span></a><span class="sd">            Settings: A populated Settings object.</span>
+</span><span id="L-90"><a href="#L-90"><span class="linenos">90</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos">91</span></a>        <span class="k">return</span> <span class="n">Settings</span><span class="p">(</span>
+</span><span id="L-92"><a href="#L-92"><span class="linenos">92</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">currency</span><span class="p">,</span>
+</span><span id="L-93"><a href="#L-93"><span class="linenos">93</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span>
+</span><span id="L-94"><a href="#L-94"><span class="linenos">94</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">theme</span>
+</span><span id="L-95"><a href="#L-95"><span class="linenos">95</span></a>        <span class="p">)</span>
 </span></pre></div>
 
 
@@ -186,105 +179,96 @@
 
     </div>
     <a class="headerlink" href="#SettingsManager"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SettingsManager-5"><a href="#SettingsManager-5"><span class="linenos">  5</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SettingsManager</span><span class="p">():</span>
-</span><span id="SettingsManager-6"><a href="#SettingsManager-6"><span class="linenos">  6</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SettingsManager-7"><a href="#SettingsManager-7"><span class="linenos">  7</span></a><span class="sd">    A service class for managing global application settings and user preferences.</span>
-</span><span id="SettingsManager-8"><a href="#SettingsManager-8"><span class="linenos">  8</span></a>
-</span><span id="SettingsManager-9"><a href="#SettingsManager-9"><span class="linenos">  9</span></a><span class="sd">    This manager handles the persistence and retrieval of configuration data such </span>
-</span><span id="SettingsManager-10"><a href="#SettingsManager-10"><span class="linenos"> 10</span></a><span class="sd">    as currency, theme, and budget thresholds. It assumes a single-user </span>
-</span><span id="SettingsManager-11"><a href="#SettingsManager-11"><span class="linenos"> 11</span></a><span class="sd">    configuration model where settings are stored in a primary record.</span>
-</span><span id="SettingsManager-12"><a href="#SettingsManager-12"><span class="linenos"> 12</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="SettingsManager-13"><a href="#SettingsManager-13"><span class="linenos"> 13</span></a>
-</span><span id="SettingsManager-14"><a href="#SettingsManager-14"><span class="linenos"> 14</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">addSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newSettings</span><span class="p">:</span> <span class="n">Settings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="SettingsManager-15"><a href="#SettingsManager-15"><span class="linenos"> 15</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SettingsManager-16"><a href="#SettingsManager-16"><span class="linenos"> 16</span></a><span class="sd">        Creates a new settings record in the database.</span>
-</span><span id="SettingsManager-17"><a href="#SettingsManager-17"><span class="linenos"> 17</span></a>
-</span><span id="SettingsManager-18"><a href="#SettingsManager-18"><span class="linenos"> 18</span></a><span class="sd">        Args:</span>
-</span><span id="SettingsManager-19"><a href="#SettingsManager-19"><span class="linenos"> 19</span></a><span class="sd">            newSettings (Settings): The settings data object containing </span>
-</span><span id="SettingsManager-20"><a href="#SettingsManager-20"><span class="linenos"> 20</span></a><span class="sd">                preferences to be saved.</span>
-</span><span id="SettingsManager-21"><a href="#SettingsManager-21"><span class="linenos"> 21</span></a>
-</span><span id="SettingsManager-22"><a href="#SettingsManager-22"><span class="linenos"> 22</span></a><span class="sd">        Returns:</span>
-</span><span id="SettingsManager-23"><a href="#SettingsManager-23"><span class="linenos"> 23</span></a><span class="sd">            bool: True if the record was successfully created.</span>
-</span><span id="SettingsManager-24"><a href="#SettingsManager-24"><span class="linenos"> 24</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SettingsManager-25"><a href="#SettingsManager-25"><span class="linenos"> 25</span></a>        <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-</span><span id="SettingsManager-26"><a href="#SettingsManager-26"><span class="linenos"> 26</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span>
-</span><span id="SettingsManager-27"><a href="#SettingsManager-27"><span class="linenos"> 27</span></a>            <span class="n">cycle_duration</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">cycle_duration</span><span class="p">,</span>
-</span><span id="SettingsManager-28"><a href="#SettingsManager-28"><span class="linenos"> 28</span></a>            <span class="n">budget_threshold</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">budget_threshold</span><span class="p">,</span>
-</span><span id="SettingsManager-29"><a href="#SettingsManager-29"><span class="linenos"> 29</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span>
-</span><span id="SettingsManager-30"><a href="#SettingsManager-30"><span class="linenos"> 30</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">theme</span>
-</span><span id="SettingsManager-31"><a href="#SettingsManager-31"><span class="linenos"> 31</span></a>        <span class="p">)</span>
-</span><span id="SettingsManager-32"><a href="#SettingsManager-32"><span class="linenos"> 32</span></a>        <span class="k">return</span> <span class="kc">True</span>
-</span><span id="SettingsManager-33"><a href="#SettingsManager-33"><span class="linenos"> 33</span></a>
-</span><span id="SettingsManager-34"><a href="#SettingsManager-34"><span class="linenos"> 34</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">fetchSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Settings</span><span class="p">:</span>
-</span><span id="SettingsManager-35"><a href="#SettingsManager-35"><span class="linenos"> 35</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SettingsManager-36"><a href="#SettingsManager-36"><span class="linenos"> 36</span></a><span class="sd">        Retrieves the primary application settings record.</span>
-</span><span id="SettingsManager-37"><a href="#SettingsManager-37"><span class="linenos"> 37</span></a>
-</span><span id="SettingsManager-38"><a href="#SettingsManager-38"><span class="linenos"> 38</span></a><span class="sd">        Note:</span>
-</span><span id="SettingsManager-39"><a href="#SettingsManager-39"><span class="linenos"> 39</span></a><span class="sd">            This method specifically looks for the record with ID 1.</span>
-</span><span id="SettingsManager-40"><a href="#SettingsManager-40"><span class="linenos"> 40</span></a>
-</span><span id="SettingsManager-41"><a href="#SettingsManager-41"><span class="linenos"> 41</span></a><span class="sd">        Returns:</span>
-</span><span id="SettingsManager-42"><a href="#SettingsManager-42"><span class="linenos"> 42</span></a><span class="sd">            Settings: A business object populated with the user preferences.</span>
-</span><span id="SettingsManager-43"><a href="#SettingsManager-43"><span class="linenos"> 43</span></a>
-</span><span id="SettingsManager-44"><a href="#SettingsManager-44"><span class="linenos"> 44</span></a><span class="sd">        Raises:</span>
-</span><span id="SettingsManager-45"><a href="#SettingsManager-45"><span class="linenos"> 45</span></a><span class="sd">            SettingsModel.DoesNotExist: If the settings record has not been </span>
-</span><span id="SettingsManager-46"><a href="#SettingsManager-46"><span class="linenos"> 46</span></a><span class="sd">                initialized in the database.</span>
-</span><span id="SettingsManager-47"><a href="#SettingsManager-47"><span class="linenos"> 47</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SettingsManager-48"><a href="#SettingsManager-48"><span class="linenos"> 48</span></a>        <span class="n">settings</span> <span class="o">=</span> <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="SettingsManager-49"><a href="#SettingsManager-49"><span class="linenos"> 49</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">createDataObject</span><span class="p">(</span>
-</span><span id="SettingsManager-50"><a href="#SettingsManager-50"><span class="linenos"> 50</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span> 
-</span><span id="SettingsManager-51"><a href="#SettingsManager-51"><span class="linenos"> 51</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">cycle_duration</span><span class="p">,</span> 
-</span><span id="SettingsManager-52"><a href="#SettingsManager-52"><span class="linenos"> 52</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">budget_threshold</span><span class="p">,</span> 
-</span><span id="SettingsManager-53"><a href="#SettingsManager-53"><span class="linenos"> 53</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span> 
-</span><span id="SettingsManager-54"><a href="#SettingsManager-54"><span class="linenos"> 54</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">theme</span>
-</span><span id="SettingsManager-55"><a href="#SettingsManager-55"><span class="linenos"> 55</span></a>        <span class="p">)</span>
-</span><span id="SettingsManager-56"><a href="#SettingsManager-56"><span class="linenos"> 56</span></a>    
-</span><span id="SettingsManager-57"><a href="#SettingsManager-57"><span class="linenos"> 57</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">updateSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newSettings</span><span class="p">:</span> <span class="n">Settings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="SettingsManager-58"><a href="#SettingsManager-58"><span class="linenos"> 58</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SettingsManager-59"><a href="#SettingsManager-59"><span class="linenos"> 59</span></a><span class="sd">        Updates the primary settings record with new values.</span>
-</span><span id="SettingsManager-60"><a href="#SettingsManager-60"><span class="linenos"> 60</span></a>
-</span><span id="SettingsManager-61"><a href="#SettingsManager-61"><span class="linenos"> 61</span></a><span class="sd">        Args:</span>
-</span><span id="SettingsManager-62"><a href="#SettingsManager-62"><span class="linenos"> 62</span></a><span class="sd">            newSettings (Settings): The updated data object to apply.</span>
-</span><span id="SettingsManager-63"><a href="#SettingsManager-63"><span class="linenos"> 63</span></a>
-</span><span id="SettingsManager-64"><a href="#SettingsManager-64"><span class="linenos"> 64</span></a><span class="sd">        Returns:</span>
-</span><span id="SettingsManager-65"><a href="#SettingsManager-65"><span class="linenos"> 65</span></a><span class="sd">            bool: True if the update operation was executed.</span>
-</span><span id="SettingsManager-66"><a href="#SettingsManager-66"><span class="linenos"> 66</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SettingsManager-67"><a href="#SettingsManager-67"><span class="linenos"> 67</span></a>        <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-</span><span id="SettingsManager-68"><a href="#SettingsManager-68"><span class="linenos"> 68</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span>
-</span><span id="SettingsManager-69"><a href="#SettingsManager-69"><span class="linenos"> 69</span></a>            <span class="n">cycle_duration</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">cycle_duration</span><span class="p">,</span>
-</span><span id="SettingsManager-70"><a href="#SettingsManager-70"><span class="linenos"> 70</span></a>            <span class="n">budget_threshold</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">budget_threshold</span><span class="p">,</span>
-</span><span id="SettingsManager-71"><a href="#SettingsManager-71"><span class="linenos"> 71</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span>
-</span><span id="SettingsManager-72"><a href="#SettingsManager-72"><span class="linenos"> 72</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">theme</span>
-</span><span id="SettingsManager-73"><a href="#SettingsManager-73"><span class="linenos"> 73</span></a>        <span class="p">)</span>
-</span><span id="SettingsManager-74"><a href="#SettingsManager-74"><span class="linenos"> 74</span></a>        <span class="k">return</span> <span class="kc">True</span>
-</span><span id="SettingsManager-75"><a href="#SettingsManager-75"><span class="linenos"> 75</span></a>        
-</span><span id="SettingsManager-76"><a href="#SettingsManager-76"><span class="linenos"> 76</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">createDataObject</span><span class="p">(</span>
-</span><span id="SettingsManager-77"><a href="#SettingsManager-77"><span class="linenos"> 77</span></a>        <span class="bp">self</span><span class="p">,</span> 
-</span><span id="SettingsManager-78"><a href="#SettingsManager-78"><span class="linenos"> 78</span></a>        <span class="n">currency</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
-</span><span id="SettingsManager-79"><a href="#SettingsManager-79"><span class="linenos"> 79</span></a>        <span class="n">cycle_duration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> 
-</span><span id="SettingsManager-80"><a href="#SettingsManager-80"><span class="linenos"> 80</span></a>        <span class="n">budget_threshold</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> 
-</span><span id="SettingsManager-81"><a href="#SettingsManager-81"><span class="linenos"> 81</span></a>        <span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
-</span><span id="SettingsManager-82"><a href="#SettingsManager-82"><span class="linenos"> 82</span></a>        <span class="n">theme</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="SettingsManager-83"><a href="#SettingsManager-83"><span class="linenos"> 83</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Settings</span><span class="p">:</span> 
-</span><span id="SettingsManager-84"><a href="#SettingsManager-84"><span class="linenos"> 84</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SettingsManager-85"><a href="#SettingsManager-85"><span class="linenos"> 85</span></a><span class="sd">        Factory method to convert database fields into a Settings business object.</span>
-</span><span id="SettingsManager-86"><a href="#SettingsManager-86"><span class="linenos"> 86</span></a>
-</span><span id="SettingsManager-87"><a href="#SettingsManager-87"><span class="linenos"> 87</span></a><span class="sd">        Args:</span>
-</span><span id="SettingsManager-88"><a href="#SettingsManager-88"><span class="linenos"> 88</span></a><span class="sd">            currency (str): The chosen currency symbol or code.</span>
-</span><span id="SettingsManager-89"><a href="#SettingsManager-89"><span class="linenos"> 89</span></a><span class="sd">            cycle_duration (int): Length of the budget cycle in days.</span>
-</span><span id="SettingsManager-90"><a href="#SettingsManager-90"><span class="linenos"> 90</span></a><span class="sd">            budget_threshold (int): Percentage at which to trigger alerts.</span>
-</span><span id="SettingsManager-91"><a href="#SettingsManager-91"><span class="linenos"> 91</span></a><span class="sd">            language (str): User&#39;s preferred UI language.</span>
-</span><span id="SettingsManager-92"><a href="#SettingsManager-92"><span class="linenos"> 92</span></a><span class="sd">            theme (str): UI theme identifier (e.g., &#39;Dark&#39;, &#39;Light&#39;).</span>
-</span><span id="SettingsManager-93"><a href="#SettingsManager-93"><span class="linenos"> 93</span></a>
-</span><span id="SettingsManager-94"><a href="#SettingsManager-94"><span class="linenos"> 94</span></a><span class="sd">        Returns:</span>
-</span><span id="SettingsManager-95"><a href="#SettingsManager-95"><span class="linenos"> 95</span></a><span class="sd">            Settings: A populated Settings object.</span>
-</span><span id="SettingsManager-96"><a href="#SettingsManager-96"><span class="linenos"> 96</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SettingsManager-97"><a href="#SettingsManager-97"><span class="linenos"> 97</span></a>        <span class="k">return</span> <span class="n">Settings</span><span class="p">(</span>
-</span><span id="SettingsManager-98"><a href="#SettingsManager-98"><span class="linenos"> 98</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">currency</span><span class="p">,</span>
-</span><span id="SettingsManager-99"><a href="#SettingsManager-99"><span class="linenos"> 99</span></a>            <span class="n">cycle_duration</span><span class="o">=</span><span class="n">cycle_duration</span><span class="p">,</span>
-</span><span id="SettingsManager-100"><a href="#SettingsManager-100"><span class="linenos">100</span></a>            <span class="n">budget_threshold</span><span class="o">=</span><span class="n">budget_threshold</span><span class="p">,</span>
-</span><span id="SettingsManager-101"><a href="#SettingsManager-101"><span class="linenos">101</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span>
-</span><span id="SettingsManager-102"><a href="#SettingsManager-102"><span class="linenos">102</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">theme</span>
-</span><span id="SettingsManager-103"><a href="#SettingsManager-103"><span class="linenos">103</span></a>        <span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SettingsManager-7"><a href="#SettingsManager-7"><span class="linenos"> 7</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SettingsManager</span><span class="p">():</span>
+</span><span id="SettingsManager-8"><a href="#SettingsManager-8"><span class="linenos"> 8</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SettingsManager-9"><a href="#SettingsManager-9"><span class="linenos"> 9</span></a><span class="sd">    A service class for managing global application settings and user preferences.</span>
+</span><span id="SettingsManager-10"><a href="#SettingsManager-10"><span class="linenos">10</span></a>
+</span><span id="SettingsManager-11"><a href="#SettingsManager-11"><span class="linenos">11</span></a><span class="sd">    This manager handles the persistence and retrieval of configuration data such </span>
+</span><span id="SettingsManager-12"><a href="#SettingsManager-12"><span class="linenos">12</span></a><span class="sd">    as currency, theme, and budget thresholds. It assumes a single-user </span>
+</span><span id="SettingsManager-13"><a href="#SettingsManager-13"><span class="linenos">13</span></a><span class="sd">    configuration model where settings are stored in a primary record.</span>
+</span><span id="SettingsManager-14"><a href="#SettingsManager-14"><span class="linenos">14</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="SettingsManager-15"><a href="#SettingsManager-15"><span class="linenos">15</span></a>
+</span><span id="SettingsManager-16"><a href="#SettingsManager-16"><span class="linenos">16</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">addSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newSettings</span><span class="p">:</span> <span class="n">Settings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="SettingsManager-17"><a href="#SettingsManager-17"><span class="linenos">17</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SettingsManager-18"><a href="#SettingsManager-18"><span class="linenos">18</span></a><span class="sd">        Creates a new settings record in the database.</span>
+</span><span id="SettingsManager-19"><a href="#SettingsManager-19"><span class="linenos">19</span></a>
+</span><span id="SettingsManager-20"><a href="#SettingsManager-20"><span class="linenos">20</span></a><span class="sd">        Args:</span>
+</span><span id="SettingsManager-21"><a href="#SettingsManager-21"><span class="linenos">21</span></a><span class="sd">            newSettings (Settings): The settings data object containing </span>
+</span><span id="SettingsManager-22"><a href="#SettingsManager-22"><span class="linenos">22</span></a><span class="sd">                preferences to be saved.</span>
+</span><span id="SettingsManager-23"><a href="#SettingsManager-23"><span class="linenos">23</span></a>
+</span><span id="SettingsManager-24"><a href="#SettingsManager-24"><span class="linenos">24</span></a><span class="sd">        Returns:</span>
+</span><span id="SettingsManager-25"><a href="#SettingsManager-25"><span class="linenos">25</span></a><span class="sd">            bool: True if the record was successfully created.</span>
+</span><span id="SettingsManager-26"><a href="#SettingsManager-26"><span class="linenos">26</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SettingsManager-27"><a href="#SettingsManager-27"><span class="linenos">27</span></a>        <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+</span><span id="SettingsManager-28"><a href="#SettingsManager-28"><span class="linenos">28</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span>
+</span><span id="SettingsManager-29"><a href="#SettingsManager-29"><span class="linenos">29</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span>
+</span><span id="SettingsManager-30"><a href="#SettingsManager-30"><span class="linenos">30</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">theme</span>
+</span><span id="SettingsManager-31"><a href="#SettingsManager-31"><span class="linenos">31</span></a>        <span class="p">)</span>
+</span><span id="SettingsManager-32"><a href="#SettingsManager-32"><span class="linenos">32</span></a>        <span class="k">return</span> <span class="kc">True</span>
+</span><span id="SettingsManager-33"><a href="#SettingsManager-33"><span class="linenos">33</span></a>
+</span><span id="SettingsManager-34"><a href="#SettingsManager-34"><span class="linenos">34</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">fetchSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Settings</span><span class="p">]:</span>
+</span><span id="SettingsManager-35"><a href="#SettingsManager-35"><span class="linenos">35</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SettingsManager-36"><a href="#SettingsManager-36"><span class="linenos">36</span></a><span class="sd">        Retrieves the primary application settings record.</span>
+</span><span id="SettingsManager-37"><a href="#SettingsManager-37"><span class="linenos">37</span></a>
+</span><span id="SettingsManager-38"><a href="#SettingsManager-38"><span class="linenos">38</span></a><span class="sd">        Note:</span>
+</span><span id="SettingsManager-39"><a href="#SettingsManager-39"><span class="linenos">39</span></a><span class="sd">            This method specifically looks for the record with ID 1.</span>
+</span><span id="SettingsManager-40"><a href="#SettingsManager-40"><span class="linenos">40</span></a>
+</span><span id="SettingsManager-41"><a href="#SettingsManager-41"><span class="linenos">41</span></a><span class="sd">        Returns:</span>
+</span><span id="SettingsManager-42"><a href="#SettingsManager-42"><span class="linenos">42</span></a><span class="sd">            Settings: A business object populated with the user preferences.</span>
+</span><span id="SettingsManager-43"><a href="#SettingsManager-43"><span class="linenos">43</span></a>
+</span><span id="SettingsManager-44"><a href="#SettingsManager-44"><span class="linenos">44</span></a><span class="sd">        Raises:</span>
+</span><span id="SettingsManager-45"><a href="#SettingsManager-45"><span class="linenos">45</span></a><span class="sd">            SettingsModel.DoesNotExist: If the settings record has not been </span>
+</span><span id="SettingsManager-46"><a href="#SettingsManager-46"><span class="linenos">46</span></a><span class="sd">                initialized in the database.</span>
+</span><span id="SettingsManager-47"><a href="#SettingsManager-47"><span class="linenos">47</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SettingsManager-48"><a href="#SettingsManager-48"><span class="linenos">48</span></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="SettingsManager-49"><a href="#SettingsManager-49"><span class="linenos">49</span></a>            <span class="n">settings</span> <span class="o">=</span> <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="SettingsManager-50"><a href="#SettingsManager-50"><span class="linenos">50</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">createDataObject</span><span class="p">(</span>
+</span><span id="SettingsManager-51"><a href="#SettingsManager-51"><span class="linenos">51</span></a>                <span class="n">settings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span> 
+</span><span id="SettingsManager-52"><a href="#SettingsManager-52"><span class="linenos">52</span></a>                <span class="n">settings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span> 
+</span><span id="SettingsManager-53"><a href="#SettingsManager-53"><span class="linenos">53</span></a>                <span class="n">settings</span><span class="o">.</span><span class="n">theme</span>
+</span><span id="SettingsManager-54"><a href="#SettingsManager-54"><span class="linenos">54</span></a>            <span class="p">)</span>
+</span><span id="SettingsManager-55"><a href="#SettingsManager-55"><span class="linenos">55</span></a>        <span class="k">except</span><span class="p">:</span>
+</span><span id="SettingsManager-56"><a href="#SettingsManager-56"><span class="linenos">56</span></a>            <span class="k">return</span> <span class="kc">None</span>
+</span><span id="SettingsManager-57"><a href="#SettingsManager-57"><span class="linenos">57</span></a>    
+</span><span id="SettingsManager-58"><a href="#SettingsManager-58"><span class="linenos">58</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">updateSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newSettings</span><span class="p">:</span> <span class="n">Settings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="SettingsManager-59"><a href="#SettingsManager-59"><span class="linenos">59</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SettingsManager-60"><a href="#SettingsManager-60"><span class="linenos">60</span></a><span class="sd">        Updates the primary settings record with new values.</span>
+</span><span id="SettingsManager-61"><a href="#SettingsManager-61"><span class="linenos">61</span></a>
+</span><span id="SettingsManager-62"><a href="#SettingsManager-62"><span class="linenos">62</span></a><span class="sd">        Args:</span>
+</span><span id="SettingsManager-63"><a href="#SettingsManager-63"><span class="linenos">63</span></a><span class="sd">            newSettings (Settings): The updated data object to apply.</span>
+</span><span id="SettingsManager-64"><a href="#SettingsManager-64"><span class="linenos">64</span></a>
+</span><span id="SettingsManager-65"><a href="#SettingsManager-65"><span class="linenos">65</span></a><span class="sd">        Returns:</span>
+</span><span id="SettingsManager-66"><a href="#SettingsManager-66"><span class="linenos">66</span></a><span class="sd">            bool: True if the update operation was executed.</span>
+</span><span id="SettingsManager-67"><a href="#SettingsManager-67"><span class="linenos">67</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SettingsManager-68"><a href="#SettingsManager-68"><span class="linenos">68</span></a>        <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+</span><span id="SettingsManager-69"><a href="#SettingsManager-69"><span class="linenos">69</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span>
+</span><span id="SettingsManager-70"><a href="#SettingsManager-70"><span class="linenos">70</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span>
+</span><span id="SettingsManager-71"><a href="#SettingsManager-71"><span class="linenos">71</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">theme</span>
+</span><span id="SettingsManager-72"><a href="#SettingsManager-72"><span class="linenos">72</span></a>        <span class="p">)</span>
+</span><span id="SettingsManager-73"><a href="#SettingsManager-73"><span class="linenos">73</span></a>        <span class="k">return</span> <span class="kc">True</span>
+</span><span id="SettingsManager-74"><a href="#SettingsManager-74"><span class="linenos">74</span></a>        
+</span><span id="SettingsManager-75"><a href="#SettingsManager-75"><span class="linenos">75</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">createDataObject</span><span class="p">(</span>
+</span><span id="SettingsManager-76"><a href="#SettingsManager-76"><span class="linenos">76</span></a>        <span class="bp">self</span><span class="p">,</span> 
+</span><span id="SettingsManager-77"><a href="#SettingsManager-77"><span class="linenos">77</span></a>        <span class="n">currency</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+</span><span id="SettingsManager-78"><a href="#SettingsManager-78"><span class="linenos">78</span></a>        <span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+</span><span id="SettingsManager-79"><a href="#SettingsManager-79"><span class="linenos">79</span></a>        <span class="n">theme</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="SettingsManager-80"><a href="#SettingsManager-80"><span class="linenos">80</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Settings</span><span class="p">:</span> 
+</span><span id="SettingsManager-81"><a href="#SettingsManager-81"><span class="linenos">81</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SettingsManager-82"><a href="#SettingsManager-82"><span class="linenos">82</span></a><span class="sd">        Factory method to convert database fields into a Settings business object.</span>
+</span><span id="SettingsManager-83"><a href="#SettingsManager-83"><span class="linenos">83</span></a>
+</span><span id="SettingsManager-84"><a href="#SettingsManager-84"><span class="linenos">84</span></a><span class="sd">        Args:</span>
+</span><span id="SettingsManager-85"><a href="#SettingsManager-85"><span class="linenos">85</span></a><span class="sd">            currency (str): The chosen currency symbol or code.</span>
+</span><span id="SettingsManager-86"><a href="#SettingsManager-86"><span class="linenos">86</span></a><span class="sd">            language (str): User&#39;s preferred UI language.</span>
+</span><span id="SettingsManager-87"><a href="#SettingsManager-87"><span class="linenos">87</span></a><span class="sd">            theme (str): UI theme identifier (e.g., &#39;Dark&#39;, &#39;Light&#39;).</span>
+</span><span id="SettingsManager-88"><a href="#SettingsManager-88"><span class="linenos">88</span></a>
+</span><span id="SettingsManager-89"><a href="#SettingsManager-89"><span class="linenos">89</span></a><span class="sd">        Returns:</span>
+</span><span id="SettingsManager-90"><a href="#SettingsManager-90"><span class="linenos">90</span></a><span class="sd">            Settings: A populated Settings object.</span>
+</span><span id="SettingsManager-91"><a href="#SettingsManager-91"><span class="linenos">91</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SettingsManager-92"><a href="#SettingsManager-92"><span class="linenos">92</span></a>        <span class="k">return</span> <span class="n">Settings</span><span class="p">(</span>
+</span><span id="SettingsManager-93"><a href="#SettingsManager-93"><span class="linenos">93</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">currency</span><span class="p">,</span>
+</span><span id="SettingsManager-94"><a href="#SettingsManager-94"><span class="linenos">94</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span>
+</span><span id="SettingsManager-95"><a href="#SettingsManager-95"><span class="linenos">95</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">theme</span>
+</span><span id="SettingsManager-96"><a href="#SettingsManager-96"><span class="linenos">96</span></a>        <span class="p">)</span>
 </span></pre></div>
 
 
@@ -307,21 +291,19 @@ configuration model where settings are stored in a primary record.</p>
 
     </div>
     <a class="headerlink" href="#SettingsManager.addSettings"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SettingsManager.addSettings-14"><a href="#SettingsManager.addSettings-14"><span class="linenos">14</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">addSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newSettings</span><span class="p">:</span> <span class="n">Settings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="SettingsManager.addSettings-15"><a href="#SettingsManager.addSettings-15"><span class="linenos">15</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SettingsManager.addSettings-16"><a href="#SettingsManager.addSettings-16"><span class="linenos">16</span></a><span class="sd">        Creates a new settings record in the database.</span>
-</span><span id="SettingsManager.addSettings-17"><a href="#SettingsManager.addSettings-17"><span class="linenos">17</span></a>
-</span><span id="SettingsManager.addSettings-18"><a href="#SettingsManager.addSettings-18"><span class="linenos">18</span></a><span class="sd">        Args:</span>
-</span><span id="SettingsManager.addSettings-19"><a href="#SettingsManager.addSettings-19"><span class="linenos">19</span></a><span class="sd">            newSettings (Settings): The settings data object containing </span>
-</span><span id="SettingsManager.addSettings-20"><a href="#SettingsManager.addSettings-20"><span class="linenos">20</span></a><span class="sd">                preferences to be saved.</span>
-</span><span id="SettingsManager.addSettings-21"><a href="#SettingsManager.addSettings-21"><span class="linenos">21</span></a>
-</span><span id="SettingsManager.addSettings-22"><a href="#SettingsManager.addSettings-22"><span class="linenos">22</span></a><span class="sd">        Returns:</span>
-</span><span id="SettingsManager.addSettings-23"><a href="#SettingsManager.addSettings-23"><span class="linenos">23</span></a><span class="sd">            bool: True if the record was successfully created.</span>
-</span><span id="SettingsManager.addSettings-24"><a href="#SettingsManager.addSettings-24"><span class="linenos">24</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SettingsManager.addSettings-25"><a href="#SettingsManager.addSettings-25"><span class="linenos">25</span></a>        <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-</span><span id="SettingsManager.addSettings-26"><a href="#SettingsManager.addSettings-26"><span class="linenos">26</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span>
-</span><span id="SettingsManager.addSettings-27"><a href="#SettingsManager.addSettings-27"><span class="linenos">27</span></a>            <span class="n">cycle_duration</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">cycle_duration</span><span class="p">,</span>
-</span><span id="SettingsManager.addSettings-28"><a href="#SettingsManager.addSettings-28"><span class="linenos">28</span></a>            <span class="n">budget_threshold</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">budget_threshold</span><span class="p">,</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SettingsManager.addSettings-16"><a href="#SettingsManager.addSettings-16"><span class="linenos">16</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">addSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newSettings</span><span class="p">:</span> <span class="n">Settings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="SettingsManager.addSettings-17"><a href="#SettingsManager.addSettings-17"><span class="linenos">17</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SettingsManager.addSettings-18"><a href="#SettingsManager.addSettings-18"><span class="linenos">18</span></a><span class="sd">        Creates a new settings record in the database.</span>
+</span><span id="SettingsManager.addSettings-19"><a href="#SettingsManager.addSettings-19"><span class="linenos">19</span></a>
+</span><span id="SettingsManager.addSettings-20"><a href="#SettingsManager.addSettings-20"><span class="linenos">20</span></a><span class="sd">        Args:</span>
+</span><span id="SettingsManager.addSettings-21"><a href="#SettingsManager.addSettings-21"><span class="linenos">21</span></a><span class="sd">            newSettings (Settings): The settings data object containing </span>
+</span><span id="SettingsManager.addSettings-22"><a href="#SettingsManager.addSettings-22"><span class="linenos">22</span></a><span class="sd">                preferences to be saved.</span>
+</span><span id="SettingsManager.addSettings-23"><a href="#SettingsManager.addSettings-23"><span class="linenos">23</span></a>
+</span><span id="SettingsManager.addSettings-24"><a href="#SettingsManager.addSettings-24"><span class="linenos">24</span></a><span class="sd">        Returns:</span>
+</span><span id="SettingsManager.addSettings-25"><a href="#SettingsManager.addSettings-25"><span class="linenos">25</span></a><span class="sd">            bool: True if the record was successfully created.</span>
+</span><span id="SettingsManager.addSettings-26"><a href="#SettingsManager.addSettings-26"><span class="linenos">26</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SettingsManager.addSettings-27"><a href="#SettingsManager.addSettings-27"><span class="linenos">27</span></a>        <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+</span><span id="SettingsManager.addSettings-28"><a href="#SettingsManager.addSettings-28"><span class="linenos">28</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span>
 </span><span id="SettingsManager.addSettings-29"><a href="#SettingsManager.addSettings-29"><span class="linenos">29</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span>
 </span><span id="SettingsManager.addSettings-30"><a href="#SettingsManager.addSettings-30"><span class="linenos">30</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">theme</span>
 </span><span id="SettingsManager.addSettings-31"><a href="#SettingsManager.addSettings-31"><span class="linenos">31</span></a>        <span class="p">)</span>
@@ -346,13 +328,13 @@ configuration model where settings are stored in a primary record.</p>
 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">fetchSettings</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n"><a href="../classes/Settings.html#Settings">userSettings.classes.Settings.Settings</a></span>:</span></span>
+        <span class="name">fetchSettings</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n">Optional</span><span class="p">[</span><span class="n"><a href="../classes/Settings.html#Settings">userSettings.classes.Settings.Settings</a></span><span class="p">]</span>:</span></span>
 
                 <label class="view-source-button" for="SettingsManager.fetchSettings-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#SettingsManager.fetchSettings"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SettingsManager.fetchSettings-34"><a href="#SettingsManager.fetchSettings-34"><span class="linenos">34</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">fetchSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Settings</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SettingsManager.fetchSettings-34"><a href="#SettingsManager.fetchSettings-34"><span class="linenos">34</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">fetchSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Settings</span><span class="p">]:</span>
 </span><span id="SettingsManager.fetchSettings-35"><a href="#SettingsManager.fetchSettings-35"><span class="linenos">35</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="SettingsManager.fetchSettings-36"><a href="#SettingsManager.fetchSettings-36"><span class="linenos">36</span></a><span class="sd">        Retrieves the primary application settings record.</span>
 </span><span id="SettingsManager.fetchSettings-37"><a href="#SettingsManager.fetchSettings-37"><span class="linenos">37</span></a>
@@ -366,14 +348,15 @@ configuration model where settings are stored in a primary record.</p>
 </span><span id="SettingsManager.fetchSettings-45"><a href="#SettingsManager.fetchSettings-45"><span class="linenos">45</span></a><span class="sd">            SettingsModel.DoesNotExist: If the settings record has not been </span>
 </span><span id="SettingsManager.fetchSettings-46"><a href="#SettingsManager.fetchSettings-46"><span class="linenos">46</span></a><span class="sd">                initialized in the database.</span>
 </span><span id="SettingsManager.fetchSettings-47"><a href="#SettingsManager.fetchSettings-47"><span class="linenos">47</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SettingsManager.fetchSettings-48"><a href="#SettingsManager.fetchSettings-48"><span class="linenos">48</span></a>        <span class="n">settings</span> <span class="o">=</span> <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="SettingsManager.fetchSettings-49"><a href="#SettingsManager.fetchSettings-49"><span class="linenos">49</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">createDataObject</span><span class="p">(</span>
-</span><span id="SettingsManager.fetchSettings-50"><a href="#SettingsManager.fetchSettings-50"><span class="linenos">50</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span> 
-</span><span id="SettingsManager.fetchSettings-51"><a href="#SettingsManager.fetchSettings-51"><span class="linenos">51</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">cycle_duration</span><span class="p">,</span> 
-</span><span id="SettingsManager.fetchSettings-52"><a href="#SettingsManager.fetchSettings-52"><span class="linenos">52</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">budget_threshold</span><span class="p">,</span> 
-</span><span id="SettingsManager.fetchSettings-53"><a href="#SettingsManager.fetchSettings-53"><span class="linenos">53</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span> 
-</span><span id="SettingsManager.fetchSettings-54"><a href="#SettingsManager.fetchSettings-54"><span class="linenos">54</span></a>            <span class="n">settings</span><span class="o">.</span><span class="n">theme</span>
-</span><span id="SettingsManager.fetchSettings-55"><a href="#SettingsManager.fetchSettings-55"><span class="linenos">55</span></a>        <span class="p">)</span>
+</span><span id="SettingsManager.fetchSettings-48"><a href="#SettingsManager.fetchSettings-48"><span class="linenos">48</span></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="SettingsManager.fetchSettings-49"><a href="#SettingsManager.fetchSettings-49"><span class="linenos">49</span></a>            <span class="n">settings</span> <span class="o">=</span> <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="SettingsManager.fetchSettings-50"><a href="#SettingsManager.fetchSettings-50"><span class="linenos">50</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">createDataObject</span><span class="p">(</span>
+</span><span id="SettingsManager.fetchSettings-51"><a href="#SettingsManager.fetchSettings-51"><span class="linenos">51</span></a>                <span class="n">settings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span> 
+</span><span id="SettingsManager.fetchSettings-52"><a href="#SettingsManager.fetchSettings-52"><span class="linenos">52</span></a>                <span class="n">settings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span> 
+</span><span id="SettingsManager.fetchSettings-53"><a href="#SettingsManager.fetchSettings-53"><span class="linenos">53</span></a>                <span class="n">settings</span><span class="o">.</span><span class="n">theme</span>
+</span><span id="SettingsManager.fetchSettings-54"><a href="#SettingsManager.fetchSettings-54"><span class="linenos">54</span></a>            <span class="p">)</span>
+</span><span id="SettingsManager.fetchSettings-55"><a href="#SettingsManager.fetchSettings-55"><span class="linenos">55</span></a>        <span class="k">except</span><span class="p">:</span>
+</span><span id="SettingsManager.fetchSettings-56"><a href="#SettingsManager.fetchSettings-56"><span class="linenos">56</span></a>            <span class="k">return</span> <span class="kc">None</span>
 </span></pre></div>
 
 
@@ -403,24 +386,22 @@ configuration model where settings are stored in a primary record.</p>
 
     </div>
     <a class="headerlink" href="#SettingsManager.updateSettings"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SettingsManager.updateSettings-57"><a href="#SettingsManager.updateSettings-57"><span class="linenos">57</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">updateSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newSettings</span><span class="p">:</span> <span class="n">Settings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="SettingsManager.updateSettings-58"><a href="#SettingsManager.updateSettings-58"><span class="linenos">58</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SettingsManager.updateSettings-59"><a href="#SettingsManager.updateSettings-59"><span class="linenos">59</span></a><span class="sd">        Updates the primary settings record with new values.</span>
-</span><span id="SettingsManager.updateSettings-60"><a href="#SettingsManager.updateSettings-60"><span class="linenos">60</span></a>
-</span><span id="SettingsManager.updateSettings-61"><a href="#SettingsManager.updateSettings-61"><span class="linenos">61</span></a><span class="sd">        Args:</span>
-</span><span id="SettingsManager.updateSettings-62"><a href="#SettingsManager.updateSettings-62"><span class="linenos">62</span></a><span class="sd">            newSettings (Settings): The updated data object to apply.</span>
-</span><span id="SettingsManager.updateSettings-63"><a href="#SettingsManager.updateSettings-63"><span class="linenos">63</span></a>
-</span><span id="SettingsManager.updateSettings-64"><a href="#SettingsManager.updateSettings-64"><span class="linenos">64</span></a><span class="sd">        Returns:</span>
-</span><span id="SettingsManager.updateSettings-65"><a href="#SettingsManager.updateSettings-65"><span class="linenos">65</span></a><span class="sd">            bool: True if the update operation was executed.</span>
-</span><span id="SettingsManager.updateSettings-66"><a href="#SettingsManager.updateSettings-66"><span class="linenos">66</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SettingsManager.updateSettings-67"><a href="#SettingsManager.updateSettings-67"><span class="linenos">67</span></a>        <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-</span><span id="SettingsManager.updateSettings-68"><a href="#SettingsManager.updateSettings-68"><span class="linenos">68</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span>
-</span><span id="SettingsManager.updateSettings-69"><a href="#SettingsManager.updateSettings-69"><span class="linenos">69</span></a>            <span class="n">cycle_duration</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">cycle_duration</span><span class="p">,</span>
-</span><span id="SettingsManager.updateSettings-70"><a href="#SettingsManager.updateSettings-70"><span class="linenos">70</span></a>            <span class="n">budget_threshold</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">budget_threshold</span><span class="p">,</span>
-</span><span id="SettingsManager.updateSettings-71"><a href="#SettingsManager.updateSettings-71"><span class="linenos">71</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span>
-</span><span id="SettingsManager.updateSettings-72"><a href="#SettingsManager.updateSettings-72"><span class="linenos">72</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">theme</span>
-</span><span id="SettingsManager.updateSettings-73"><a href="#SettingsManager.updateSettings-73"><span class="linenos">73</span></a>        <span class="p">)</span>
-</span><span id="SettingsManager.updateSettings-74"><a href="#SettingsManager.updateSettings-74"><span class="linenos">74</span></a>        <span class="k">return</span> <span class="kc">True</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SettingsManager.updateSettings-58"><a href="#SettingsManager.updateSettings-58"><span class="linenos">58</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">updateSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newSettings</span><span class="p">:</span> <span class="n">Settings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="SettingsManager.updateSettings-59"><a href="#SettingsManager.updateSettings-59"><span class="linenos">59</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SettingsManager.updateSettings-60"><a href="#SettingsManager.updateSettings-60"><span class="linenos">60</span></a><span class="sd">        Updates the primary settings record with new values.</span>
+</span><span id="SettingsManager.updateSettings-61"><a href="#SettingsManager.updateSettings-61"><span class="linenos">61</span></a>
+</span><span id="SettingsManager.updateSettings-62"><a href="#SettingsManager.updateSettings-62"><span class="linenos">62</span></a><span class="sd">        Args:</span>
+</span><span id="SettingsManager.updateSettings-63"><a href="#SettingsManager.updateSettings-63"><span class="linenos">63</span></a><span class="sd">            newSettings (Settings): The updated data object to apply.</span>
+</span><span id="SettingsManager.updateSettings-64"><a href="#SettingsManager.updateSettings-64"><span class="linenos">64</span></a>
+</span><span id="SettingsManager.updateSettings-65"><a href="#SettingsManager.updateSettings-65"><span class="linenos">65</span></a><span class="sd">        Returns:</span>
+</span><span id="SettingsManager.updateSettings-66"><a href="#SettingsManager.updateSettings-66"><span class="linenos">66</span></a><span class="sd">            bool: True if the update operation was executed.</span>
+</span><span id="SettingsManager.updateSettings-67"><a href="#SettingsManager.updateSettings-67"><span class="linenos">67</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SettingsManager.updateSettings-68"><a href="#SettingsManager.updateSettings-68"><span class="linenos">68</span></a>        <span class="n">SettingsModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+</span><span id="SettingsManager.updateSettings-69"><a href="#SettingsManager.updateSettings-69"><span class="linenos">69</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span>
+</span><span id="SettingsManager.updateSettings-70"><a href="#SettingsManager.updateSettings-70"><span class="linenos">70</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">language</span><span class="p">,</span>
+</span><span id="SettingsManager.updateSettings-71"><a href="#SettingsManager.updateSettings-71"><span class="linenos">71</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">newSettings</span><span class="o">.</span><span class="n">theme</span>
+</span><span id="SettingsManager.updateSettings-72"><a href="#SettingsManager.updateSettings-72"><span class="linenos">72</span></a>        <span class="p">)</span>
+</span><span id="SettingsManager.updateSettings-73"><a href="#SettingsManager.updateSettings-73"><span class="linenos">73</span></a>        <span class="k">return</span> <span class="kc">True</span>
 </span></pre></div>
 
 
@@ -440,40 +421,34 @@ configuration model where settings are stored in a primary record.</p>
 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">createDataObject</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">self</span>,</span><span class="param">	<span class="n">currency</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">cycle_duration</span><span class="p">:</span> <span class="nb">int</span>,</span><span class="param">	<span class="n">budget_threshold</span><span class="p">:</span> <span class="nb">int</span>,</span><span class="param">	<span class="n">language</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">theme</span><span class="p">:</span> <span class="nb">str</span></span><span class="return-annotation">) -> <span class="n"><a href="../classes/Settings.html#Settings">userSettings.classes.Settings.Settings</a></span>:</span></span>
+        <span class="name">createDataObject</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">self</span>,</span><span class="param">	<span class="n">currency</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">language</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">theme</span><span class="p">:</span> <span class="nb">str</span></span><span class="return-annotation">) -> <span class="n"><a href="../classes/Settings.html#Settings">userSettings.classes.Settings.Settings</a></span>:</span></span>
 
                 <label class="view-source-button" for="SettingsManager.createDataObject-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#SettingsManager.createDataObject"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SettingsManager.createDataObject-76"><a href="#SettingsManager.createDataObject-76"><span class="linenos"> 76</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">createDataObject</span><span class="p">(</span>
-</span><span id="SettingsManager.createDataObject-77"><a href="#SettingsManager.createDataObject-77"><span class="linenos"> 77</span></a>        <span class="bp">self</span><span class="p">,</span> 
-</span><span id="SettingsManager.createDataObject-78"><a href="#SettingsManager.createDataObject-78"><span class="linenos"> 78</span></a>        <span class="n">currency</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
-</span><span id="SettingsManager.createDataObject-79"><a href="#SettingsManager.createDataObject-79"><span class="linenos"> 79</span></a>        <span class="n">cycle_duration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> 
-</span><span id="SettingsManager.createDataObject-80"><a href="#SettingsManager.createDataObject-80"><span class="linenos"> 80</span></a>        <span class="n">budget_threshold</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> 
-</span><span id="SettingsManager.createDataObject-81"><a href="#SettingsManager.createDataObject-81"><span class="linenos"> 81</span></a>        <span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
-</span><span id="SettingsManager.createDataObject-82"><a href="#SettingsManager.createDataObject-82"><span class="linenos"> 82</span></a>        <span class="n">theme</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="SettingsManager.createDataObject-83"><a href="#SettingsManager.createDataObject-83"><span class="linenos"> 83</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Settings</span><span class="p">:</span> 
-</span><span id="SettingsManager.createDataObject-84"><a href="#SettingsManager.createDataObject-84"><span class="linenos"> 84</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SettingsManager.createDataObject-85"><a href="#SettingsManager.createDataObject-85"><span class="linenos"> 85</span></a><span class="sd">        Factory method to convert database fields into a Settings business object.</span>
-</span><span id="SettingsManager.createDataObject-86"><a href="#SettingsManager.createDataObject-86"><span class="linenos"> 86</span></a>
-</span><span id="SettingsManager.createDataObject-87"><a href="#SettingsManager.createDataObject-87"><span class="linenos"> 87</span></a><span class="sd">        Args:</span>
-</span><span id="SettingsManager.createDataObject-88"><a href="#SettingsManager.createDataObject-88"><span class="linenos"> 88</span></a><span class="sd">            currency (str): The chosen currency symbol or code.</span>
-</span><span id="SettingsManager.createDataObject-89"><a href="#SettingsManager.createDataObject-89"><span class="linenos"> 89</span></a><span class="sd">            cycle_duration (int): Length of the budget cycle in days.</span>
-</span><span id="SettingsManager.createDataObject-90"><a href="#SettingsManager.createDataObject-90"><span class="linenos"> 90</span></a><span class="sd">            budget_threshold (int): Percentage at which to trigger alerts.</span>
-</span><span id="SettingsManager.createDataObject-91"><a href="#SettingsManager.createDataObject-91"><span class="linenos"> 91</span></a><span class="sd">            language (str): User&#39;s preferred UI language.</span>
-</span><span id="SettingsManager.createDataObject-92"><a href="#SettingsManager.createDataObject-92"><span class="linenos"> 92</span></a><span class="sd">            theme (str): UI theme identifier (e.g., &#39;Dark&#39;, &#39;Light&#39;).</span>
-</span><span id="SettingsManager.createDataObject-93"><a href="#SettingsManager.createDataObject-93"><span class="linenos"> 93</span></a>
-</span><span id="SettingsManager.createDataObject-94"><a href="#SettingsManager.createDataObject-94"><span class="linenos"> 94</span></a><span class="sd">        Returns:</span>
-</span><span id="SettingsManager.createDataObject-95"><a href="#SettingsManager.createDataObject-95"><span class="linenos"> 95</span></a><span class="sd">            Settings: A populated Settings object.</span>
-</span><span id="SettingsManager.createDataObject-96"><a href="#SettingsManager.createDataObject-96"><span class="linenos"> 96</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SettingsManager.createDataObject-97"><a href="#SettingsManager.createDataObject-97"><span class="linenos"> 97</span></a>        <span class="k">return</span> <span class="n">Settings</span><span class="p">(</span>
-</span><span id="SettingsManager.createDataObject-98"><a href="#SettingsManager.createDataObject-98"><span class="linenos"> 98</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">currency</span><span class="p">,</span>
-</span><span id="SettingsManager.createDataObject-99"><a href="#SettingsManager.createDataObject-99"><span class="linenos"> 99</span></a>            <span class="n">cycle_duration</span><span class="o">=</span><span class="n">cycle_duration</span><span class="p">,</span>
-</span><span id="SettingsManager.createDataObject-100"><a href="#SettingsManager.createDataObject-100"><span class="linenos">100</span></a>            <span class="n">budget_threshold</span><span class="o">=</span><span class="n">budget_threshold</span><span class="p">,</span>
-</span><span id="SettingsManager.createDataObject-101"><a href="#SettingsManager.createDataObject-101"><span class="linenos">101</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span>
-</span><span id="SettingsManager.createDataObject-102"><a href="#SettingsManager.createDataObject-102"><span class="linenos">102</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">theme</span>
-</span><span id="SettingsManager.createDataObject-103"><a href="#SettingsManager.createDataObject-103"><span class="linenos">103</span></a>        <span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SettingsManager.createDataObject-75"><a href="#SettingsManager.createDataObject-75"><span class="linenos">75</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">createDataObject</span><span class="p">(</span>
+</span><span id="SettingsManager.createDataObject-76"><a href="#SettingsManager.createDataObject-76"><span class="linenos">76</span></a>        <span class="bp">self</span><span class="p">,</span> 
+</span><span id="SettingsManager.createDataObject-77"><a href="#SettingsManager.createDataObject-77"><span class="linenos">77</span></a>        <span class="n">currency</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+</span><span id="SettingsManager.createDataObject-78"><a href="#SettingsManager.createDataObject-78"><span class="linenos">78</span></a>        <span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+</span><span id="SettingsManager.createDataObject-79"><a href="#SettingsManager.createDataObject-79"><span class="linenos">79</span></a>        <span class="n">theme</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="SettingsManager.createDataObject-80"><a href="#SettingsManager.createDataObject-80"><span class="linenos">80</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Settings</span><span class="p">:</span> 
+</span><span id="SettingsManager.createDataObject-81"><a href="#SettingsManager.createDataObject-81"><span class="linenos">81</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SettingsManager.createDataObject-82"><a href="#SettingsManager.createDataObject-82"><span class="linenos">82</span></a><span class="sd">        Factory method to convert database fields into a Settings business object.</span>
+</span><span id="SettingsManager.createDataObject-83"><a href="#SettingsManager.createDataObject-83"><span class="linenos">83</span></a>
+</span><span id="SettingsManager.createDataObject-84"><a href="#SettingsManager.createDataObject-84"><span class="linenos">84</span></a><span class="sd">        Args:</span>
+</span><span id="SettingsManager.createDataObject-85"><a href="#SettingsManager.createDataObject-85"><span class="linenos">85</span></a><span class="sd">            currency (str): The chosen currency symbol or code.</span>
+</span><span id="SettingsManager.createDataObject-86"><a href="#SettingsManager.createDataObject-86"><span class="linenos">86</span></a><span class="sd">            language (str): User&#39;s preferred UI language.</span>
+</span><span id="SettingsManager.createDataObject-87"><a href="#SettingsManager.createDataObject-87"><span class="linenos">87</span></a><span class="sd">            theme (str): UI theme identifier (e.g., &#39;Dark&#39;, &#39;Light&#39;).</span>
+</span><span id="SettingsManager.createDataObject-88"><a href="#SettingsManager.createDataObject-88"><span class="linenos">88</span></a>
+</span><span id="SettingsManager.createDataObject-89"><a href="#SettingsManager.createDataObject-89"><span class="linenos">89</span></a><span class="sd">        Returns:</span>
+</span><span id="SettingsManager.createDataObject-90"><a href="#SettingsManager.createDataObject-90"><span class="linenos">90</span></a><span class="sd">            Settings: A populated Settings object.</span>
+</span><span id="SettingsManager.createDataObject-91"><a href="#SettingsManager.createDataObject-91"><span class="linenos">91</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SettingsManager.createDataObject-92"><a href="#SettingsManager.createDataObject-92"><span class="linenos">92</span></a>        <span class="k">return</span> <span class="n">Settings</span><span class="p">(</span>
+</span><span id="SettingsManager.createDataObject-93"><a href="#SettingsManager.createDataObject-93"><span class="linenos">93</span></a>            <span class="n">currency</span><span class="o">=</span><span class="n">currency</span><span class="p">,</span>
+</span><span id="SettingsManager.createDataObject-94"><a href="#SettingsManager.createDataObject-94"><span class="linenos">94</span></a>            <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span>
+</span><span id="SettingsManager.createDataObject-95"><a href="#SettingsManager.createDataObject-95"><span class="linenos">95</span></a>            <span class="n">theme</span><span class="o">=</span><span class="n">theme</span>
+</span><span id="SettingsManager.createDataObject-96"><a href="#SettingsManager.createDataObject-96"><span class="linenos">96</span></a>        <span class="p">)</span>
 </span></pre></div>
 
 
@@ -481,8 +456,6 @@ configuration model where settings are stored in a primary record.</p>
 
 <p>Args:
     currency (str): The chosen currency symbol or code.
-    cycle_duration (int): Length of the budget cycle in days.
-    budget_threshold (int): Percentage at which to trigger alerts.
     language (str): User's preferred UI language.
     theme (str): UI theme identifier (e.g., 'Dark', 'Light').</p>
 
