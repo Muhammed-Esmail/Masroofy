@@ -17,15 +17,11 @@ import { AuthService } from "./auth.js";
     const userName = UserName ? UserName.value.trim() : null;
 
     const result = await auth.authUser(email, userName, password);
-
+    
     if (result.status === "success") {
       window.location.href = "dashboard/";
     } else {
-      if (result.errors && result.errors.length > 0) {
-        alert(result.errors.join("\n"));
-      } else {
-        alert(result.message || "Something went wrong.");
-      }
+      alert(result.description || "Something went wrong.");
     }
   });
 })();

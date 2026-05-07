@@ -13,33 +13,18 @@ export class AuthService extends API {
         username: username,
         password: password,
       });
-
-      if (response.ok) {
+      
+      if (response.success) {
         window.location.reload();
-        return { status: "success", data: response.data };
+        return { status: "success", description: response.data };
       } else {
         return {
           status: "error",
-          message: response.data.message || "Authentication failed",
-          errors: response.data.errors || [],
+          description: response.description || "Authentication failed",
         };
       }
     } catch (error) {
-      return { status: "error", message: "Network connection failed\n" + response };
-    }
-  }
-
-  async verifySession() {
-    try {
-      const response = await this.request("/verify/", "GET");
-
-      if (response.ok) {
-        return { status: "success", data: response.data };
-      } else {
-        return { status: "error", message: "No active session" };
-      }
-    } catch (error) {
-      return { status: "error", message: "Network error" };
+      return { status: "error", description: "Network connection failed\n" + response };
     }
   }
 }

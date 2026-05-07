@@ -1,3 +1,5 @@
+from typing import Optional
+
 from userSettings.models import SettingsModel
 from userSettings.classes import Settings
 
@@ -28,7 +30,7 @@ class SettingsManager():
         )
         return True
 
-    def fetchSettings(self) -> Settings:
+    def fetchSettings(self) -> Optional[Settings]:
         """
         Retrieves the primary application settings record.
 
@@ -42,12 +44,15 @@ class SettingsManager():
             SettingsModel.DoesNotExist: If the settings record has not been 
                 initialized in the database.
         """
-        settings = SettingsModel.objects.get(id=1)
-        return self.createDataObject(
-            settings.currency, 
-            settings.language, 
-            settings.theme
-        )
+        try:
+            settings = SettingsModel.objects.get(id=1)
+            return self.createDataObject(
+                settings.currency, 
+                settings.language, 
+                settings.theme
+            )
+        except:
+            return None
     
     def updateSettings(self, newSettings: Settings) -> bool:
         """

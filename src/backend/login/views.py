@@ -42,7 +42,7 @@ def Auth(request):
             username = data.get('username', 'user')
             password = data.get('password')
         except json.JSONDecodeError:
-            return JsonResponse({"message": "Invalid JSON"}, status=400)
+            return JsonResponse({"success":False, "description": "Invalid JSON"}, status=400)
         securityM = securityManager()
         if not userExists:
             try:
@@ -50,9 +50,9 @@ def Auth(request):
                 newUser=securityM.createUser(username,email,password)
                 login(request, newUser)
                 request.session['username'] = newUser.username
-                return JsonResponse({"message": "Account created and logged in"}, status=200)
+                return JsonResponse({"success":True, "description": "Account created and logged in"}, status=200)
             except ValidationError as error:
-                return JsonResponse({"message":"password is not valid", "errors":error.messages},status =400)
+                return JsonResponse({"success":False, "description":"password is not valid.\nErrors: " + str(error.messages)},status =400)
             
         else: 
             try:
@@ -61,11 +61,11 @@ def Auth(request):
                 if isValid:
                     login(request, user)
                     request.session['username'] = user.username 
-                    return JsonResponse({"message": "Logged in successfully"}, status=200)
+                    return JsonResponse({"success":True, "description": "Logged in successfully"}, status=200)
                 else:
-                    return JsonResponse({"message": "Invalid email or password55"}, status=400)
+                    return JsonResponse({"success":False, "description": "Invalid email or password"}, status=400)
             except User.DoesNotExist:
-                return JsonResponse({"message": "Invalid email or password"}, status=400)
+                return JsonResponse({"success":False, "description": "Invalid email or password"}, status=400)
     
-                
+    
     return render(request, 'pages/login/login.html',context)
