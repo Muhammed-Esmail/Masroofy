@@ -1,8 +1,6 @@
 # Masroofy
 ## Overview
-The purpose of this software is to provide an easy-use, offline, manual micro-budgeting mobile
-application designed specifically for Egyptian students and young adults. It helps replace
-traditional tracking methods like physical notebooks or basic note app.
+The purpose of this software is to provide an easy-use, offline, manual micro-budgeting web application designed specifically for Egyptian students and young adults. It helps replace traditional tracking methods like physical notebooks or basic note app.
 
 ## Team
 | Student Name | Student ID |
@@ -14,3 +12,26 @@ traditional tracking methods like physical notebooks or basic note app.
 
 ## Acknowledgements
 This project is for Assignment #2 for the Introduction to Software Engineering Course (CS251) at **FCAI - Cairo University**.
+
+
+---
+
+
+## Tools
+
+### Backend
+* Django
+* Python
+
+### Frontend
+* HTML
+* CSS
+* Javascript
+
+### Documentation
+* pdoc
+
+### Other Concepts
+* REST-style API
+* OOP principles
+* Comprehensive usage of design patterns and overall application modularity
