@@ -7,10 +7,10 @@
     <h2>Settings</h2>
     <div class="settings">
         <h3>update your settings</h3>
-        <form method="POST"">
+        <form method="POST">
             {% csrf_token %}
             {{ settingForm.as_p }}
-            <button type="submit" name="btnSettingsUpdate" ">Save Settings</button>
+            <button type="submit" name="btnSettingsUpdate">Save Settings</button>
         </form>
     </div>
     <div class="settings">

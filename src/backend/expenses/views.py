@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import PeriodicExpense
+from userSettings.services.SettingsManager import SettingsManager
 
 # 1. READ
 def index(request):
     expenses = PeriodicExpense.objects.all().order_by('-created_at')
     context = {
-        "expenses": expenses
+        "expenses": expenses,
+        'settings':SettingsManager().fetchSettings()
     }
     return render(request, 'pages/expenses/expenses.html', context)
 
@@ -50,7 +52,11 @@ def update_expense(request, id):
             
         expense.save()
         return redirect('expense-list')
-    return render(request, 'pages/expenses/edit_expense.html', {'expense': expense})
+    context={
+        'settings':SettingsManager().fetchSettings(),
+        'expense': expense,
+    }
+    return render(request, 'pages/expenses/edit_expense.html', context)
 
 def delete_expense(request, id):
     if request.method == "POST":

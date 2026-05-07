@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from backend.Controller import Controller
-from transaction.services import TransactionManager, CategoryManager
+from userSettings.services.SettingsManager import SettingsManager
 from history.services import TransactionCRUD, CategoryCRUD
 from datetime import datetime
 from django.http import JsonResponse
@@ -42,8 +42,10 @@ def fetchAndBuildCategoryObject(request):
 
 def index(request):
     categories = category_manager.fetchAllCategories()
+    settings = SettingsManager().fetchSettings()
     context = {
-        "categories": categories
+        "categories": categories,
+        "settings": settings,
     }
     return render(request, 'pages/transaction/transaction.html', context)
 
@@ -70,8 +72,10 @@ def delete_transaction(request, id):
 
 def category_index(request):
     categories = category_manager.fetchAllCategories()
+    settings = SettingsManager().fetchSettings()
     context = {
-        "categories": categories
+        "categories": categories,
+        "settings": settings,
     }
     return render(request, 'pages/transaction/category.html', context)
 

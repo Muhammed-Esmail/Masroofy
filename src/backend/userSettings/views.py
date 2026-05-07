@@ -1,11 +1,9 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.shortcuts import render, redirect
 from .forms import SettingsForm
 from .models import SettingsModel
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from userSettings.services.SettingsManager import SettingsManager
 
 
 # Create your views here.
@@ -38,6 +36,7 @@ def settings(request):
 
     context['passwordForm'] = passwordform
     context['settingForm'] = settingForm
+    context['settings'] = SettingsManager().fetchSettings()
 
 
-    return render(request, 'pages/settings/settings.html',context)
+    return render(request, 'pages/settings/settings.html', context)

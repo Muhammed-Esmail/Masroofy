@@ -16,12 +16,9 @@ class SettingsModel(models.Model):
         LIGHT = "Light Mode"
         DARK = "Dark Mode"
 
-    language = models.TextField(choices=languageChoices)
-    currency = models.TextField(choices=currencyChoices)
-    theme = models.TextField(choices=themeChoices)
-
-    cycle_duration = models.IntegerField(null=False)
-    budget_threshold = models.FloatField(null=False)
+    language = models.TextField(choices=languageChoices, default=languageChoices.ENGLISH)
+    currency = models.TextField(choices=currencyChoices, default=currencyChoices.US_DOLLAR)
+    theme = models.TextField(choices=themeChoices, default=themeChoices.LIGHT)
 
     class Meta:
         db_table='Settings'

@@ -5,7 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}Masroofy{% endblock %}</title>
-   <link rel="shortcut icon" href="/static/assets/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="/static/assets/favicon.png" type="image/x-icon">
+  {% if settings is not None and settings.theme == 'Dark Mode' %}
+  <link rel="stylesheet" href="/static/css/dark_theme.css">
+  {% endif %}
 </head>
 <body>
 
