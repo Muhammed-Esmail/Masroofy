@@ -23,7 +23,7 @@ async function updateTransaction(e) {
     const form = document.getElementById('update-form');
     const data = Object.fromEntries(new FormData(form).entries());
     const response = await transactionAPI.request(`/update_transaction/`, 'POST', data);
-    if (response.success) {
+    if (response.ok) {
         alert('Transaction Updated');
         document.getElementById('updateDialog').close();
         fetchFullHistory();
@@ -37,7 +37,7 @@ async function updateTransaction(e) {
 
 async function deleteTransaction(id) {
     const response = await transactionAPI.request(`/delete_transaction/${id}/`, 'DELETE');
-    if (response.success) alert('Transaction Deleted');
+    if (response.ok) alert('Transaction Deleted');
     if (response.state) {
         alert(response.state);
     }
@@ -55,7 +55,8 @@ function onListClick(e) {
 }
 
 async function fetchFullHistory() {
-    const data = await historyAPI.request(`/full_history/`, 'GET');
+    let data = await historyAPI.request(`/full_history/`, 'GET');
+    data = data.data;
     data.forEach(t => transactionCache[t.id] = t);
     renderTransactions(data, document.getElementById('fullHistoryResult'));
 }
@@ -72,7 +73,8 @@ async function fetchFiltered(e) {
     if (categoryName)  params.append('category_name', categoryName);
     console.log(`[${categoryName}]`);
     if (cycleId)       params.append('cycle_id', cycleId);
-    const data = await historyAPI.request(`/filtered_history/?${params}`);
+    let data = await historyAPI.request(`/filtered_history/?${params}`);
+    data = data.data;
     const list = data || [];
     list.forEach(t => transactionCache[t.id] = t);
     renderTransactions(list, document.getElementById('filteredResult'));
@@ -83,17 +85,20 @@ async function fetchCycle(e) {
     const id = document.getElementById('cycleIdSingle').value;
     const params = new URLSearchParams();
     if (id) params.append('id', id);
-    const data = await historyAPI.request(`/fetch_cycle_data/?${params}`);
+    let data = await historyAPI.request(`/fetch_cycle_data/?${params}`);
+    data = data.data;
     renderCycle(data, document.getElementById('cycleResult'));
 }
 
 async function getActiveCycleId() {
-    const data = await historyAPI.request(`/get_active_cycle_id/`);
+    let data = await historyAPI.request(`/get_active_cycle_id/`);
+    data = data.data;
     document.getElementById('activeCycleId').textContent = JSON.stringify(data, null, 2);
 }
 
 async function fetchTotalSpent() {
-    const data = await historyAPI.request(`/get_total_spent/`);
+    let data = await historyAPI.request(`/get_total_spent/`);
+    data = data.data;
     document.getElementById('totalSpentResult').textContent = JSON.stringify(data, null, 2);
 }
 
