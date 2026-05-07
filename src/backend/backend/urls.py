@@ -24,5 +24,6 @@ urlpatterns = [
     path('cycle/', include('cycle.urls')),
     path('transaction/', include('transaction.urls')),
     path('dashboard/', include('dashboard.urls')),
-    path('userSettings/', include('userSettings.urls'))
+    path('userSettings/', include('userSettings.urls')),
+    path('expenses/', include('expenses.urls')),
 ]
