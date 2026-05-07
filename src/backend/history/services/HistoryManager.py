@@ -59,7 +59,7 @@ class HistoryManager:
         if currentCycleId:
             return self.transaction_queryable.getTotalSpentInCycle(currentCycleId)
         
-        return None
+        return 0
 
     def setActive(self, id: int) -> None:
         self.cycle_readable.setActive(id)

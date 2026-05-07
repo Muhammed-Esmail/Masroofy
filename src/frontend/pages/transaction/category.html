@@ -1,11 +1,9 @@
+{% extends "pages/base/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Category Manager</title>
-</head>
-<body>
+
+{% block title %}Category Manager{% endblock %}
+
+{% block content %}
 
     <section id="category-section">
         <h2>Category Management</h2>
@@ -61,5 +59,4 @@
     </section>
 
     <script type="module" src="{% static '/pages/transaction/js/category.js' %}"></script>
-</body>
-</html>
+{% endblock %}

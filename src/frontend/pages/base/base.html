@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Masroofy{% endblock %}</title>
+</head>
+<body>
+
+  <nav>
+    <a href="/history">History</a>
+    <a href="/cycle">Cycles</a>
+    <a href="/transaction">Transactions</a>
+    <a href="/expenses">Expenses</a>
+    <a href="/transaction/category">Categories</a>
+  </nav>
+
+  {% block content %}{% endblock %}
+
+  <footer>
+    <p>&copy; 2026 Masroofy. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

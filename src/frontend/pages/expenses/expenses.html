@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Manage Recurring Expenses</title>
-    <style>
-        .hidden { display: none; }
-    </style>
-</head>
-<body>
+{% extends "pages/base/base.html" %}
+{% load static %}
+
+{% block title %}Manage Recurring Expenses{% endblock %}
+
+{% block content %}
 
     <h2>Your Recurring Expenses</h2>
     <div>
@@ -107,5 +103,4 @@
         frequencySelect.addEventListener('change', toggleFields);
         toggleFields();
     </script>
-</body>
-</html>
+{% endblock %}

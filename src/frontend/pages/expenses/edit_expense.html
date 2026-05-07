@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Expense</title>
-    <style>.hidden { display: none; }</style>
-</head>
-<body>
+{% extends "pages/base/base.html" %}
+{% load static %}
+
+{% block title %}Edit Expense{% endblock %}
+
+{% block content %}
 
     <h2>Edit Expense: {{ expense.name }}</h2>
     
@@ -84,5 +82,4 @@
 
         frequencySelect.addEventListener('change', toggleFields);
     </script>
-</body>
-</html>
+{% endblock %}
