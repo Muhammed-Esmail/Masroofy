@@ -3,8 +3,9 @@ from django.urls import path, include
 
 from . import views
 
+app_name='login'
 urlpatterns = [
-    path('', views.home),
+    path('', views.home, name='login'),
     path('api/auth/', views.Auth, name='Auth'),
     path('api/verify/', views.verifySession, name='verifySession'),
 ]

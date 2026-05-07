@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import JsonResponse
 from .services.securityManager import securityManager 
 from django.contrib.auth import get_user_model
@@ -6,11 +6,13 @@ from django.contrib.auth import login
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 import json
+from django.views.decorators.cache import never_cache
 
 User = get_user_model()
 
 
 # Create your views here
+@never_cache
 def home(request):
     userExists = User.objects.exists()
     context = {
