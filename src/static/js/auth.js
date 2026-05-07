@@ -1,20 +1,16 @@
 class AuthService {
   constructor() {
-    this.baseUrl = "http://127.0.0.1:8000/api";
+    this.api = new API();
+    this.api.setBase("http://127.0.0.1:8000/api");
   }
   async authUser(Email, userName = null, password) {
     try {
-      const response = await fetch(`${this.baseUrl}/auth/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": this.getCsrfToken(),
-        },
-        body: JSON.stringify({ email: Email, username: userName, password: password }),
-      });
-      const data = await response.json();
+      const data = await this.api.request("/auth/", "POST", { email: Email, username: userName, password: password });
       console.log("data:", data);
 
+      if (data.token) {
+        this.api.setToken(data.token);
+      }
       if (response.ok) {
         return { status: "success", data: data };
       } else {

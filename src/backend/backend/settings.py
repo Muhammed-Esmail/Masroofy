@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'userSettings.apps.UserSettingsConfig',
     'expenses.apps.ExpensesConfig',
     'insights.apps.InsightsConfig',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +134,12 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
     BASE_DIR / 'frontend',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
