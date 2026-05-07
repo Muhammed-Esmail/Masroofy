@@ -1,56 +1,45 @@
-class AuthService {
+import { API } from "/static/api/API.js";
+
+export class AuthService extends API {
   constructor() {
-    this.api = new API();
-    this.api.setBase("http://127.0.0.1:8000/api");
+    super()
+    this.setBase("/api");
   }
-  async authUser(Email, userName = null, password) {
-    try {
-      const data = await this.api.request("/auth/", "POST", { email: Email, username: userName, password: password });
-      console.log("data:", data);
 
-      if (data.token) {
-        this.api.setToken(data.token);
-      }
-      if (response.ok) {
-        return { status: "success", data: data };
-      } else {
-        return { status: "error", message: data.message, errors: data.errors || [] };
-      }
-    } catch (error) {
-      console.error("CATCH ERROR:", error);
-      return { status: "error", message: "unknown error", errors: [] };
-    }
-  }
-  async verifySession() {
+  async authUser(email, username = null, password) {
     try {
-      const response = await fetch(`${this.baseUrl}/verify/`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+        const response = await this.request('/auth/', 'POST', { 
+            email: email, 
+            username: username, 
+            password: password 
+        });
 
-      if (response.ok) {
-        return { status: "success", data: await response.json() };
-      } else {
-        return { status: "error", message: "No active session" };
-      }
-    } catch (error) {
-      return { status: "error", message: "Network error" };
-    }
-  }
-  getCsrfToken() {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-      const cookies = document.cookie.split(";");
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.substring(0, 10) === "csrftoken=") {
-          cookieValue = decodeURIComponent(cookie.substring(10));
-          break;
+        if (response.ok) {
+            window.location.reload();
+            return { status: "success", data: response.data };
+        } else {
+            return { 
+                status: "error", 
+                message: response.data.message || "Authentication failed", 
+                errors: response.data.errors || [] 
+            };
         }
-      }
+    } catch (error) {
+        return { status: "error", message: "Network connection failed\n" + response };
     }
-    return cookieValue;
+  }
+
+  async verifySession() {
+      try {
+          const response = await this.request('/verify/', 'GET');
+
+          if (response.ok) {
+              return { status: "success", data: response.data };
+          } else {
+              return { status: "error", message: "No active session" };
+          }
+      } catch (error) {
+          return { status: "error", message: "Network error" };
+      }
   }
 }

@@ -1,3 +1,5 @@
+import { AuthService } from './auth.js';
+
 (function () {
   console.log("LOGIN JS LOADED");
   const form = document.getElementById("auth");
