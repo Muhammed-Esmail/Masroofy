@@ -1,18 +1,33 @@
 export class API {
-    BASE = '';
+  BASE = "";
 
-    getCsrf() {
-        const cookie = document.cookie.split(';').find(c => c.trim().startsWith('csrftoken='));
-        return cookie ? cookie.split('=')[1] : '';
-    }
+  getCsrf() {
+    const cookie = document.cookie.split(";").find((c) => c.trim().startsWith("csrftoken="));
+    return cookie ? cookie.split("=")[1] : "";
+  }
 
-    getBase() {
-        return this.BASE;
-    }
+  getBase() {
+    return this.BASE;
+  }
 
-    setBase(base) {
-        this.BASE = base
-    }
+  setBase(base) {
+    this.BASE = base;
+  }
+
+  setToken(token) {
+    localStorage.setItem("authToken", token);
+  }
+
+  getToken() {
+    return localStorage.getItem("authToken");
+  }
+
+  clearToken() {
+    localStorage.removeItem("authToken");
+  }
+
+  async request(url, method = "GET", body = null) {
+    const fullUrl = `${this.getBase()}${url}`;
 
     async request(url, method = 'GET', body = null) {
         const fullUrl = `${this.BASE}${url}`;

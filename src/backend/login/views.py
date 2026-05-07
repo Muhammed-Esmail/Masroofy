@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import login 
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+from rest_framework.authtoken.models import Token
 import json
 from django.views.decorators.cache import never_cache
 
@@ -46,9 +47,10 @@ def Auth(request):
             try:
                 validate_password(password)
                 newUser=securityM.createUser(username,email,password)
+                token, _ = Token.objects.get_or_create(user=newUser)
                 login(request, newUser)
                 request.session['username'] = newUser.username
-                return JsonResponse({"message": "Account created and logged in"}, status=200)
+                return JsonResponse({"message": "Account created and logged in", "token":token}, status=200)
             except ValidationError as error:
                 return JsonResponse({"message":"password is not valid", "errors":error.messages},status =400)
             
@@ -58,8 +60,9 @@ def Auth(request):
                     isValid = securityM.checkPassword(user, password)
                     if isValid:
                         login(request, user)
+                        token, _ = Token.objects.get_or_create(user=newUser)
                         request.session['username'] = user.username 
-                        return JsonResponse({"message": "Logged in successfully"}, status=200)
+                        return JsonResponse({"message": "Logged in successfully", "token":token}, status=200)
                     else:
                         return JsonResponse({"message": "Invalid email or password55"}, status=400)
                 except User.DoesNotExist:
@@ -78,4 +81,14 @@ def verifySession(request):
     ### returns
     - A JSON response indicating whether the session is valid, including the username if so.
     '''
-    request.user.is_authenticated
+    authHeader = request.META.get('HTTP_AUTHORIZATION', '')
+    if not authHeader.startswith('Token '):
+        return JsonResponse({"valid": False, "message": "No token provided"}, status=401)
+    
+    token_key = authHeader.split(' ')[1]
+    try:
+        token = Token.objects.get(key=token_key)
+        return JsonResponse({"valid": True, "username": token.user.username}, status=200)
+    except Token.DoesNotExist:
+        return JsonResponse({"valid": False, "message": "Invalid token"}, status=401)
+
