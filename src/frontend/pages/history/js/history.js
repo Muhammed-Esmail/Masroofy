@@ -55,8 +55,7 @@ function onListClick(e) {
 }
 
 async function fetchFullHistory() {
-    let data = await historyAPI.request(`/full_history/`, 'GET');
-    data = data.data;
+    const data = await historyAPI.request(`/full_history/`, 'GET');
     data.forEach(t => transactionCache[t.id] = t);
     renderTransactions(data, document.getElementById('fullHistoryResult'));
 }
@@ -73,8 +72,7 @@ async function fetchFiltered(e) {
     if (categoryName)  params.append('category_name', categoryName);
     console.log(`[${categoryName}]`);
     if (cycleId)       params.append('cycle_id', cycleId);
-    let data = await historyAPI.request(`/filtered_history/?${params}`);
-    data = data.data;
+    const data = await historyAPI.request(`/filtered_history/?${params}`);
     const list = data || [];
     list.forEach(t => transactionCache[t.id] = t);
     renderTransactions(list, document.getElementById('filteredResult'));
@@ -85,20 +83,17 @@ async function fetchCycle(e) {
     const id = document.getElementById('cycleIdSingle').value;
     const params = new URLSearchParams();
     if (id) params.append('id', id);
-    let data = await historyAPI.request(`/fetch_cycle_data/?${params}`);
-    data = data.data;
+    const data = await historyAPI.request(`/fetch_cycle_data/?${params}`);
     renderCycle(data, document.getElementById('cycleResult'));
 }
 
 async function getActiveCycleId() {
-    let data = await historyAPI.request(`/get_active_cycle_id/`);
-    data = data.data;
+    const data = await historyAPI.request(`/get_active_cycle_id/`);
     document.getElementById('activeCycleId').textContent = JSON.stringify(data, null, 2);
 }
 
 async function fetchTotalSpent() {
-    let data = await historyAPI.request(`/get_total_spent/`);
-    data = data.data;
+    const data = await historyAPI.request(`/get_total_spent/`);
     document.getElementById('totalSpentResult').textContent = JSON.stringify(data, null, 2);
 }
 

@@ -49,6 +49,8 @@ def index(request):
 
 def log_transaction(request):
     transaction_obj = fetchAndBuildTransactionObject(request)    
+    if transaction_obj.amount <= 0:
+        return JsonResponse({'success': False})
     transaction_manager.logTransaction(transaction_obj)
     state = notification_manager.getCurrentState()
     return JsonResponse({'success': True, 'state': state})

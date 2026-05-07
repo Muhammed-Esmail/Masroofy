@@ -8,7 +8,7 @@ async function addCategory(e) {
 
     const data = Object.fromEntries(new FormData(e.target).entries());
     const response = await api.request('/add_category/', 'POST', data);
-    if (response.ok) {
+    if (response.success) {
         alert('Category created!');
                 window.location.reload();
 
@@ -22,7 +22,7 @@ async function updateCategory(e) {
 
     const data = Object.fromEntries(new FormData(e.target).entries());
     const response = await api.request('/update_category/', 'POST', data);
-    if (response.ok) {
+    if (response.success) {
         alert('Category updated!');
         window.location.reload();
     } else {
@@ -35,7 +35,7 @@ async function deleteCategory(e) {
 
     const name = document.querySelector('#delete-category-form select[name="name"]').value;
     const response = await api.request(`/delete_category/${name}/`, 'DELETE');
-    if (response.ok) {
+    if (response.success) {
         alert('Category deleted!');
         window.location.reload();
     } else {
