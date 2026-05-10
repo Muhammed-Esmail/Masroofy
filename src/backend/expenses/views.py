@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import PeriodicExpense
 from userSettings.services.SettingsManager import SettingsManager
+from django.views.decorators.cache import never_cache
 
 # 1. READ
+@never_cache
 def index(request):
     expenses = PeriodicExpense.objects.all().order_by('-created_at')
     context = {
@@ -12,6 +14,7 @@ def index(request):
     return render(request, 'pages/expenses/expenses.html', context)
 
 # 2. CREATE
+@never_cache
 def create_expense(request):
     if request.method == "POST":
         name = request.POST.get('name')
@@ -35,6 +38,7 @@ def create_expense(request):
         
         return redirect('expense-list')
 
+@never_cache
 def update_expense(request, id):
     expense = get_object_or_404(PeriodicExpense, id=id)
     

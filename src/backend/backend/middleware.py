@@ -1,10 +1,12 @@
 from django.shortcuts import redirect
 from django.urls import reverse, resolve
-from cycle.services.AllowanceManager import AllowanceManager
+from backend.Controller import Controller
+
 
 TOKEN_NAME = 'token'
 LOGIN_PAGE_NAME = 'login:login'
 CYCLE_PAGE_NAME = 'cycle:welcome'
+DASHBOARD_PAGE_NAME = 'dashboard:dashboard'
 
 class MasroofyAuthMiddleware:
     def __init__(self, get_response) -> None:
@@ -14,11 +16,12 @@ class MasroofyAuthMiddleware:
         
         cycle_url = reverse(CYCLE_PAGE_NAME)
         login_url = reverse(LOGIN_PAGE_NAME)
-        requested_url = request.path
+        dashboard_url = reverse(DASHBOARD_PAGE_NAME)
 
         try:
             match = resolve(request.path)
-            app_name = match.app_name  # Look for 'app_name' in urls.py
+            app_name = match.app_name  # Look for 'app_name' in urls.
+            url_name = match.url_name
         except:
             app_name = None
 
@@ -38,6 +41,12 @@ class MasroofyAuthMiddleware:
             return redirect(login_url)
 
         # User is logged in
+
+        # Cant make a new cycle with an active one
+        if app_name == 'cycle' and self.checkActiveCycle():
+            if url_name != 'resetCycle':
+                return redirect(dashboard_url)
+
         # Check if there is an active cycle
         if not app_name == 'cycle' and not self.checkActiveCycle():
             return redirect(cycle_url)
@@ -49,5 +58,6 @@ class MasroofyAuthMiddleware:
         '''
         # Verifies the user has an active cycle in server's DB 
         '''
-        allowanceManager = AllowanceManager()
+        controller = Controller()
+        allowanceManager = controller.getAllowanceManager()
         return allowanceManager.checkActivityStatus()

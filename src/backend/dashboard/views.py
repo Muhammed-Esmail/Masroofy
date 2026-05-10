@@ -4,7 +4,10 @@ from datetime import date
 from cycle.services.AllowanceManager import NoCycleException
 from userSettings.services.SettingsManager import SettingsManager
 import json
+from django.views.decorators.cache import never_cache
+
 # Create your views here.
+@never_cache
 def home(request):
     controller = Controller()
 

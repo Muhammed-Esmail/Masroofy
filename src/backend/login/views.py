@@ -20,6 +20,8 @@ def home(request):
         'settings': SettingsManager().fetchSettings(),
     }
     return render(request, 'pages/login/login.html', context)
+
+@never_cache
 def Auth(request):
     '''
     handel both login and signup
