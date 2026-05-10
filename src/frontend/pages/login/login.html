@@ -1,5 +1,10 @@
-{% extends "pages/base/base.html" %} {% load static %} {% block title %}{% if needSignUp %}SignUp page{% else %}Login
+{% extends "pages/base/superbase.html" %} {% load static %} {% block title %}{% if needSignUp %}SignUp page{% else %}Login
 page{% endif %}{% endblock %} {% block content %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/Auth.css' %}">
+{% endblock %}
+
 <form method="post" id="auth">
   {% csrf_token %}
   <label for="Email">Email</label>

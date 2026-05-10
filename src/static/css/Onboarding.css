@@ -1,0 +1,98 @@
+/* ═══════════════════════════════════════════════════════════════
+   Masroofy — onboarding.css
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Center the whole welcome page */
+body:has(.onboarding-wrap) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.onboarding-wrap {
+  width: 100%;
+  max-width: 480px;
+  padding: 1.5rem;
+}
+
+.onboarding-wrap h1 { margin-bottom: .3rem; }
+.onboarding-wrap > p { margin-bottom: 2rem; }
+
+/* Allowance block */
+.allowance-row {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  background: var(--mint-light);
+  border: 1px solid var(--mint-border);
+  border-radius: var(--r);
+  padding: .85rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.allowance-row .currency-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--mint-hover);
+  white-space: nowrap;
+}
+
+.allowance-row input[type="number"] {
+  border: none;
+  background: transparent;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text);
+  padding: 0;
+  box-shadow: none;
+}
+
+.allowance-row input:focus {
+  border: none;
+  box-shadow: none;
+}
+
+/* Date row */
+.date-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Submit */
+.onboarding-wrap button[type="submit"] {
+  width: 100%;
+  padding: .7rem;
+  font-size: .93rem;
+  margin-top: .5rem;
+}
+
+/* Reset cycle — subtle secondary button */
+.onboarding-wrap form + form {
+  margin-top: .75rem;
+}
+
+.onboarding-wrap form + form button {
+  width: 100%;
+  background: transparent;
+  color: var(--text-faint);
+  border-color: var(--border);
+  font-size: .82rem;
+}
+
+.onboarding-wrap form + form button:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+  background: var(--danger-light);
+}
+
+/* Footer note */
+.onboarding-footer {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: .78rem;
+  color: var(--text-faint);
+}

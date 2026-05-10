@@ -1,4 +1,112 @@
-body{
-    background-color: black;
-    color: white;
+/* ═══════════════════════════════════════════════════════════════
+   Masroofy — dark_theme.css
+   Overrides base.css variables. Load after base.css + nav.css.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --mint:         #3ecf8e;
+  --mint-hover:   #52dba0;          /* lighter in dark for contrast */
+  --mint-light:   #0d2e20;          /* dark tinted mint bg */
+  --mint-border:  #1a4a30;
+
+  --white:        #1a1f1d;          /* "white" surfaces → dark */
+  --off-white:    #141918;          /* page background */
+  --border:       #2a3330;
+
+  --text:         #e8eeeb;
+  --text-sub:     #8fa89f;
+  --text-faint:   #4a6059;
+
+  --danger:       #f07070;
+  --danger-light: #2a1515;
+
+  --warning:      #f59e0b;
+
+  --sh-sm:        0 1px 4px rgba(0,0,0,.35);
+  --sh:           0 4px 18px rgba(0,0,0,.5);
 }
+
+/* ── Body ──────────────────────────────────────────────────── */
+body {
+  background: var(--off-white);
+  color: var(--text);
+}
+
+/* ── Inputs ─────────────────────────────────────────────────── */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+  background: #1f2622;
+  color: var(--text);
+  border-color: var(--border);
+  color-scheme: dark;   /* fixes browser date picker */
+}
+
+input::placeholder { color: var(--text-faint); }
+
+/* ── Buttons — non-primary ───────────────────────────────────── */
+button,
+a.btn {
+  background: #222926;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+button:hover,
+a.btn:hover {
+  background: #2c3430;
+}
+
+/* ── Nav ─────────────────────────────────────────────────────── */
+nav {
+  background: #1a1f1d;
+  border-bottom-color: var(--border);
+}
+
+/* ── Footer ──────────────────────────────────────────────────── */
+footer {
+  background: #1a1f1d;
+  border-top-color: var(--border);
+  color: var(--text-faint);
+}
+
+/* ── Tables ──────────────────────────────────────────────────── */
+tbody tr:hover td {
+  background: #1f2622;
+}
+
+/* ── Pre / code ──────────────────────────────────────────────── */
+pre {
+  background: #1f2622;
+  border-color: var(--border);
+  color: var(--text-sub);
+}
+
+/* ── Dialog ──────────────────────────────────────────────────── */
+#updateDialog {
+  background: #1a1f1d;
+  border-color: var(--border);
+}
+
+#updateDialog::backdrop {
+  background: rgba(0,0,0,.55);
+}
+
+/* ── Chart.js — force light text on dark bg ──────────────────── */
+canvas { filter: brightness(.92) contrast(1.05); }
+
+/* ── Auth card ───────────────────────────────────────────────── */
+#auth {
+  background: #1a1f1d;
+  border-color: var(--border);
+}
+
+/* ── Scrollbar (webkit) ──────────────────────────────────────── */
+::-webkit-scrollbar               { width: 8px; height: 8px; }
+::-webkit-scrollbar-track         { background: var(--off-white); }
+::-webkit-scrollbar-thumb         { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover   { background: #3a4a44; }

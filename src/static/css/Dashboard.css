@@ -1,0 +1,99 @@
+/* ═══════════════════════════════════════════════════════════════
+   Masroofy — dashboard.css
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Stat grid (cycle, daily limit, summary) ─────────────────── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--sh-sm);
+}
+
+.stat-card h2 {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-faint);
+  font-weight: 600;
+  margin-bottom: .6rem;
+}
+
+.stat-card .stat-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-card .stat-label {
+  font-size: .78rem;
+  color: var(--text-faint);
+  margin-top: .25rem;
+}
+
+.stat-card.accent {
+  border-color: var(--mint-border);
+  background: var(--mint-light);
+}
+
+.stat-card.accent .stat-value { color: var(--mint-hover); }
+
+/* ── Chart row ───────────────────────────────────────────────── */
+.chart-row {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.chart-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.25rem;
+  box-shadow: var(--sh-sm);
+  flex: 1;
+  min-width: 220px;
+}
+
+.chart-box h2 {
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-faint);
+  margin-bottom: 1rem;
+}
+
+.chart-box canvas {
+  width: 100% !important;
+  height: 220px !important;
+}
+
+/* ── Section tables on dashboard ─────────────────────────────── */
+.dashboard-section {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.5rem;
+  box-shadow: var(--sh-sm);
+  margin-bottom: 1.25rem;
+}
+
+.dashboard-section h2 {
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-faint);
+  margin-bottom: 1rem;
+}

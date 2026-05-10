@@ -1,55 +1,51 @@
 {% extends "pages/base/base.html" %}
 {% load static %}
 
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/Onboarding.css' %}">
+{% endblock %}
+
 {% block title %}Welcome to Masroofy{% endblock %}
 
 {% block content %}
-
+<div class="onboarding-wrap">
     <h1>Welcome to Masroofy</h1>
     <p>Let’s set up your financial oasis for this cycle. High-end budgeting, made for students.</p>
 
     <form method="POST" action="start_cycle/">
         {% csrf_token %}
 
-        <p><small>TOTAL ALLOWANCE (EGP)</small></p>
-        <div>
-            <h2>EGP </h2>
-            <input type="number" name="amount" required step="0.01" /> 
+        <label>TOTAL ALLOWANCE (EGP)</label>
+        <div class="allowance-row">
+            <span class="currency-label">EGP</span>
+            <input type="number" name="amount" placeholder="0.00" required step="0.01" /> 
         </div>
 
-        <table width="100%">
-            <tr>
-                <td>
-                    <p><small>START DATE</small></p>
-                    <input type="date" name="start_date" required>
-                </td>
-                <td>
-                    <p><small>END DATE</small></p>
-                    <input type="date" name="end_date" required>
-                </td>
-            </tr>
-        </table>
+        <div class="date-row">
+            <label>START DATE
+                <input type="date" name="start_date" required>
+            </label>
+            <label>END DATE
+                <input type="date" name="end_date" required>
+            </label>
+        </div>
 
-        <br>
-
-        <blockquote>
+        <blockquote style="margin-bottom: 1.5rem;">
             Tip: Most students find a <b>30-day cycle</b> helps best with monthly allowance management.
         </blockquote>
 
-        <br>
-
-        <button type="submit">
+        <button type="submit" class="btn-primary">
             Start Cycle ➔
         </button>
     </form>
 
     <form method="POST" action="reset_cycle/">
         {% csrf_token %}
-        <button type="submit">Reset Cycle</button>
+        <button type="submit" class="btn-outline">Reset Cycle</button>
     </form>
 
-    <p align="center">
-        <small>By starting, you agree to our <a href="#">Terms of usage</a>.</small>
-    </p>
-
+    <div class="onboarding-footer">
+        By starting, you agree to our <a href="#">Terms of usage</a>.
+    </div>
+</div>
 {% endblock %}
