@@ -1,4 +1,4 @@
-export class API {
+export default class API {
     BASE = '';
 
     getCsrf() {
@@ -20,7 +20,7 @@ export class API {
 
         const opts = {
         method,
-        credentials: "include",
+        credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json', 'X-CSRFToken': this.getCsrf() },
         };
         if (body) opts.body = JSON.stringify(body);

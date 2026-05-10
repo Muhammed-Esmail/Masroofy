@@ -20,7 +20,8 @@ class MasroofyAuthMiddleware:
 
         try:
             match = resolve(request.path)
-            app_name = match.app_name  # Look for 'app_name' in urls.py
+            app_name = match.app_name  # Look for 'app_name' in urls.
+            url_name = match.url_name
         except:
             app_name = None
 
@@ -43,7 +44,8 @@ class MasroofyAuthMiddleware:
 
         # Cant make a new cycle with an active one
         if app_name == 'cycle' and self.checkActiveCycle():
-            return redirect(dashboard_url)
+            if url_name != 'resetCycle':
+                return redirect(dashboard_url)
 
         # Check if there is an active cycle
         if not app_name == 'cycle' and not self.checkActiveCycle():

@@ -5,6 +5,8 @@
 
 {% block content %}
 
+    <script type="module" src="{% static '/pages/onboarding/js/onboarding.js' %}"></script>
+
     <h1>Welcome to Masroofy</h1>
     <p>Let’s set up your financial oasis for this cycle. High-end budgeting, made for students.</p>
 
@@ -38,7 +40,7 @@
 
         <br>
 
-        <button type="submit">
+        <button type="submit" id="start-btn">
             Start Cycle ➔
         </button>
     </form>
