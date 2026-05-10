@@ -1,4 +1,4 @@
-{% extends "pages/base/base.html" %}
+{% extends "pages/base/superbase.html" %}
 {% load static %}
 
 {% block title %}Welcome to Masroofy{% endblock %}
@@ -41,11 +41,6 @@
         <button type="submit">
             Start Cycle ➔
         </button>
-    </form>
-
-    <form method="POST" action="reset_cycle/">
-        {% csrf_token %}
-        <button type="submit">Reset Cycle</button>
     </form>
 
     <p align="center">

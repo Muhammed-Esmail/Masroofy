@@ -4,11 +4,13 @@ from history.services import HistoryManager
 from django.http import HttpResponse, JsonResponse
 from transaction.services import CategoryManager
 from userSettings.services.SettingsManager import SettingsManager
+from django.views.decorators.cache import never_cache
 
 controller: Controller = Controller()
 historyManager: HistoryManager = controller.getHistoryManager()
 categoryManager: CategoryManager = controller.getCategoryManager()
 
+@never_cache
 def index(request):
     categories = categoryManager.fetchAllCategories()
     context = {

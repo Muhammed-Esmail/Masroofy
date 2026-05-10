@@ -5,6 +5,7 @@ from history.services import TransactionCRUD, CategoryCRUD
 from datetime import datetime
 from django.http import JsonResponse
 import json
+from django.views.decorators.cache import never_cache
 
 controller = Controller()
 transaction_crud = TransactionCRUD()
@@ -39,7 +40,7 @@ def fetchAndBuildCategoryObject(request):
     description = data.get('description')
     return category_crud.createDataObject(name, description)
     
-
+@never_cache
 def index(request):
     categories = category_manager.fetchAllCategories()
     settings = SettingsManager().fetchSettings()
@@ -70,6 +71,7 @@ def delete_transaction(request, id):
     state = notification_manager.getCurrentState()
     return JsonResponse({'ok': True, 'state': state})
 
+@never_cache
 def category_index(request):
     categories = category_manager.fetchAllCategories()
     settings = SettingsManager().fetchSettings()
