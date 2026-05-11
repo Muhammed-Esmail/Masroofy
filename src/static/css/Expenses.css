@@ -1,0 +1,81 @@
+/* ═══════════════════════════════════════════════════════════════
+   Masroofy — expenses.css
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Expense card list ───────────────────────────────────────── */
+.expense-list > div {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1rem 1.25rem;
+  margin-bottom: .6rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.expense-list strong {
+  font-size: .95rem;
+  color: var(--text);
+}
+
+.expense-list .expense-meta {
+  flex: 1;
+  font-size: .82rem;
+  color: var(--text-sub);
+  line-height: 1.6;
+}
+
+.expense-list .expense-actions {
+  display: flex;
+  gap: .4rem;
+}
+
+.expense-list .expense-actions button,
+.expense-list .expense-actions a {
+  padding: .3rem .7rem;
+  font-size: .78rem;
+}
+
+/* ── Day-of-month checkbox grid ──────────────────────────────── */
+#month_days_container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem .4rem;
+  margin-top: .5rem;
+}
+
+#month_days_container label {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  font-size: .8rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-sub);
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: .25rem .5rem;
+  cursor: pointer;
+  transition: background var(--ease), border-color var(--ease);
+}
+
+#month_days_container label:has(input:checked) {
+  background: var(--mint-light);
+  border-color: var(--mint-border);
+  color: var(--mint-hover);
+}
+
+/* ── Day-of-week checkboxes ──────────────────────────────────── */
+#weekly_fields label {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  margin-right: .6rem;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: .85rem;
+  color: var(--text-sub);
+}

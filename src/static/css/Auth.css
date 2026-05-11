@@ -1,0 +1,51 @@
+/* ═══════════════════════════════════════════════════════════════
+   Masroofy — auth.css  (login / signup)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Hide the nav on auth pages — add class="auth-page" to <body>
+   or just let the card float nicely on the page background       */
+
+body:has(#auth) nav { display: none; }
+body:has(#auth) footer { display: none; }
+
+body:has(#auth) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+#auth {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 2.5rem 2.25rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--sh);
+}
+
+#auth::before {
+  content: 'Masroofy';
+  display: block;
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--mint-hover);
+  letter-spacing: -.01em;
+  margin-bottom: 1.75rem;
+}
+
+#auth label {
+  margin-top: .85rem;
+}
+
+#auth label:first-of-type {
+  margin-top: 0;
+}
+
+#auth button[type="submit"] {
+  width: 100%;
+  margin-top: 1.25rem;
+  padding: .7rem;
+  font-size: .93rem;
+}
